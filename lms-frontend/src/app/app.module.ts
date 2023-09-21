@@ -6,17 +6,23 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { NavbarComponent } from './components/navbar.component';
+import { MainComponent } from './components/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    NavbarComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
