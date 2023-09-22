@@ -1,9 +1,10 @@
 .link {
     margin-right: 15px; 
     color: white;
+    text-decoration: none;
   }
   
-  .spacer {
-    flex: 1; 
-  }
+.spacer {
+  flex: 1; 
+}
   

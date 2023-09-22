@@ -1,7 +1,20 @@
+<ng-container *ngIf="(isLoggedIn$ | async) as loggedIn; else loggedOut">
 <mat-toolbar color="primary">
-    <span>PowerLearn LMS</span>
+    <span>AI_Learn LMS</span>
     <span class="spacer"></span>
-    <a routerLink="/" class="link">Home</a>
-    <a routerLink="/about" class="link">About</a>
-    <a routerLink="/login" class="link">Log In</a>
+    <a routerLink="/dashboard" class="link">Dashboard</a>
+    <button mat-raised-button color="warn" (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon> Log Out
+    </button>
 </mat-toolbar>
+</ng-container>
+
+
+<ng-template #loggedOut>
+    <mat-toolbar color="primary">
+        <span>AI_Learn LMS</span>
+        <span class="spacer"></span>
+        <a routerLink="/about" class="link">About</a>
+        <a routerLink="/login" class="link">Log In</a>
+    </mat-toolbar>
+</ng-template>

@@ -1,0 +1,56 @@
+<h2>Register an Account</h2>
+ 
+<div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+</div>
+
+<form [formGroup]="registerForm" (submit)="registerAccount()">
+<tr>
+    <td>
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput type="text" formControlName="name" placeholder="Name">
+    </mat-form-field>
+    </td>
+    <td><mat-error *ngIf="invalidField('name')">Please enter a valid name (Min. of 5 chars).</mat-error></td>
+</tr>
+<tr>
+    <td>
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput type="text" formControlName="username" placeholder="Username">
+     
+    </mat-form-field>
+    </td>
+    <td>
+        <mat-error *ngIf="invalidField('username')">Please enter a valid username (Min. of 3 chars).</mat-error>
+    </td>
+</tr>
+<tr>
+    <td>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" placeholder="Password">
+    </mat-form-field>
+</td>
+<td>
+    <mat-error *ngIf="invalidField('password')">Please enter a valid password. Password should have a minimum of 8 characters, including at least 1 special character and 1 letter.</mat-error>
+</td>
+</tr>
+<tr>
+<td>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" placeholder="Email address">
+    </mat-form-field>
+</td>
+<td>
+    <mat-error *ngIf="invalidField('email')">Please enter a valid email address.</mat-error>
+</td>
+</tr>
+    <button mat-raised-button color="warn" type="submit" [disabled]="registerForm.invalid">Submit</button>
+
+    <mat-progress-spinner *ngIf="isLoading" class="loader" diameter="30" mode="indeterminate"></mat-progress-spinner>
+  </form>
+
+
