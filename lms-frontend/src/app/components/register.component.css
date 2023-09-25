@@ -1,0 +1,26 @@
+/* Center the form using Flexbox */
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* This ensures that the form takes up at least the entire viewport height. You can adjust this value as needed. */
+  }
+  
+  /* Style the form container (optional) */
+  form {
+    max-width: 400px; /* Adjust the maximum width as needed */
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Style the form elements (optional) */
+  mat-form-field,
+  mat-radio-button,
+  button {
+    width: 100%;
+    margin-bottom: 16px; /* Adjust the margin as needed */
+  }
+  

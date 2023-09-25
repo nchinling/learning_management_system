@@ -1,10 +1,10 @@
-<h2>Register an Account</h2>
- 
+
 <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
 </div>
 
 <form [formGroup]="registerForm" (submit)="registerAccount()">
+  <h2>Register an Account</h2>
 <tr>
     <td>
     <mat-form-field appearance="fill">
@@ -48,8 +48,9 @@
     <mat-error *ngIf="invalidField('email')">Please enter a valid email address.</mat-error>
 </td>
 </tr>
-    <button mat-raised-button color="warn" type="submit" [disabled]="registerForm.invalid">Submit</button>
-
+<tr>
+    <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Submit</button>
+</tr>
     <mat-progress-spinner *ngIf="isLoading" class="loader" diameter="30" mode="indeterminate"></mat-progress-spinner>
   </form>
 

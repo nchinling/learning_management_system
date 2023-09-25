@@ -19,6 +19,18 @@ export interface RegisterResponse {
     timestamp: string
 }
 
+export interface Quiz {
+    account_id: string
+    quiz_id: string
+    questions: QuizQuestion[]
+}
+
+export interface QuizQuestion {
+    quiz_question_id: string
+    question: string
+    options: (string | null)[];
+    answer: string
+}
 
 
 

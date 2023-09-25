@@ -19,6 +19,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import { AccountService } from './services/account.service';
 import { RegisterComponent } from './components/register.component';
+import { QuizComponent } from './components/quiz.component';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { RegisterComponent } from './components/register.component';
     NavbarComponent,
     MainComponent,
     DashboardComponent,
-    RegisterComponent
+    RegisterComponent,
+    QuizComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ import { RegisterComponent } from './components/register.component';
     MatProgressSpinnerModule,
     MatCardModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
+    MatRadioModule
   ],
   providers: [AccountService],
   bootstrap: [AppComponent]
