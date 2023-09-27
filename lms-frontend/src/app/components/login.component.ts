@@ -75,6 +75,7 @@ export class LoginComponent {
     
       this.errorMessage = error.error;
       console.info('this.errorMessage is ' + this.errorMessage)
+      this.isLoading = false;
     });
 
   }

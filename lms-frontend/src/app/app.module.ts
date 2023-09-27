@@ -15,12 +15,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import { AccountService } from './services/account.service';
 import { RegisterComponent } from './components/register.component';
 import { QuizComponent } from './components/quiz.component';
 import { MatRadioModule } from '@angular/material/radio';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -43,11 +45,13 @@ import { MatRadioModule } from '@angular/material/radio';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatExpansionModule,
     MatProgressSpinnerModule,
     MatCardModule,
     MatDividerModule,
     MatIconModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSelectModule
   ],
   providers: [AccountService],
   bootstrap: [AppComponent]

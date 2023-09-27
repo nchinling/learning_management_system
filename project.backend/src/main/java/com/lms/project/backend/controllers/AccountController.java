@@ -105,17 +105,17 @@ public class AccountController {
                 .add("username", loggedInAccount.getUsername())
                 .add("timestamp", (new Date()).toString())
                 .build();
+
+                
             } catch (AccountNotFoundException e) {
                 String errorMessage = e.getMessage();
                 System.out.printf(">>>Account Exception occured>>>>>\n");   
                 resp = Json.createObjectBuilder()
                 .add("error", errorMessage)
                 .build();
-                
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(resp.toString());
             } catch (IOException e) {
-            
                 e.printStackTrace();
             }
 
@@ -123,7 +123,7 @@ public class AccountController {
 
         } catch (AccountException e) {
             String errorMessage = e.getMessage();
-             System.out.printf(">>>Account Exception occured>>>>>\n");   
+            System.out.printf(">>>Account Exception occured>>>>>\n");   
             resp = Json.createObjectBuilder()
             .add("error", errorMessage)
             .build();
@@ -132,7 +132,12 @@ public class AccountController {
             .body(resp.toString());
         }
 
-  
+        if (resp == null) {
+            resp = Json.createObjectBuilder()
+                .add("error", "An unexpected error occurred")
+                .build();
+        }
+
         return ResponseEntity.ok(resp.toString());
 
     }
