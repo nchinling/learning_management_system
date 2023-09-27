@@ -45,25 +45,27 @@
   </form>
 </div>
  -->
-
-
+ <div class="container">
+ <h1>Create Quiz</h1>
  <form [formGroup]="quizForm" (submit)="processQuiz()">
  
-  <p>
-    <label for="name">Quiz Title:</label>
-    <input type="text" id="name" name="name" formControlName="name">
-  </p>
  
-  Questions:
+    <label for="name">Quiz Title: </label>
+    <mat-form-field>
+      <input matInput placeholder="Title" formControlName="title" required>
+    </mat-form-field>
+
   <div formArrayName="questions">
+    Questions:
     <div *ngFor="let question of questions.controls; let i=index">
+     
       <div [formGroupName]="i">
       {{i+1}})
+    
       <mat-form-field class="question-field">
         <textarea matInput placeholder="Question" formControlName="question" required rows="5"></textarea>
       </mat-form-field>
 
-      
       <div class="option-container">
         <label class="option-label">A)</label>&nbsp;
         <mat-form-field class="option-field">
@@ -96,33 +98,25 @@
         <input type="radio" formControlName="answer" value="D">
       </div>
 
-
-      <!-- <div formArrayName="questions.options">
-        <div *ngFor="let option of options.controls; let j=index">
-          <div [formGroupName]="j">
-            hello
-            <button (click)="removeOption(j)">X</button>
-          </div>
-        </div>
-       
-      </div> -->
-
-    
-        <button (click)="removeQuestion(i)">Remove Question</button>
+        <button mat-raised-button color="accent" class="add-label" (click)="removeQuestion(i)">Remove Question</button>
+      
       </div>
     </div>
   </div>
- 
-  <p>
-    <button type="button" (click)="addQuestion()">Add Question</button>
-  </p>
-   
-  <p>
-    <button type="submit">Submit</button>
-  </p>
- 
 
+
+ <br>
+  <button mat-raised-button color="primary" class="add-label" (click)="addMCQ()"> +MCQ</button>&nbsp;
+  <button mat-raised-button color="primary" class="add-label" (click)="addFreeResponse()"> +Free-Response</button>&nbsp;
+  <div>
+    <button mat-raised-button color="primary" class="submit-label" type="submit">Submit</button>
+  </div>
+ 
+<div>
   {{this.quizForm.value | json}}
+</div>
+
 </form>
+</div>
  
  
