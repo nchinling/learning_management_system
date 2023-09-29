@@ -15,3 +15,7 @@
 ## 27 Sep
 - created working form with ability to add new questions
 - attempt to create free response
+
+
+## 29 Sep
+- Improved form control
