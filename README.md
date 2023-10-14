@@ -19,3 +19,6 @@
 
 ## 29 Sep
 - Improved form control
+
+## 14 Oct
+- Stored quiz in MongoDB

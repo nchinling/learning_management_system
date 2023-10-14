@@ -3,7 +3,7 @@
  <form [formGroup]="quizForm" (submit)="processQuiz()">
  
  
-  <label for="name">Quiz Title: </label>
+  <label>Quiz Title: </label>
   <mat-form-field>
     <input matInput placeholder="Title" formControlName="title" required>
   </mat-form-field>
@@ -67,8 +67,8 @@
 
 
  <br>
-  <button mat-raised-button color="primary" class="add-label" (click)="addMCQ()"> +MCQ</button>&nbsp;
-  <button mat-raised-button color="primary" class="add-label" (click)="addFreeResponse()"> +Free-Response</button>&nbsp;
+  <button mat-raised-button color="primary" class="add-label" type="button" (click)="addMCQ()"> +MCQ</button>&nbsp;
+  <button mat-raised-button color="primary" class="add-label" type="button" (click)="addFreeResponse()"> +Free-Response</button>&nbsp;
   <div>
     <button mat-raised-button color="primary" class="submit-label" type="submit">Submit</button>
   </div>

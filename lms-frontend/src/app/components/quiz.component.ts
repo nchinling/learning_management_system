@@ -1,8 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { QuizQuestion } from '../models';
+import { CreateQuizResponse, Quiz, QuizQuestion } from '../models';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
+import { Observable, firstValueFrom } from 'rxjs';
+import { QuizService } from '../services/quiz.service';
 
   @Component({
     selector: 'app-quiz',
@@ -15,14 +17,17 @@ import { AccountService } from '../services/account.service';
     quizForm!: FormGroup
     optionForm!: FormGroup
     questionFormGroup!: FormGroup
+    createQuiz$!: Promise<CreateQuizResponse>
+    errorMessage!: string;
    
     fb = inject(FormBuilder)
     router = inject(Router)
     accountSvc = inject(AccountService)
+    quizSvc = inject(QuizService)
 
     currentQuestionType!: 'MCQ' | 'FreeResponse';
 
-    title = 'FormArray Example in Angular Reactive forms';
+    title = 'Quiz Creator';
 
     constructor() {
    
@@ -81,6 +86,30 @@ import { AccountService } from '../services/account.service';
 
     processQuiz() {
       console.log(this.quizForm.value);
+
+      const quizData:Quiz = this.quizForm.value
+      quizData.account_id = this.accountSvc.account_id
+
+      console.info("quizData account id is", quizData.account_id)
+    
+    this.createQuiz$=firstValueFrom(this.quizSvc.createQuiz(quizData))
+    this.createQuiz$.then((response) => {
+      console.log('account_id:', response.account_id);
+      console.log('quiz_id:', response.quiz_id);
+      console.log('title:', response.title);
+      console.log('status:' , response.status)
+      const queryParams = {
+      account_id: response.account_id,
+      };
+
+    this.router.navigate(['/dashboard'], { queryParams: queryParams })
+    }).catch((error)=>{
+    
+      this.errorMessage = error.error;
+      console.info('this.errorMessage is ' + this.errorMessage)
+  
+    });
+
     }
 
    

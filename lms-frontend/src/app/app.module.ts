@@ -23,6 +23,7 @@ import { RegisterComponent } from './components/register.component';
 import { QuizComponent } from './components/quiz.component';
 import { MatRadioModule } from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
+import { QuizService } from './services/quiz.service';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import {MatSelectModule} from '@angular/material/select';
     MatRadioModule,
     MatSelectModule
   ],
-  providers: [AccountService],
+  providers: [AccountService, QuizService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
