@@ -26,10 +26,13 @@ export interface Quiz {
 }
 
 export interface QuizQuestion {
-    quiz_question_id: string
+    // quiz_question_id: string
     question: string
     questionType: string
-    options: (string | null)[];
+    option1: (string | null);
+    option2: (string | null);
+    option3: (string | null);
+    option4: (string | null);
     answer: string
 }
 

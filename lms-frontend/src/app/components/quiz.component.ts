@@ -55,6 +55,20 @@ import { QuizService } from '../services/quiz.service';
       })
     }
 
+    // createNewMCQ(): FormGroup {
+    //   return this.fb.group({
+    //     questionType: 'MCQ',
+    //     question: this.fb.control<string>('What is 1+1', [Validators.required]),
+    //     options: this.fb.array([
+    //       this.fb.control<string>('2', [Validators.required]),
+    //       this.fb.control<string>('3', [Validators.required]),
+    //       this.fb.control<string>('4', [Validators.required]),
+    //       this.fb.control<string>('5', [Validators.required]),
+    //     ]),
+    //     answer: this.fb.control<string>('', [Validators.required]),
+    //   });
+    // }
+
     createNewFreeResponse(): FormGroup {
       return this.fb.group({
         questionType: 'FreeResponse',

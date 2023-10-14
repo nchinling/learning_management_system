@@ -19,17 +19,17 @@ public class QuizRepository {
     private MongoTemplate mongoTemplate;
 
     public Quiz saveQuiz(Quiz quiz) {
-    Query query = new Query(Criteria.where("accountId").is(quiz.getAccountId()));
-    Document existingAccountId = mongoTemplate.findOne(query, Document.class, "quiz");
+    // Query query = new Query(Criteria.where("accountId").is(quiz.getAccountId()));
+    // Document existingAccountId = mongoTemplate.findOne(query, Document.class, "quiz");
 
-    if (existingAccountId != null) {
-        existingAccountId.put("title", quiz.getTitle());
-        existingAccountId.put("quizId", quiz.getQuizId());
-        existingAccountId.put("quizQuestions", quiz.getQuestions());
-        mongoTemplate.save(existingAccountId, "quiz");
-        System.out.println(">>>>> Updating existing quiz >>>>>>");
-        return quiz;
-    } else {
+    // if (existingAccountId != null) {
+    //     existingAccountId.put("title", quiz.getTitle());
+    //     existingAccountId.put("quizId", quiz.getQuizId());
+    //     existingAccountId.put("quizQuestions", quiz.getQuestions());
+    //     mongoTemplate.save(existingAccountId, "quiz");
+    //     System.out.println(">>>>> Updating existing quiz >>>>>>");
+    //     return quiz;
+    // } else {
         Document doc = new Document();
         doc.put("accountId", quiz.getAccountId());
         doc.put("title", quiz.getTitle());
@@ -38,6 +38,6 @@ public class QuizRepository {
         mongoTemplate.insert(doc, "quiz");
         System.out.println(">>>>> New quiz created >>>>>>");
         return quiz;
-    }
+    // }
     }
 }
