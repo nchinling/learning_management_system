@@ -36,4 +36,13 @@ export class DashboardComponent {
   }
 
 
+  viewQuiz(quiz_id:string){
+    console.info('Printed the quiz_id:'+ quiz_id)
+    this.quizSvc.quiz_id = quiz_id 
+    this.router.navigate(['viewquiz']);
+  
+  }
+
+
+
 }

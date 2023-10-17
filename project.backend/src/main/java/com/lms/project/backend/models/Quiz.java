@@ -8,7 +8,7 @@ public class Quiz {
     private String quizId;
     private String title;
     private String status;
-    private QuizQuestions[] questions;
+    private QuizQuestions[] quizQuestions;
     public Quiz() {
     }
 
@@ -18,19 +18,27 @@ public class Quiz {
         this.title = title;
     }
 
-    public Quiz(String accountId, String title, QuizQuestions[] questions) {
+    public Quiz(String accountId, String title, QuizQuestions[] quizQuestions) {
         this.accountId = accountId;
         this.title = title;
-        this.questions = questions;
+        this.quizQuestions = quizQuestions;
+    }
+
+  
+    public Quiz(String accountId, String title, String quizId, QuizQuestions[] quizQuestions) {
+        this.accountId = accountId;
+        this.quizId = quizId;
+        this.title = title;
+        this.quizQuestions = quizQuestions;
     }
 
     
-    public Quiz(String accountId, String quizId, String title, String status, QuizQuestions[] questions) {
+    public Quiz(String accountId, String quizId, String title, String status, QuizQuestions[] quizQuestions) {
         this.accountId = accountId;
         this.quizId = quizId;
         this.title = title;
         this.status = status;
-        this.questions = questions;
+        this.quizQuestions = quizQuestions;
     }
     public String getAccountId() {
         return accountId;
@@ -45,10 +53,10 @@ public class Quiz {
         this.title = title;
     }
     public QuizQuestions[] getQuestions() {
-        return questions;
+        return quizQuestions;
     }
-    public void setQuestions(QuizQuestions[] questions) {
-        this.questions = questions;
+    public void setQuestions(QuizQuestions[] quizQuestions) {
+        this.quizQuestions = quizQuestions;
     }
     public String getQuizId() {
         return quizId;
@@ -65,7 +73,7 @@ public class Quiz {
     @Override
     public String toString() {
         return "Quiz [accountId=" + accountId + ", quizId=" + quizId + ", title=" + title + ", status=" + status
-                + ", questions=" + Arrays.toString(questions) + "]";
+                + ", quizQuestions=" + Arrays.toString(quizQuestions) + "]";
     }
     
     

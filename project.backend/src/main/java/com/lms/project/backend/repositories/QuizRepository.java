@@ -65,4 +65,23 @@ public class QuizRepository {
             return result;
     }
 
+
+    public Quiz getQuiz(String quizId){
+        Criteria criteria = Criteria.where("quizId").is(quizId);      
+
+		Query query = new Query(criteria);
+			// .with(Sort.by(Direction.ASC, "title"));z
+		query.fields()
+			.exclude("_id")
+			.include("accountId", "title", "quizId", "quizQuestions");
+
+
+            Quiz quiz = mongoTemplate.findOne(query, Quiz.class, "quiz");
+
+            System.out.println("Data returned from MongoDB: " + quiz);
+        
+        return quiz;
+
+   }
+
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -115,14 +116,48 @@ public class QuizController {
             JsonObjectBuilder quizBuilder = Json.createObjectBuilder()
             .add("quiz_id", quiz.getQuizId())
             .add("title", quiz.getTitle());
-            System.out.println(">>>quizId is: " + quiz.getQuizId());
-            System.out.println(">>>Title is: " + quiz.getTitle());
             arrayBuilder.add(quizBuilder);
         }
 
         JsonArray respArray = arrayBuilder.build();
         System.out.println(">>>sending back jsonarray quizResponse data.>>>>>Hooray: " + respArray);
         return ResponseEntity.ok(respArray.toString());
+
+}
+
+
+    @GetMapping(path="/getQuiz/{quiz_id}")
+    @ResponseBody
+    public ResponseEntity<String> getQuiz(@PathVariable String quiz_id) throws IOException{
+        
+        String quizId = quiz_id;
+
+        Quiz quiz = quizSvc.getQuiz(quizId);
+        
+        System.out.println("Retrieved quiz from controller: "+ quiz);
+
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        for (QuizQuestions question : quiz.getQuestions()) {
+            JsonObjectBuilder questionBuilder = Json.createObjectBuilder()
+            .add("question", question.getQuestion())
+            .add("questionType", question.getQuestionType())
+            .add("option1", question.getOption1() != null ? question.getOption1() : "")
+            .add("option2", question.getOption2() != null ? question.getOption2() : "")
+            .add("option3", question.getOption3() != null ? question.getOption3() : "")
+            .add("option4", question.getOption4() != null ? question.getOption4() : "")
+            .add("answer", question.getAnswer());
+            arrayBuilder.add(questionBuilder);
+        }
+
+        JsonObject resp = Json.createObjectBuilder()
+            .add("title", quiz.getTitle())
+            .add("account_id", quiz.getAccountId())
+            .add("quiz_id", quiz.getQuizId())
+            .add("questions", arrayBuilder)
+            .build();
+
+        System.out.println(">>>sending back quiz data.>>>>>Hooray: " + resp);
+        return ResponseEntity.ok(resp.toString());
 
 }
 

@@ -25,4 +25,5 @@
 
 ## 17 Oct 
 - retrieved list of quiz from MongoDB 
-- displayed in component
+- displayed list in dashboard component
+- displayed list in view component

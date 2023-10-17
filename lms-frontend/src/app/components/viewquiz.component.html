@@ -1,0 +1,22 @@
+<div class = "container">
+
+    <div *ngIf="quiz$ | async as quiz">
+        <h1>Quiz</h1>
+        <p>Title: {{ quiz.title }}</p>
+        <p>Quiz ID: {{ quiz.quiz_id }}</p>
+        <h2>Questions:</h2>
+        <ol>
+          <li *ngFor="let question of quiz.questions">
+            <p>{{ question.question }}</p>
+            <p>Question Type: {{ question.questionType }}</p>
+            <p *ngIf="question.option1">Option 1: {{ question.option1 }}</p>
+            <p *ngIf="question.option2">Option 2: {{ question.option2 }}</p>
+            <p *ngIf="question.option3">Option 3: {{ question.option3 }}</p>
+            <p *ngIf="question.option4">Option 4: {{ question.option4 }}</p>
+            <p>Answer: {{ question.answer }}</p>
+          </li>
+        </ol>
+      </div>
+      
+    
+    </div>

@@ -24,6 +24,7 @@ import { QuizComponent } from './components/quiz.component';
 import { MatRadioModule } from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
 import { QuizService } from './services/quiz.service';
+import { ViewquizComponent } from './components/viewquiz.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { QuizService } from './services/quiz.service';
     MainComponent,
     DashboardComponent,
     RegisterComponent,
-    QuizComponent
+    QuizComponent,
+    ViewquizComponent
   ],
   imports: [
     BrowserModule,

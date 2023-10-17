@@ -1,11 +1,19 @@
-<p>dashboard works!</p>
+<div class = "container">
 
 <div *ngIf="allQuizCreated$ | async as quizResponses;">
-    <!-- Display the data when it's available -->
+    <h1>Quiz</h1>
     <ul>
       <li *ngFor="let quizResponse of quizResponses">
-        <!-- Display individual quiz data here -->
-        {{ quizResponse | json }} <!-- You can adjust how you want to display each quiz -->
+        
+        <!-- {{ quizResponse | json }} -->
+        <td class="quiz_row" (click)="viewQuiz(quizResponse.quiz_id)">
+            {{ quizResponse.title}} ({{ quizResponse.quiz_id }})
+        </td>
+
       </li>
     </ul>
-  </div>
+</div>
+
+
+
+</div>

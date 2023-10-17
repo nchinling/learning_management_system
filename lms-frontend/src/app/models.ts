@@ -21,6 +21,7 @@ export interface RegisterResponse {
 
 export interface Quiz {
     account_id: string
+    quiz_id: string
     title: string
     questions: QuizQuestion[]
 }

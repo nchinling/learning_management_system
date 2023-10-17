@@ -1,0 +1,49 @@
+.container{
+    margin: 15px
+}
+
+
+  /* Style the quiz title */
+  h1 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  /* Style the title and quiz ID */
+  p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  
+  /* Style the questions section */
+  h2 {
+    font-size: 20px;
+    color: #333;
+    margin-top: 20px;
+  }
+  
+  /* Style the question list */
+  ol {
+    list-style-type: decimal;
+  }
+  
+ 
+  li {
+    font-size: 18px;
+    color: #444;
+    margin-bottom: 20px;
+  }
+  
+
+  p.option {
+    font-style: italic;
+    color: #555;
+  }
+  
+
+  p.answer {
+    font-weight: bold;
+    color: #008000; /* Green color for the answer */
+  }
+  

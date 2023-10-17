@@ -39,15 +39,12 @@ public class QuizService {
      
         List<Quiz> allQuiz = quizRepo.getAllQuiz(accountId);
 
-        System.out.println("The allQuiz in service are " + allQuiz);
-
-        
         List<Quiz> quizzes = new ArrayList<Quiz>();
         if (!allQuiz.isEmpty()) {
         for (Quiz quiz : allQuiz) {
 
             Quiz eachQuiz = new Quiz(quiz.getTitle(), quiz.getQuizId());
-            System.out.println("The quiz retrieved is "+ eachQuiz);
+
 
             quizzes.add(eachQuiz);
         }
@@ -55,11 +52,20 @@ public class QuizService {
             System.out.println("No quiz found.");
         }
 
-
-        System.out.println("Returning quiz info." + quizzes);
     
         return quizzes;
         
     }
-    
+
+
+    public Quiz getQuiz(String quizId) throws IOException {
+        System.out.println(">>>>>>>> I am in getQuizService>>>>>>");
+
+        
+        Quiz quiz = quizRepo.getQuiz(quizId);
+        return quiz;
+        
+    }
+
+
 }

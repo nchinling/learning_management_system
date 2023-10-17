@@ -14,6 +14,7 @@ export class QuizService {
 
   accountSvc=inject(AccountService)
   account_id!: string
+  quiz_id!: string
 
   http=inject(HttpClient)
   router = inject(Router)
@@ -63,6 +64,20 @@ export class QuizService {
 
   }
 
+
+  getQuiz(quiz_id:string): Promise<Quiz> {
+
+    console.info('>>>>>>sending to Stock server...')
+
+    return lastValueFrom(
+      this.http.get<Quiz>(`${URL_API_SERVER}/getQuiz/${quiz_id}`)
+        .pipe(
+          map(resp => ({ account_id: resp.account_id, title: resp.title, 
+                      questions: resp.questions, quiz_id: resp.quiz_id
+                      }))
+        )
+    )
+  } 
 
   
 }
