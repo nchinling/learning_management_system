@@ -22,3 +22,7 @@
 
 ## 14 Oct
 - Stored quiz in MongoDB
+
+## 17 Oct 
+- retrieved list of quiz from MongoDB 
+- displayed in component

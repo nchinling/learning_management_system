@@ -1,6 +1,9 @@
 package com.lms.project.backend.controllers;
 
 
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -8,9 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,7 +26,10 @@ import com.lms.project.backend.service.QuizException;
 import com.lms.project.backend.service.QuizService;
 
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
 
 @Controller
 @RequestMapping(path="/api")
@@ -86,7 +94,37 @@ public class QuizController {
             .body(resp.toString());
             }
         }
-            
+    
+
+    @GetMapping(path="/getAllQuiz")
+    @ResponseBody
+    public ResponseEntity<String> getAllQuiz(
+    @RequestParam(required=true) String account_id) throws IOException{
+        System.out.println("I am in getAllQuiz server");
+        System.out.println(">>>>>>>>accountId in controller>>>>>" + account_id);
+
+        String accountId = account_id;
+        
+        List<Quiz> quizzes = quizSvc.getAllQuiz(accountId);
+        System.out.println("Retrieved in controller: "+ quizzes);
+
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+
+     
+        for (Quiz quiz : quizzes) {
+            JsonObjectBuilder quizBuilder = Json.createObjectBuilder()
+            .add("quiz_id", quiz.getQuizId())
+            .add("title", quiz.getTitle());
+            System.out.println(">>>quizId is: " + quiz.getQuizId());
+            System.out.println(">>>Title is: " + quiz.getTitle());
+            arrayBuilder.add(quizBuilder);
+        }
+
+        JsonArray respArray = arrayBuilder.build();
+        System.out.println(">>>sending back jsonarray quizResponse data.>>>>>Hooray: " + respArray);
+        return ResponseEntity.ok(respArray.toString());
+
+}
 
 
 }

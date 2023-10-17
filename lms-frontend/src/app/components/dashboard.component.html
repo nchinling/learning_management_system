@@ -1,2 +1,11 @@
 <p>dashboard works!</p>
 
+<div *ngIf="allQuizCreated$ | async as quizResponses;">
+    <!-- Display the data when it's available -->
+    <ul>
+      <li *ngFor="let quizResponse of quizResponses">
+        <!-- Display individual quiz data here -->
+        {{ quizResponse | json }} <!-- You can adjust how you want to display each quiz -->
+      </li>
+    </ul>
+  </div>

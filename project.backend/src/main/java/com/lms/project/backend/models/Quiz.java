@@ -11,6 +11,13 @@ public class Quiz {
     private QuizQuestions[] questions;
     public Quiz() {
     }
+
+    
+    public Quiz(String title, String quizId) {
+        this.quizId = quizId;
+        this.title = title;
+    }
+
     public Quiz(String accountId, String title, QuizQuestions[] questions) {
         this.accountId = accountId;
         this.title = title;
