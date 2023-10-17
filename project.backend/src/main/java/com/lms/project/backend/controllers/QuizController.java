@@ -162,5 +162,29 @@ public class QuizController {
 }
 
 
+@GetMapping(path="/removeQuiz/{quiz_id}")
+@ResponseBody
+public ResponseEntity<String> removeQuiz(@PathVariable String quiz_id) throws IOException{
+   
+    System.out.println(">>>>>>>>quiz_id in controller>>>>>" + quiz_id);
+   
+    String quizId = quiz_id;
+    try {
+        quizSvc.removeQuiz(quizId);
+        System.out.println(">>>>>>>>Successfully removed quiz with id >>>>>" + quiz_id);
+            JsonObject resp = Json.createObjectBuilder()
+            .add("message", "Successfully removed")
+            .build();
+
+        return ResponseEntity.ok(resp.toString());
+        
+    } catch (Exception e) {
+        System.out.println(">>>>>>>>Did not remove quiz with id >>>>>" + quiz_id);
+        return ResponseEntity.ok(e.getMessage());
+    }
+
+}
+
+
 }
 

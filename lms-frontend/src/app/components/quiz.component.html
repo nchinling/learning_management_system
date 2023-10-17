@@ -53,19 +53,6 @@
           </div>
     </div>
 
-    <!-- <div *ngIf="question!.get('questionType')!.value === 'MCQ'">
-      <div class="option-container" *ngFor="let option of question!.get('options')!.controls; let i = index">
-        <label class="option-label">{{ i + 1 }}</label>&nbsp;
-        <mat-form-field class="option-field">
-          <input matInput [placeholder]="'Answer for Option ' + (i + 1)" [formControlName]="i" required>
-        </mat-form-field>
-        <input type="radio" formControlName="answer" [value]="i">
-      </div>
-    </div> -->
-    
-    
-    
-    
 
     <div *ngIf="question.get('questionType')?.value === 'FreeResponse'">
       <mat-form-field class="answer-field">

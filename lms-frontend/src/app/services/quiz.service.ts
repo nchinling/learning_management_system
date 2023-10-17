@@ -1,5 +1,5 @@
 import { HttpParams, HttpHeaders, HttpErrorResponse, HttpClient } from "@angular/common/http";
-import { Observable, catchError, throwError, filter, tap, Subject, map, lastValueFrom } from "rxjs";
+import { Observable, catchError, throwError, filter, tap, Subject, map, lastValueFrom, firstValueFrom } from "rxjs";
 import { CreateQuizResponse, LoginResponse, Quiz, RegisterResponse, UserData } from "../models";
 import { Injectable, inject } from "@angular/core";
 import { Router } from "@angular/router";
@@ -77,6 +77,25 @@ export class QuizService {
                       }))
         )
     )
+  } 
+
+
+  removeFromAllQuiz(quiz_id:string) {
+    console.info('>>>>>>sending to Quiz server...')
+    
+    const payload = {
+      quiz_id: quiz_id
+    };
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    console.info('>>>>>>sending to Quiz server2...')
+
+    return firstValueFrom(
+      this.http.get<string>(`${URL_API_SERVER}/removeQuiz/${quiz_id}`)
+    );
+    
+
+  
   } 
 
   

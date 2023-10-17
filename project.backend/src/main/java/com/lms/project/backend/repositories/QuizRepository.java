@@ -84,4 +84,11 @@ public class QuizRepository {
 
    }
 
+   public void removeQuiz(String quizId){
+    Criteria criteria = Criteria.where("quizId").is(quizId);  
+    Query query = new Query(criteria);
+    mongoTemplate.remove(query, Quiz.class, "quiz");
+   }
+
+
 }

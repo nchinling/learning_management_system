@@ -68,4 +68,10 @@ public class QuizService {
     }
 
 
+    public void removeQuiz(String quizId) throws IOException {
+
+        quizRepo.removeQuiz(quizId);
+    }
+
+
 }

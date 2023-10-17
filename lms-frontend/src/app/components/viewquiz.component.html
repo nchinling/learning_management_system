@@ -3,10 +3,10 @@
     <div *ngIf="quiz$ | async as quiz">
         <h1>Quiz</h1>
         <p>Title: {{ quiz.title }}</p>
-        <p>Quiz ID: {{ quiz.quiz_id }}</p>
+        <p>Quiz ID: {{ quiz.quiz_id }}</p> <button mat-raised-button color="warn" (click)="deleteQuiz(quiz.quiz_id)">Delete Quiz</button>
         <h2>Questions:</h2>
         <ol>
-          <li *ngFor="let question of quiz.questions">
+          <li *ngFor="let question of quiz.questions; let i = index">
             <p>{{ question.question }}</p>
             <p>Question Type: {{ question.questionType }}</p>
             <p *ngIf="question.option1">Option 1: {{ question.option1 }}</p>
@@ -14,9 +14,48 @@
             <p *ngIf="question.option3">Option 3: {{ question.option3 }}</p>
             <p *ngIf="question.option4">Option 4: {{ question.option4 }}</p>
             <p>Answer: {{ question.answer }}</p>
+            <button mat-raised-button color="accent" (click)="deleteQuestion(i)"> X </button>
           </li>
         </ol>
+        <br/>
+    
       </div>
       
     
-    </div>
+</div>
+
+<!-- <div class="container">
+    <h1>Edit Quiz</h1>
+    <form [formGroup]="editQuizForm" (submit)="updateQuiz()">
+      <label>Quiz Title: </label>
+      <mat-form-field>
+        <input matInput placeholder="Title" formControlName="title" required>
+      </mat-form-field>
+      <p>Quiz ID: {{ quiz.quiz_id }}</p>
+      <h2>Questions:</h2>
+      <ol>
+        <li *ngFor="let question of editQuestions.controls; let i = index">
+          <div [formGroupName]="i">
+            {{ i + 1 }}) {{ question.get('questionType')?.value === 'MCQ' ? 'MCQ' : 'Free Response' }}
+            <mat-form-field class="question-field">
+              <textarea matInput placeholder="Question" formControlName="question" required rows="5"></textarea>
+            </mat-form-field>
+            <div *ngIf="question.get('questionType')?.value === 'MCQ'">
+         
+            </div>
+            <div *ngIf="question.get('questionType')?.value === 'FreeResponse'">
+              <mat-form-field class="answer-field">
+                <input matInput placeholder="Answer" formControlName="answer" required>
+              </mat-form-field>
+            </div>
+            <button mat-raised-button color="accent" class="add-label" (click)="removeQuestion(i)">Remove Question {{ i + 1 }}</button>
+            <br>
+          </div>
+        </li>
+      </ol>
+      <button mat-raised-button color="primary" class="add-label" type="button" (click)="addMCQ()">+ MCQ</button>&nbsp;
+      <button mat-raised-button color="primary" class="add-label" type="button" (click)="addFreeResponse()">+ Free-Response</button>&nbsp;
+      <button mat-raised-button color="primary" class="submit-label" type="submit">Update Quiz</button>
+    </form>
+  </div> -->
+  

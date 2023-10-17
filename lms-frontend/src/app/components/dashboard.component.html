@@ -2,7 +2,7 @@
 
 <div *ngIf="allQuizCreated$ | async as quizResponses;">
     <h1>Quiz</h1>
-    <ul>
+    <ol>
       <li *ngFor="let quizResponse of quizResponses">
         
         <!-- {{ quizResponse | json }} -->
@@ -11,7 +11,7 @@
         </td>
 
       </li>
-    </ul>
+    </ol>
 </div>
 
 
