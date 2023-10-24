@@ -11,15 +11,80 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ViewquizComponent {
 
+  updateQuizForm!: FormGroup
+
   quiz$!: Promise<Quiz>
   quizSvc = inject(QuizService)
   quiz_id!: string
   router = inject(Router)
+  fb = inject(FormBuilder)
 
   ngOnInit(): void{
     this.quiz_id = this.quizSvc.quiz_id
     console.info("the quiz_id in view quiz is ", this.quiz_id)
+    // this.quiz$ = this.quizSvc.getQuiz(this.quiz_id)
+    this.updateQuizForm = this.createForm()
+
+  }
+
+
+  private createForm(): FormGroup {
+ 
     this.quiz$ = this.quizSvc.getQuiz(this.quiz_id)
+    
+    const defaultQuestion = this.fb.group({
+      question: [''],
+      questionType: [''],
+      option1: [''],
+      option2: [''],
+      option3: [''],
+      option4: [''],
+      answer: ['']
+    });
+    const formGroup = this.fb.group({
+      title: [''],
+      quiz_id: [''],
+      questions: this.fb.array([])
+      // questions: this.fb.array([defaultQuestion]) 
+    });
+
+
+    this.quiz$.then((quizData) => {
+    
+      console.info('quizData:', quizData)
+    
+      const quizFormData = {
+        ...quizData
+      };
+      formGroup.patchValue(quizFormData);
+
+        // Add questions to the form array
+        if (quizData.questions && quizData.questions.length > 0) {
+          const questionArray = formGroup.get('questions') as FormArray;
+          questionArray.clear(); 
+    
+          quizData.questions.forEach((question) => {
+            questionArray.push(
+              this.fb.group({
+                question: [question.question],
+                questionType: [question.questionType],
+                option1: [question.option1],
+                option2: [question.option2],
+                option3: [question.option3],
+                option4: [question.option4],
+                answer: [question.answer],
+              })
+            );
+          });
+        }
+      });
+
+    return formGroup;
+  }
+
+
+  get questionControls() {
+    return (this.updateQuizForm.get('questions') as FormArray).controls;
   }
 
 
@@ -31,6 +96,16 @@ export class ViewquizComponent {
         console.info('Quiz removed successfully');
         this.router.navigate(['/dashboard'])
       })
+  }
+
+  saveQuiz(quizId: string){
+    console.info("saving quiz with id ", quizId)
+  
+    // this.quizSvc.removeFromAllQuiz(quizId)
+    //   .then(() => {
+    //     console.info('Quiz removed successfully');
+    //     this.router.navigate(['/dashboard'])
+    //   })
   }
 
 

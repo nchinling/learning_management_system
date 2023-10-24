@@ -1,6 +1,6 @@
 <ng-container *ngIf="(isLoggedIn$ | async) as loggedIn; else loggedOut">
 <mat-toolbar color="primary">
-    <span>AI_Learn LMS</span>
+    <span><span style="color: red; font-size: 20px;">ROB</span>ot<span style="color: navajowhite;">AI</span> Learning Management System</span>
     <span class="spacer"></span>
     <a routerLink="/dashboard" class="link">Dashboard</a>
     <a routerLink="/quiz" class="link">Quiz</a>
@@ -13,7 +13,7 @@
 
 <ng-template #loggedOut>
     <mat-toolbar color="primary">
-        <span>AI_Learn LMS</span>
+        <span><span style="color: red; font-size: 20px;">ROB</span>ot<span style="color: navajowhite;">AI</span> Learning Management System</span>
         <span class="spacer"></span>
         <a routerLink="/about" class="link">About</a>
         <a routerLink="/login" class="link">Log In</a>

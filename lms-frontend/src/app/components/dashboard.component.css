@@ -5,3 +5,7 @@
 .quiz_row{
     cursor: pointer;
 }
+
+.quiz_row:hover{
+    color:grey;
+}
