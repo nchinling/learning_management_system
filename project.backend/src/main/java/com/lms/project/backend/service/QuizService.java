@@ -32,7 +32,7 @@ public class QuizService {
 
     
     public List<Quiz> getAllQuiz(String accountId) throws IOException {
-        System.out.println(">>>>>>>> I am in getAllQuizService>>>>>>");
+        System.out.println(">>>>>>>> I am in getAllQuizServices>>>>>>");
 
      
         List<Quiz> allQuiz = quizRepo.getAllQuiz(accountId);
