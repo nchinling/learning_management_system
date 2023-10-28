@@ -27,3 +27,8 @@
 - retrieved list of quiz from MongoDB 
 - displayed list in dashboard component
 - displayed list in view component
+
+# 28 Oct 
+- implement save edit
+- implement tags
+- implement equation editor

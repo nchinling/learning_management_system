@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { QuizService } from '../services/quiz.service';
-import { Quiz } from '../models';
+import { CreateQuizResponse, Quiz } from '../models';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-viewquiz',
@@ -12,6 +13,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ViewquizComponent {
 
   updateQuizForm!: FormGroup
+  quizUpdateResponse$!: Promise<CreateQuizResponse>
+  successMessage!: string;
 
   quiz$!: Promise<Quiz>
   quizSvc = inject(QuizService)
@@ -100,12 +103,21 @@ export class ViewquizComponent {
 
   saveQuiz(quizId: string){
     console.info("saving quiz with id ", quizId)
+    const updatedQuizData:Quiz = this.updateQuizForm.value
+    console.info('>> data: ', updatedQuizData)
+
+    this.quizUpdateResponse$=firstValueFrom(this.quizSvc.createQuiz(updatedQuizData))
+    this.quizUpdateResponse$.then((response) => {
+      console.log('status:', response.status);
+
+    this.updateQuizForm.reset
+    this.successMessage = 'Account has been successfully updated.'
+    setTimeout(() => {
+      this.router.navigate(['/dashboard']);
+    }, 2000); 
+
+    })
   
-    // this.quizSvc.removeFromAllQuiz(quizId)
-    //   .then(() => {
-    //     console.info('Quiz removed successfully');
-    //     this.router.navigate(['/dashboard'])
-    //   })
   }
 
 

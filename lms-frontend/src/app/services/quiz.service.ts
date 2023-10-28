@@ -22,8 +22,16 @@ export class QuizService {
 
   createQuiz(quizData: Quiz ): Observable<CreateQuizResponse> {
 
+    if (!quizData.quiz_id) {
+      const quizId = Math.random().toString(36).substring(2, 10);
+      quizData.quiz_id = quizId;
+      console.log(`The quizId after generating is: ${quizData.quiz_id}`);
+  }
+  
+
     const form = new HttpParams()
       .set("accountId", quizData.account_id)
+      .set("quizId", quizData.quiz_id)
       .set("title", quizData.title)
       .set("questions", JSON.stringify(quizData.questions)); 
 
@@ -40,6 +48,7 @@ export class QuizService {
     );
     
   }
+
 
   getAllQuizCreated(account_id: string): Promise<CreateQuizResponse[]> {
   
@@ -93,10 +102,7 @@ export class QuizService {
     return firstValueFrom(
       this.http.get<string>(`${URL_API_SERVER}/removeQuiz/${quiz_id}`)
     );
-    
-
   
   } 
-
   
 }

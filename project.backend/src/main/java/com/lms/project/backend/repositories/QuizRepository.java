@@ -3,6 +3,7 @@ package com.lms.project.backend.repositories;
 import org.springframework.stereotype.Repository;
 
 import com.lms.project.backend.models.Quiz;
+import com.mongodb.client.result.UpdateResult;
 
 import java.util.List;
 
@@ -10,9 +11,11 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 
 
@@ -22,28 +25,49 @@ public class QuizRepository {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    public Quiz saveQuiz(Quiz quiz) {
-    // Query query = new Query(Criteria.where("accountId").is(quiz.getAccountId()));
-    // Document existingAccountId = mongoTemplate.findOne(query, Document.class, "quiz");
-
-    // if (existingAccountId != null) {
-    //     existingAccountId.put("title", quiz.getTitle());
-    //     existingAccountId.put("quizId", quiz.getQuizId());
-    //     existingAccountId.put("quizQuestions", quiz.getQuestions());
-    //     mongoTemplate.save(existingAccountId, "quiz");
-    //     System.out.println(">>>>> Updating existing quiz >>>>>>");
+    // public Quiz saveQuiz(Quiz quiz) {
+    //     Document doc = new Document();
+    //     doc.put("accountId", quiz.getAccountId());
+    //     doc.put("title", quiz.getTitle());
+    //     doc.put("quizId", quiz.getQuizId());
+    //     doc.put("quizQuestions", quiz.getQuestions());
+    //     mongoTemplate.insert(doc, "quiz");
+    //     System.out.println(">>>>> New quiz created >>>>>>");
     //     return quiz;
-    // } else {
-        Document doc = new Document();
-        doc.put("accountId", quiz.getAccountId());
-        doc.put("title", quiz.getTitle());
-        doc.put("quizId", quiz.getQuizId());
-        doc.put("quizQuestions", quiz.getQuestions());
-        mongoTemplate.insert(doc, "quiz");
-        System.out.println(">>>>> New quiz created >>>>>>");
-        return quiz;
+
     // }
+
+    public Quiz saveQuiz(Quiz quiz) {
+        Query searchQuery = new Query(Criteria.where("quizId").is(quiz.getQuizId()));
+        Document existingDoc = mongoTemplate.findOne(searchQuery, Document.class, "quiz");
+
+        if (existingDoc != null) {
+            // Update the existing document
+            Update update = new Update()
+                .set("title", quiz.getTitle())
+                .set("quizQuestions", quiz.getQuestions());
+            
+            UpdateResult updateResult = mongoTemplate.updateFirst(searchQuery, update, "quiz");
+            
+            if (updateResult.getModifiedCount() > 0) {
+                System.out.println(">>>>> Existing quiz updated >>>>>>");
+            } else {
+                System.out.println(">>>>> Existing quiz not updated >>>>>>");
+            }
+        } else {
+            // Create a new document
+            Document doc = new Document();
+            doc.put("accountId", quiz.getAccountId());
+            doc.put("title", quiz.getTitle());
+            doc.put("quizId", quiz.getQuizId());
+            doc.put("quizQuestions", quiz.getQuestions());
+            mongoTemplate.insert(doc, "quiz");
+            System.out.println(">>>>> New quiz created >>>>>>");
+        }
+
+        return quiz;
     }
+
 
 
     public List<Quiz> getAllQuiz(String accountId){

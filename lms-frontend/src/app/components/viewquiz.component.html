@@ -37,87 +37,22 @@
                     <label for="option4">D) </label>
                     <input type="text" id="option4" formControlName="option4">
                   </div>
-                  <div class="form-group"><br>
-                    <label for="answer">Answer: </label>
-                    <input type="text" id="answer" formControlName="answer">
-                  </div>
-      </div><br>
+              </div>
+              <div class="form-group"><br>
+                <label for="answer">Answer: </label>
+                <input type="text" id="answer" formControlName="answer">
+              </div>
+      <br>
           </div>
         </div>
       </div><br>
         <button mat-raised-button color="primary" (click)="saveQuiz(quiz_id)">Save Quiz</button>&nbsp;
         <button mat-raised-button color="warn" (click)="deleteQuiz(quiz_id)">Delete Quiz</button>
+        
+        <div class="success-message">{{successMessage}}</div>
     </div>
   </div>
 </form>
 
 
 
-<!-- working 1-->
-<!-- <div class = "container">
-
-    <div *ngIf="quiz$ | async as quiz">
-        <h1>Quiz</h1>
-      
-          <label for="quizTitle" class="quizTitle">Title: </label>
-      <mat-form-field>
-        <input matInput type="text" [(ngModel)]="quiz.title">
-      </mat-form-field>
-        <p>Quiz ID: {{ quiz.quiz_id }}</p> 
-    
-        <h2>Questions:</h2>
-        <ol>
-          <li *ngFor="let question of quiz.questions; let i = index">
-          <p>Question Type: {{ question.questionType }}</p>
-          <mat-form-field class="question-field">
-            <textarea matInput [(ngModel)]="question.question" placeholder="Question" required rows="5"></textarea>
-          </mat-form-field><br>
-      
-            <input *ngIf="question.option1" type="text" [(ngModel)]="question.option1" placeholder="{{ question.option1 }}">
-            <p *ngIf="question.option2">B) {{ question.option2 }}</p>
-            <p *ngIf="question.option3">C) {{ question.option3 }}</p>
-            <p *ngIf="question.option4">D) {{ question.option4 }}</p>
-            <label for="questionAnswer" class="questionAnswer">Answer: </label>
-            <mat-form-field>
-              <input matInput type="text" [(ngModel)]="question.answer">
-            </mat-form-field><br>
-            <button mat-raised-button color="accent" (click)="deleteQuestion(i)"> X </button>
-          </li>
-        </ol>
-        <br/>
-        <button mat-raised-button color="warn" (click)="deleteQuiz(quiz.quiz_id)">Delete Quiz</button>&nbsp;
-        <button mat-raised-button color="primary" (click)="saveQuiz(quiz.quiz_id)">Save Quiz</button>
-    
-      </div>
-      
-</div> -->
-
-
-<!-- working 2-->
-<!-- <div class = "container">
-
-  <div *ngIf="quiz$ | async as quiz">
-      <h1>Quiz</h1>
-      <p>Title: {{ quiz.title }}</p>
-      <input type="text" [(ngModel)]="quiz.title">
-      <p>Quiz ID: {{ quiz.quiz_id }}</p> <button mat-raised-button color="warn" (click)="deleteQuiz(quiz.quiz_id)">Delete Quiz</button>
-      <h2>Questions:</h2>
-      <ol>
-        <li *ngFor="let question of quiz.questions; let i = index">
-          <textarea [(ngModel)]="question.question" placeholder="Question"></textarea>
-
-          <p>Question Type: {{ question.questionType }}</p>
-          <p *ngIf="question.option1">A) {{ question.option1 }}</p>
-          <p *ngIf="question.option2">B) {{ question.option2 }}</p>
-          <p *ngIf="question.option3">C) {{ question.option3 }}</p>
-          <p *ngIf="question.option4">D {{ question.option4 }}</p>
-          <p>Answer: {{ question.answer }}</p>
-          <button mat-raised-button color="accent" (click)="deleteQuestion(i)"> X </button>
-        </li>
-      </ol>
-      <br/>
-  
-    </div>
-    
-  
-</div> -->

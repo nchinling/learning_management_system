@@ -19,10 +19,8 @@ public class QuizService {
     private QuizRepository quizRepo;
   
     public Quiz saveQuiz(Quiz quiz) throws QuizException {
+        System.out.println("The quizId in saveQuiz is: " + quiz.getQuizId());
         try {
-
-            String quizId = UUID.randomUUID().toString().substring(0, 8);
-            quiz.setQuizId(quizId);
 
             return quizRepo.saveQuiz(quiz);
 

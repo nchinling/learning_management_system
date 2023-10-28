@@ -48,6 +48,8 @@ public class QuizController {
 
         String accountId = form.getFirst("accountId");
         System.out.println(">>> The accountId is >>>>>" + accountId);
+        String quizId = form.getFirst("quizId");
+        System.out.println(">>> The quizId is >>>>>" + quizId);
         String title = form.getFirst("title");
         System.out.println(">>> The title is >>>>>" + title);
         String questionsJson = form.getFirst("questions");
@@ -66,11 +68,10 @@ public class QuizController {
         System.out.println(">>> The questions for quiz is >>>>>" + questions);
 
         // For creation of new quiz
-        Quiz quiz = new Quiz(accountId, title, questions);
+        Quiz quiz = new Quiz(accountId, title, quizId, questions);
      
         JsonObject resp = null;
 
-    
             Quiz savedQuiz;
             try {
                 savedQuiz = quizSvc.saveQuiz(quiz);
