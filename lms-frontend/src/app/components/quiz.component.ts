@@ -6,6 +6,14 @@ import { AccountService } from '../services/account.service';
 import { Observable, firstValueFrom } from 'rxjs';
 import { QuizService } from '../services/quiz.service';
 
+
+
+
+declare var MathJax: {
+  tex2chtmlPromise: (input: string, options: Object) => Promise<any>;
+};
+
+
   @Component({
     selector: 'app-quiz',
     templateUrl: './quiz.component.html',
@@ -19,18 +27,40 @@ import { QuizService } from '../services/quiz.service';
     questionFormGroup!: FormGroup
     createQuiz$!: Promise<CreateQuizResponse>
     errorMessage!: string;
+    mathEquationOutput: string = '';
+    renderedMath!: string;
    
     fb = inject(FormBuilder)
     router = inject(Router)
     accountSvc = inject(AccountService)
     quizSvc = inject(QuizService)
+    
 
     currentQuestionType!: 'MCQ' | 'FreeResponse';
 
     title = 'Quiz Creator';
+    ngOnInit() {
+
+      const mathjaxConfig = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          processEscapes: true,
+        },
+      };
+  
+      // MathJax.tex2chtmlPromise("a^2+b^2=c^2\\pi+{e}{3}", mathjaxConfig).then((output) => {
+      //   this.mathEquationOutput = output.outerHTML;
+      // });
+
+      MathJax.tex2chtmlPromise("\\int_{a}^{b} f(x) \\, dx", mathjaxConfig).then((output) => {
+        this.mathEquationOutput = output.outerHTML;
+      });
+      
+    }
 
     constructor() {
-   
+
+
     this.quizForm = this.fb.group({
         title: '',
         questions: this.fb.array([]) ,
@@ -38,7 +68,8 @@ import { QuizService } from '../services/quiz.service';
       });
     
     }
-   
+    
+
     get questions() : FormArray {
       return this.quizForm.get("questions") as FormArray
     }
@@ -55,19 +86,6 @@ import { QuizService } from '../services/quiz.service';
       })
     }
 
-    // createNewMCQ(): FormGroup {
-    //   return this.fb.group({
-    //     questionType: 'MCQ',
-    //     question: this.fb.control<string>('What is 1+1', [Validators.required]),
-    //     options: this.fb.array([
-    //       this.fb.control<string>('2', [Validators.required]),
-    //       this.fb.control<string>('3', [Validators.required]),
-    //       this.fb.control<string>('4', [Validators.required]),
-    //       this.fb.control<string>('5', [Validators.required]),
-    //     ]),
-    //     answer: this.fb.control<string>('', [Validators.required]),
-    //   });
-    // }
 
     createNewFreeResponse(): FormGroup {
       return this.fb.group({
@@ -126,9 +144,11 @@ import { QuizService } from '../services/quiz.service';
 
     }
 
+  
    
-  }
+}
    
    
 
   
+

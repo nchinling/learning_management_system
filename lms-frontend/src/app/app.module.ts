@@ -54,7 +54,7 @@ import { ViewquizComponent } from './components/viewquiz.component';
     MatDividerModule,
     MatIconModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   providers: [AccountService, QuizService],
   bootstrap: [AppComponent]

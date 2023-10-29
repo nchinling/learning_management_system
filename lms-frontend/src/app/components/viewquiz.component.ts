@@ -101,6 +101,7 @@ export class ViewquizComponent {
       })
   }
 
+  
   saveQuiz(quizId: string){
     console.info("saving quiz with id ", quizId)
     const updatedQuizData:Quiz = this.updateQuizForm.value
@@ -111,7 +112,7 @@ export class ViewquizComponent {
       console.log('status:', response.status);
 
     this.updateQuizForm.reset
-    this.successMessage = 'Account has been successfully updated.'
+    this.successMessage = 'Saving changes...'
     setTimeout(() => {
       this.router.navigate(['/dashboard']);
     }, 2000); 
@@ -125,10 +126,6 @@ export class ViewquizComponent {
     console.info("deleting quiz question with index ", index)
     
   }
-
-
-
-
 
 
 }
