@@ -1,14 +1,15 @@
-/* Center the form using Flexbox */
-:host {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* This ensures that the form takes up at least the entire viewport height. You can adjust this value as needed. */
-  }
+body {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100vh; /* Ensure the body takes up the full viewport height */
+  margin: 0; /* Remove default margin */
+ 
+}
   
   /* Style the form container (optional) */
   form {
-    max-width: 400px; /* Adjust the maximum width as needed */
+    max-width: 400px;
     width: 100%;
     padding: 20px;
     background-color: #fff;
@@ -23,4 +24,11 @@
     width: 100%;
     margin-bottom: 16px; /* Adjust the margin as needed */
   }
+
+ body {
+    background-image: url("../../assets/static/images/lms.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
   

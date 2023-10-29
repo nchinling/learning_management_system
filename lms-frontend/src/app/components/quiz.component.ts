@@ -95,11 +95,11 @@ declare var MathJax: {
       })
     }
 
-    createNewOption():FormGroup {
-      return this.fb.group({
-        option: this.fb.control<string>('2', [Validators.required]),
-      })
-    }
+    // createNewOption():FormGroup {
+    //   return this.fb.group({
+    //     option: this.fb.control<string>('2', [Validators.required]),
+    //   })
+    // }
 
 
     addMCQ() {

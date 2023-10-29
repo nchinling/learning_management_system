@@ -41,11 +41,21 @@
               <div class="form-group"><br>
                 <label for="answer">Answer: </label>
                 <input type="text" id="answer" formControlName="answer">
-              </div>
+              </div><br>
+              <!-- <button mat-raised-button color="accent" class="add-label" (click)="deleteQuestion(i)">Remove Question {{i+1}}</button><br> -->
+              <button mat-fab color="accent" (click)="deleteQuestion(i)">
+                <mat-icon>delete</mat-icon>
+              </button><br>
+              
       <br>
           </div>
         </div>
-      </div><br>
+      </div>
+      <button mat-stroked-button color="accent" class="add-label" type="button" (click)="addMCQ()"> +MCQ</button>&nbsp;
+      <button mat-stroked-button color="accent" class="add-label" type="button" (click)="addFreeResponse()"> +Free-Response</button>&nbsp;
+      <!-- <button mat-raised-button color="basic" class="add-label" type="button" (click)="addMCQ()"> +MCQ</button>&nbsp;
+      <button mat-raised-button color="basic" class="add-label" type="button" (click)="addFreeResponse()"> +Free-Response</button>&nbsp; -->
+      <br><br>
         <button mat-raised-button color="primary" (click)="saveQuiz(quiz_id)">Save Quiz</button>&nbsp;
         <button mat-raised-button color="warn" (click)="deleteQuiz(quiz_id)">Delete Quiz</button>
         

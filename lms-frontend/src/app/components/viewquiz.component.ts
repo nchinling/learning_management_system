@@ -15,6 +15,7 @@ export class ViewquizComponent {
   updateQuizForm!: FormGroup
   quizUpdateResponse$!: Promise<CreateQuizResponse>
   successMessage!: string;
+  currentQuestionType!: 'MCQ' | 'FreeResponse';
 
   quiz$!: Promise<Quiz>
   quizSvc = inject(QuizService)
@@ -48,7 +49,7 @@ export class ViewquizComponent {
       title: [''],
       quiz_id: [''],
       questions: this.fb.array([])
-      // questions: this.fb.array([defaultQuestion]) 
+  
     });
 
 
@@ -90,6 +91,10 @@ export class ViewquizComponent {
     return (this.updateQuizForm.get('questions') as FormArray).controls;
   }
 
+  // get questions() : FormArray {
+  //   return this.quizForm.get("questions") as FormArray
+  // }
+
 
   deleteQuiz(quizId: string){
     console.info("deleting quiz with id ", quizId)
@@ -122,9 +127,46 @@ export class ViewquizComponent {
   }
 
 
-  deleteQuestion(index: number){
-    console.info("deleting quiz question with index ", index)
-    
+  deleteQuestion(index: number) {
+    console.info("Deleting quiz question with index ", index);
+    const questionsArray = this.updateQuizForm.get('questions') as FormArray;
+    questionsArray.removeAt(index);
+}
+
+
+  addMCQ() {
+    this.currentQuestionType = 'MCQ';
+    const newMCQ = this.createNewMCQ();
+    // this.questionControls.push(newMCQ);
+    (this.updateQuizForm.get('questions') as FormArray).push(newMCQ);
+  }
+
+  addFreeResponse() {
+    this.currentQuestionType = 'FreeResponse';
+    const newFreeResponse = this.createNewFreeResponse();
+    // this.questionControls.push(this.createNewFreeResponse());
+    (this.updateQuizForm.get('questions') as FormArray).push(newFreeResponse);
+  }
+
+  createNewMCQ(): FormGroup {
+    return this.fb.group({
+      questionType: 'MCQ',
+      question: this.fb.control<string>('What is 1+1', [Validators.required]),
+      option1: this.fb.control<string>('2', [Validators.required]),
+      option2: this.fb.control<string>('3', [Validators.required]),
+      option3: this.fb.control<string>('4', [Validators.required]),
+      option4: this.fb.control<string>('5', [Validators.required]),
+      answer: this.fb.control<string>('', [Validators.required]),
+    })
+  }
+
+
+  createNewFreeResponse(): FormGroup {
+    return this.fb.group({
+      questionType: 'FreeResponse',
+      question: this.fb.control<string>('What is 1+1', [Validators.required]),
+      answer: this.fb.control<string>('', [Validators.required]),
+    })
   }
 
 

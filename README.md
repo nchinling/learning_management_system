@@ -32,3 +32,13 @@
 - implement save edit
 - implement tags
 - implement equation editor
+
+# 29 Oct
+- explored Mathjax
+- implemented add question for edit
+- implemented delete button
+- implemented save for edit
+
+# 30 Oct
+- Implement teacher and student login
+- Implement student account

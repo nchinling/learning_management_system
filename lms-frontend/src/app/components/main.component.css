@@ -1,0 +1,10 @@
+h3 {
+    margin: 20px; 
+}
+
+.background-image {
+    background-image: url("../../assets/static/images/lms.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
