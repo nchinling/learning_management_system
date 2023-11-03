@@ -10,18 +10,20 @@ body {
   /* Style the form container (optional) */
   form {
     max-width: 400px;
-    width: 100%;
+    width: 85%;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    height: 50vh;
   }
   
   /* Style the form elements (optional) */
   mat-form-field,
   mat-radio-button,
   button {
-    width: 100%;
+    width: 85%;
     margin-bottom: 16px; /* Adjust the margin as needed */
   }
 
@@ -31,4 +33,14 @@ body {
     background-position: center;
     height: 100vh;
 }
+
+.tab-style {
+  background-color: white;
+  
+}
+
+
+
+
+
   

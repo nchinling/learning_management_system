@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lms.project.backend.models.Account;
+import com.lms.project.backend.models.StudentAccount;
 import com.lms.project.backend.repositories.AccountRepository;
 
 @Service
@@ -42,10 +43,10 @@ public class AccountService {
 
 
         @Transactional(rollbackFor = AccountException.class)
-        public Account retrieveAccount(String username) throws AccountException {
+        public Account retrieveAccount(String username, boolean student) throws AccountException {
         
-        
-                Optional<Account> retrievedAccount = accountRepo.getAccountByUsername(username);
+    
+                Optional<Account> retrievedAccount = accountRepo.getTeacherAccountByUsername(username);
 
                 return retrievedAccount.get();
 
@@ -53,8 +54,10 @@ public class AccountService {
         }
 
 
-    public Account loginAccount(String email, String password) throws IOException, AccountNotFoundException {
-        Optional<Account> userAccount = accountRepo.getAccountByUsername(email);
+    public Account teacherLoginAccount(String email, String password) throws IOException, AccountNotFoundException {
+        
+       
+        Optional<Account> userAccount = accountRepo.getTeacherAccountByUsername(email);
 
         if (userAccount.isPresent()) {
             Account loggedInAccount = userAccount.get();
@@ -72,8 +75,32 @@ public class AccountService {
           
             throw new AccountNotFoundException("Account not found for email: " + email);
         }
+
     }
 
+    
+    public StudentAccount studentLoginAccount(String email, String password) throws IOException, AccountNotFoundException {
+        
+        Optional<StudentAccount> userAccount = accountRepo.getStudentAccountByUsername(email);
 
+        if (userAccount.isPresent()) {
+            StudentAccount loggedInAccount = userAccount.get();
+            System.out.printf(">>>String Password is >>>" + password);
+            System.out.printf(">>>loggedInAccountPassword is >>>" + loggedInAccount.getPassword());   
+            if (loggedInAccount.getPassword().equals(password)){
+                return loggedInAccount;
+            }
+            else{
+              
+                throw new AccountNotFoundException("Password is incorrect");
+            }
+
+        } else {
+          
+            throw new AccountNotFoundException("Account not found for email: " + email);
+        }
+
+        }
+       
 
 }

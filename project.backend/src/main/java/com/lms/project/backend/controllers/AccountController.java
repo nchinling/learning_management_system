@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lms.project.backend.models.Account;
+import com.lms.project.backend.models.StudentAccount;
 import com.lms.project.backend.service.AccountService;
 
 import jakarta.json.Json;
@@ -42,16 +43,24 @@ public class AccountController {
 
         String email = form.getFirst("email");
         String password = form.getFirst("password");
+        System.out.println("The password in controller is " + password);
+        
+
+        boolean student = Boolean.parseBoolean(form.getFirst("student"));
+        System.out.println("This is a student: " + student);
 
         System.out.printf(">>> I am inside Controller Login >>>>>\n");
         JsonObject resp = null;
 
-            Account loggedInAccount;
+        Account teacherLoggedInAccount;
+        StudentAccount studentLoggedInAccount;
+        if(student == true){
+    
             try {
-                loggedInAccount = accSvc.loginAccount(email, password);
+                studentLoggedInAccount = accSvc.studentLoginAccount(email, password);
                 resp = Json.createObjectBuilder()
-                .add("account_id", loggedInAccount.getAccountId())
-                .add("username", loggedInAccount.getUsername())
+                .add("account_id", studentLoggedInAccount.getAccountId())
+                .add("username", studentLoggedInAccount.getEmail())
                 .add("timestamp", (new Date()).toString())
                 .build();
             } catch (AccountNotFoundException | IOException e) {
@@ -64,6 +73,30 @@ public class AccountController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(resp.toString());
             }
+
+        }
+        else{
+            try {
+                teacherLoggedInAccount = accSvc.teacherLoginAccount(email, password);
+                resp = Json.createObjectBuilder()
+                .add("account_id", teacherLoggedInAccount.getAccountId())
+                .add("username", teacherLoggedInAccount.getUsername())
+                .add("timestamp", (new Date()).toString())
+                .build();
+            } catch (AccountNotFoundException | IOException e) {
+                String errorMessage = e.getMessage();
+                System.out.printf(">>>Account Exception occured>>>>>\n");   
+                resp = Json.createObjectBuilder()
+                .add("error", errorMessage)
+                .build();
+
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(resp.toString());
+            }
+
+        }
+         
+
          
         System.out.printf(">>>Successfully logged in>>>>>\n");   
 
@@ -98,7 +131,7 @@ public class AccountController {
             accSvc.createAccount(account);
             Account loggedInAccount;
             try {
-                loggedInAccount = accSvc.loginAccount(email, password);
+                loggedInAccount = accSvc.teacherLoginAccount(email, password);
                  
                 resp = Json.createObjectBuilder()
                 .add("account_id", loggedInAccount.getAccountId())

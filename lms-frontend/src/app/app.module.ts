@@ -14,6 +14,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import {MatTabsModule} from '@angular/material/tabs';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
@@ -55,6 +56,7 @@ import { ViewquizComponent } from './components/viewquiz.component';
     MatIconModule,
     MatRadioModule,
     MatSelectModule,
+    MatTabsModule
   ],
   providers: [AccountService, QuizService],
   bootstrap: [AppComponent]

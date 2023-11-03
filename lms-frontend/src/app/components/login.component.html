@@ -1,8 +1,10 @@
 <body>
-<div>
+
+  <mat-tab-group class="tab-style">
+  <mat-tab label="Teacher" >
         <p>{{errorMessage}}</p>
 
-        <form [formGroup]="loginForm" (submit)="login()">
+        <form [formGroup]="teacherLoginForm" (submit)="teacherLogin()">
           
               <table>
                 <tr>
@@ -11,7 +13,7 @@
                       <mat-form-field appearance="fill">
                       <mat-label>Email</mat-label>
                       <input matInput type="email" formControlName="email" placeholder="Email">
-                      <mat-error *ngIf="invalidField('email')">Please enter a valid Email</mat-error>
+                      <mat-error *ngIf="invalidTeacherField('email')">Please enter a valid Email</mat-error>
                     </mat-form-field>
                   </td>
                 </tr>
@@ -22,7 +24,7 @@
                     <mat-form-field appearance="fill">
                       <mat-label>Password</mat-label>
                       <input matInput type="password" formControlName="password" placeholder="Password">
-                      <mat-error *ngIf="invalidField('password')">Please enter a valid password. Password should have a minimum of 8 characters, including at least 1 special character and 1 letter.</mat-error>
+                      <mat-error *ngIf="invalidTeacherField('password')">Please enter a valid password. Password should have a minimum of 8 characters, including at least 1 special character and 1 letter.</mat-error>
                     </mat-form-field>
                   </td>
                 </tr>
@@ -30,7 +32,7 @@
                 <tr>
                   <td></td>
                   <td>
-                    <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>&nbsp;&nbsp;&nbsp;
+                    <button mat-raised-button color="primary" type="submit" [disabled]="teacherLoginForm.invalid">Login</button>&nbsp;&nbsp;&nbsp;
                     <a routerLink="/register" class="link">Register</a>
                   </td>
                 </tr>
@@ -44,8 +46,59 @@
               </table>
           
             </form>
-          
-</div>
+        </mat-tab>
+
+
+
+        <mat-tab label="Student">
+          <p>{{errorMessage}}</p>
+
+          <form [formGroup]="studentLoginForm" (submit)="studentLogin()">
+            
+                <table>
+                  <tr>
+                    <td>Email:&nbsp;&nbsp;</td>
+                    <td>
+                        <mat-form-field appearance="fill">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" formControlName="email" placeholder="Email">
+                        <mat-error *ngIf="invalidStudentField('email')">Please enter a valid Email</mat-error>
+                      </mat-form-field>
+                    </td>
+                  </tr>
+            
+                  <tr>
+                    <td>Password:</td>
+                    <td>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Password</mat-label>
+                        <input matInput type="password" formControlName="password" placeholder="Password">
+                        <mat-error *ngIf="invalidStudentField('password')">Please enter a valid password. Password should have a minimum of 8 characters, including at least 1 special character and 1 letter.</mat-error>
+                      </mat-form-field>
+                    </td>
+                  </tr>
+            
+                  <tr>
+                    <td></td>
+                    <td>
+                      <button mat-raised-button color="primary" type="submit" [disabled]="studentLoginForm.invalid">Login</button>&nbsp;&nbsp;&nbsp;
+                      
+            
+                    </td>
+                  </tr>
+            
+                  <tr>
+                    <td></td>
+                    <td>
+                      <mat-progress-spinner *ngIf="isLoading" class="loader" diameter="30" mode="indeterminate"></mat-progress-spinner>
+                    </td>
+                  </tr>
+                </table>
+            
+              </form>
+        </mat-tab>
+      </mat-tab-group>
+
 </body>    
 
 

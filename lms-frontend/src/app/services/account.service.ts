@@ -67,11 +67,13 @@ export class AccountService {
   }
 
 
-login(email: string, password: string): Observable<LoginResponse> {
+login(email: string, password: string, student: boolean): Observable<LoginResponse> {
+
 
     const form = new HttpParams()
-      .set("email", email)
-      .set("password", password)
+    .set("email", email)
+    .set("password", password)
+    .set("student", student)
 
     const headers = new HttpHeaders()
       .set("Content-Type", "application/x-www-form-urlencoded")

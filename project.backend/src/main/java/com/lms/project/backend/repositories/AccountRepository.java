@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.lms.project.backend.models.Account;
+import com.lms.project.backend.models.StudentAccount;
 
 import static com.lms.project.backend.repositories.DBQueries.*;
 
@@ -25,18 +26,37 @@ public class AccountRepository {
 
     }
 
+    
+    public Optional<StudentAccount> getStudentAccountByUsername(String email){
 
-    public Optional<Account> getAccountByUsername(String email){
-        List<Account> accounts = jdbcTemplate.query(SELECT_ACCOUNT_BY_EMAIL, 
-        new AccountRowMapper() , new Object[]{email});
-        
-        if (!accounts.isEmpty()) {
-            return Optional.of(accounts.get(0));
-        } else {
-            return Optional.empty();
+        List<StudentAccount> accounts;
+    
+            accounts = jdbcTemplate.query(SELECT_STUDENT_ACCOUNT_BY_EMAIL, 
+            new StudentAccountRowMapper() , new Object[]{email});
+            
+            if (!accounts.isEmpty()) {
+                return Optional.of(accounts.get(0));
+            } else {
+                return Optional.empty();
+            }
+
+        }
+
+
+    public Optional<Account> getTeacherAccountByUsername(String email){
+
+        List<Account> accounts;
+    
+            accounts = jdbcTemplate.query(SELECT_ACCOUNT_BY_EMAIL, 
+            new AccountRowMapper() , new Object[]{email});
+            
+            if (!accounts.isEmpty()) {
+                return Optional.of(accounts.get(0));
+            } else {
+                return Optional.empty();
+            }
+
         }
         
-    }
-
-
+    
 }
