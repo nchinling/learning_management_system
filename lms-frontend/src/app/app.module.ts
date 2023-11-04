@@ -26,6 +26,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
 import { QuizService } from './services/quiz.service';
 import { ViewquizComponent } from './components/viewquiz.component';
+import { ClassService } from './services/class.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,7 @@ import { ViewquizComponent } from './components/viewquiz.component';
     MatSelectModule,
     MatTabsModule
   ],
-  providers: [AccountService, QuizService],
+  providers: [AccountService, QuizService, ClassService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

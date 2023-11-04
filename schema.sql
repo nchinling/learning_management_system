@@ -15,6 +15,21 @@ create table student_account(
     class VARCHAR(10) NOT NULL
 );
 
+create table class(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    account_id VARCHAR(20) NOT NULL, 
+    class_name VARCHAR(10) NOT NULL
+);
+
+INSERT INTO class (account_id, class_name)
+VALUES ('ccf05864', 'Class A');
+
+INSERT INTO class (account_id, class_name)
+VALUES ('ccf05864', 'Class B');
+
+INSERT INTO class (account_id, class_name)
+VALUES ('ccf05864', 'Class C');
+
 insert into student_account
 values(0, 'student0', 'student0@email.com', 'student0@eduquest', 'Class A');
 

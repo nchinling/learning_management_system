@@ -85,6 +85,21 @@
  <br>
   <button mat-raised-button color="primary" class="add-label" type="button" (click)="addMCQ()"> +MCQ</button>&nbsp;
   <button mat-raised-button color="primary" class="add-label" type="button" (click)="addFreeResponse()"> +Free-Response</button>&nbsp;
+  
+  <p>Assign to classes:</p>
+  <div *ngIf="classes$ | async as classes">
+    <div formArrayName="selectedClasses">
+      <div *ngFor="let class of classes; let i = index">
+        <label>
+          <input type="checkbox" [formControlName]="i" [value]="class">
+          {{ class }}
+        </label>
+      </div>
+    </div>
+  </div><br>
+  
+
+
   <div>
     <button mat-raised-button color="primary" class="submit-label" type="submit">Submit</button>
   </div>

@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { CreateQuizResponse, Quiz, QuizQuestion } from '../models';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { Observable, firstValueFrom } from 'rxjs';
 import { QuizService } from '../services/quiz.service';
+import { ClassService } from '../services/class.service';
 
 
 
@@ -29,11 +30,14 @@ declare var MathJax: {
     errorMessage!: string;
     mathEquationOutput: string = '';
     renderedMath!: string;
+    classes$!: Promise<string[]>
+    accountId!: string
    
     fb = inject(FormBuilder)
     router = inject(Router)
     accountSvc = inject(AccountService)
     quizSvc = inject(QuizService)
+    classSvc = inject(ClassService)
     
 
     currentQuestionType!: 'MCQ' | 'FreeResponse';
@@ -60,10 +64,21 @@ declare var MathJax: {
 
     constructor() {
 
+    this.accountId = this.accountSvc.account_id
+    this.classes$=this.classSvc.getClasses(this.accountId)
+    this.classes$.then(classes=> {
+      console.log('Classes data', classes)
+      const selectedClassesArray = this.quizForm.get('selectedClasses') as FormArray;
+      classes.forEach((classItem) => {
+        selectedClassesArray.push(new FormControl(false)); 
+      });
+    })
+
 
     this.quizForm = this.fb.group({
         title: '',
         questions: this.fb.array([]) ,
+        selectedClasses: this.fb.array([]),
         
       });
     
@@ -72,6 +87,10 @@ declare var MathJax: {
 
     get questions() : FormArray {
       return this.quizForm.get("questions") as FormArray
+    }
+
+    get selectedClasses() : FormArray {
+      return this.quizForm.get("selectedClasses") as FormArray
     }
 
     createNewMCQ(): FormGroup {
@@ -95,12 +114,6 @@ declare var MathJax: {
       })
     }
 
-    // createNewOption():FormGroup {
-    //   return this.fb.group({
-    //     option: this.fb.control<string>('2', [Validators.required]),
-    //   })
-    // }
-
 
     addMCQ() {
       this.currentQuestionType = 'MCQ';
@@ -116,11 +129,37 @@ declare var MathJax: {
       this.questions.removeAt(i);
     }
 
+    assignClass() {
+      console.log('class assigned to: ')
+    }
+
     processQuiz() {
-      console.log(this.quizForm.value);
+      console.log('In process quiz:', this.quizForm.value);
+      const selectedClasses = this.quizForm.get('selectedClasses')?.value;
+      console.log('Selected Classes:', selectedClasses);
+
+      this.classes$.then(classNames => {
+        const selectedClasses = this.quizForm.get('selectedClasses')?.value;
+        console.log('Selected Classes:', selectedClasses);
+    
+        if (selectedClasses && Array.isArray(selectedClasses)) {
+          for (let i = 0; i < selectedClasses.length; i++) {
+            if (selectedClasses[i] === true) {
+              selectedClasses[i] = classNames[i];
+            }
+            else{
+              selectedClasses[i] = null
+            }
+          }
+        }
+    
+        // Now you can work with the modified selectedClasses
+        console.log('Modified Selected Classes:', selectedClasses);
+   
 
       const quizData:Quiz = this.quizForm.value
       quizData.account_id = this.accountSvc.account_id
+      quizData.classes = selectedClasses
 
       console.info("quizData account id is", quizData.account_id)
     
@@ -134,13 +173,43 @@ declare var MathJax: {
       account_id: response.account_id,
       };
 
-    this.router.navigate(['/dashboard'], { queryParams: queryParams })
+      
+      this.router.navigate(['/dashboard'], { queryParams: queryParams })
     }).catch((error)=>{
     
       this.errorMessage = error.error;
       console.info('this.errorMessage is ' + this.errorMessage)
-  
+
     });
+
+
+      
+  });
+            
+
+    //   const quizData:Quiz = this.quizForm.value
+    //   quizData.account_id = this.accountSvc.account_id
+    //   quizData.classes = selectedClasses
+
+    //   console.info("quizData account id is", quizData.account_id)
+    
+    // this.createQuiz$=firstValueFrom(this.quizSvc.createQuiz(quizData))
+    // this.createQuiz$.then((response) => {
+    //   console.log('account_id:', response.account_id);
+    //   console.log('quiz_id:', response.quiz_id);
+    //   console.log('title:', response.title);
+    //   console.log('status:' , response.status)
+    //   const queryParams = {
+    //   account_id: response.account_id,
+    //   };
+
+    // this.router.navigate(['/dashboard'], { queryParams: queryParams })
+    // }).catch((error)=>{
+    
+    //   this.errorMessage = error.error;
+    //   console.info('this.errorMessage is ' + this.errorMessage)
+  
+    // });
 
     }
 

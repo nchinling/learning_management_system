@@ -2,6 +2,7 @@ package com.lms.project.backend.controllers;
 
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,12 @@ public class QuizController {
 
         String accountId = form.getFirst("accountId");
         System.out.println(">>> The accountId is >>>>>" + accountId);
+        String classes = form.getFirst("classes");
+        // ObjectMapper objectMapper = new ObjectMapper();
+
+        System.out.println(">>> The classes are: >>>>>" + classes);
+
+
         String quizId = form.getFirst("quizId");
         System.out.println(">>> The quizId is >>>>>" + quizId);
         String title = form.getFirst("title");

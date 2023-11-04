@@ -24,6 +24,7 @@ export interface Quiz {
     quiz_id: string
     title: string
     questions: QuizQuestion[]
+    classes: string[]
 }
 
 export interface QuizQuestion {

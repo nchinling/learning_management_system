@@ -15,6 +15,7 @@ export class AccountService {
   onRegisterRequest = new Subject<RegisterResponse>()
   onErrorMessage = new Subject<string>()
   isLoggedInChanged = new Subject<boolean>()
+  classes: string[] = []
 
   http=inject(HttpClient)
   router = inject(Router)
@@ -65,7 +66,6 @@ export class AccountService {
     );
     
   }
-
 
 login(email: string, password: string, student: boolean): Observable<LoginResponse> {
 

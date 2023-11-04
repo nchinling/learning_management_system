@@ -39,6 +39,16 @@
 - implemented delete button
 - implemented save for edit
 
-# 30 Oct
-- Implement teacher and student login
-- Implement student account
+# 3 Nov 
+- Implemented teacher and student login
+- Implemented student account
+
+
+# 4 Nov
+- Created student account in sql
+
+
+# To do
+- Create assignment of classes to students
+- Enable students to view quiz
+

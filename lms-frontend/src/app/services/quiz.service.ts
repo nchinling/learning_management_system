@@ -27,12 +27,15 @@ export class QuizService {
       quizData.quiz_id = quizId;
       console.log(`The quizId after generating is: ${quizData.quiz_id}`);
   }
+
+  console.info('The classes in quizData are: ', quizData.classes)
   
 
     const form = new HttpParams()
       .set("accountId", quizData.account_id)
       .set("quizId", quizData.quiz_id)
       .set("title", quizData.title)
+      .set("classes", JSON.stringify(quizData.classes)) 
       .set("questions", JSON.stringify(quizData.questions)); 
 
     const headers = new HttpHeaders()
@@ -82,7 +85,7 @@ export class QuizService {
       this.http.get<Quiz>(`${URL_API_SERVER}/getQuiz/${quiz_id}`)
         .pipe(
           map(resp => ({ account_id: resp.account_id, title: resp.title, 
-                      questions: resp.questions, quiz_id: resp.quiz_id
+                      questions: resp.questions, quiz_id: resp.quiz_id, classes: resp.classes
                       }))
         )
     )
