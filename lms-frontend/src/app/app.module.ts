@@ -27,6 +27,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { QuizService } from './services/quiz.service';
 import { ViewquizComponent } from './components/viewquiz.component';
 import { ClassService } from './services/class.service';
+import { StudentdashboardComponent } from './components/studentdashboard.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ClassService } from './services/class.service';
     DashboardComponent,
     RegisterComponent,
     QuizComponent,
-    ViewquizComponent
+    ViewquizComponent,
+    StudentdashboardComponent
   ],
   imports: [
     BrowserModule,

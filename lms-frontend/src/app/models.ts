@@ -9,8 +9,10 @@ export interface UserData {
 export interface LoginResponse {
     account_id: string
     username: string
+    name: string
     timestamp: string
     key: string
+    studentClass: string
 }
 
 export interface RegisterResponse {

@@ -21,6 +21,12 @@ create table class(
     class_name VARCHAR(10) NOT NULL
 );
 
+create table quiz(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    quiz_id VARCHAR(20) NOT NULL, 
+    class_name VARCHAR(12) NOT NULL
+);
+
 INSERT INTO class (account_id, class_name)
 VALUES ('ccf05864', 'Class A');
 

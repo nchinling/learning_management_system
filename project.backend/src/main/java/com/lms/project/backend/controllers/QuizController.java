@@ -1,8 +1,7 @@
 package com.lms.project.backend.controllers;
 
-
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.lms.project.backend.models.Quiz;
 import com.lms.project.backend.models.QuizQuestions;
 import com.lms.project.backend.service.QuizException;
@@ -50,10 +50,7 @@ public class QuizController {
         String accountId = form.getFirst("accountId");
         System.out.println(">>> The accountId is >>>>>" + accountId);
         String classes = form.getFirst("classes");
-        // ObjectMapper objectMapper = new ObjectMapper();
-
         System.out.println(">>> The classes are: >>>>>" + classes);
-
 
         String quizId = form.getFirst("quizId");
         System.out.println(">>> The quizId is >>>>>" + quizId);
@@ -61,21 +58,26 @@ public class QuizController {
         System.out.println(">>> The title is >>>>>" + title);
         String questionsJson = form.getFirst("questions");
         System.out.println(">>> The questions for quiz is >>>>>" + questionsJson);
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper questionsObjectMapper = new ObjectMapper();
+        ObjectMapper classesObjectMapper = new ObjectMapper();
         QuizQuestions[] questions;
+        String[] classList;
         try {
-            questions = objectMapper.readValue(questionsJson, QuizQuestions[].class);
+            questions = questionsObjectMapper.readValue(questionsJson, QuizQuestions[].class);
+            classList = classesObjectMapper.readValue(classes, String[].class);
+            System.out.println("The classes with Jackson are: " + classList);
         } catch (JsonProcessingException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid 'questions' format.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid format received.");
         }
-        
 
+
+    
         System.out.println(">>> The accountId for quiz is >>>>>" + accountId);
         System.out.println(">>> The title for quiz is >>>>>" + title);
         System.out.println(">>> The questions for quiz is >>>>>" + questions);
 
         // For creation of new quiz
-        Quiz quiz = new Quiz(accountId, title, quizId, questions);
+        Quiz quiz = new Quiz(accountId, title, quizId, questions, classList);
      
         JsonObject resp = null;
 
@@ -130,6 +132,33 @@ public class QuizController {
         JsonArray respArray = arrayBuilder.build();
         System.out.println(">>>sending back jsonarray quizResponse data.>>>>>Hooray: " + respArray);
         return ResponseEntity.ok(respArray.toString());
+
+}
+
+@GetMapping(path="/getAllStudentQuiz")
+@ResponseBody
+public ResponseEntity<String> getAllStudentQuiz(
+@RequestParam(required=true) String studentClass) throws IOException{
+    System.out.println("I am in getAllStudentQuiz server");
+    System.out.println(">>>>>>>>studentClass in controller>>>>>" + studentClass);
+
+    
+    List<Quiz> quizzes = quizSvc.getAllStudentQuiz(studentClass);
+    System.out.println("Retrieved in controller: "+ quizzes);
+
+    JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+
+    
+    for (Quiz quiz : quizzes) {
+        JsonObjectBuilder quizBuilder = Json.createObjectBuilder()
+        .add("quiz_id", quiz.getQuizId())
+        .add("title", quiz.getTitle());
+        arrayBuilder.add(quizBuilder);
+    }
+
+    JsonArray respArray = arrayBuilder.build();
+    System.out.println(">>>sending back jsonarray quizResponse data.>>>>>Hooray: " + respArray);
+    return ResponseEntity.ok(respArray.toString());
 
 }
 

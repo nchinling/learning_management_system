@@ -61,6 +61,8 @@ public class AccountController {
                 resp = Json.createObjectBuilder()
                 .add("account_id", studentLoggedInAccount.getAccountId())
                 .add("username", studentLoggedInAccount.getEmail())
+                .add("name", studentLoggedInAccount.getName())
+                .add("studentClass", studentLoggedInAccount.getStudentClass())
                 .add("timestamp", (new Date()).toString())
                 .build();
             } catch (AccountNotFoundException | IOException e) {

@@ -77,6 +77,30 @@ export class QuizService {
   }
 
 
+  getAllStudentQuiz(studentClass: string): Promise<CreateQuizResponse[]> {
+  
+    const queryParams = new HttpParams()
+      .set('studentClass', studentClass);
+
+    console.info("I am inside getAllStudentQuiz service:", studentClass)
+  
+    return lastValueFrom(this.http.get<CreateQuizResponse[]>(`${URL_API_SERVER}/getAllStudentQuiz`, { params: queryParams })
+    .pipe(
+      filter((respArray) => respArray !== null), 
+      map(respArray => respArray.map(resp => ({
+
+        account_id: resp.account_id, 
+        quiz_id: resp.quiz_id,
+        title: resp.title,
+        status: resp.status
+
+      })))
+    )
+    )
+
+  }
+
+
   getQuiz(quiz_id:string): Promise<Quiz> {
 
     console.info('>>>>>>sending to Stock server...')

@@ -1,0 +1,11 @@
+.container{
+    margin: 15px
+}
+
+.quiz_row{
+    cursor: pointer;
+}
+
+.quiz_row:hover{
+    color:grey;
+}

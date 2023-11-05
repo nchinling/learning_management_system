@@ -125,7 +125,7 @@ export class LoginComponent {
        
       };
 
-    this.router.navigate(['/dashboard'], { queryParams: queryParams })
+    this.router.navigate(['/studentdashboard'], { queryParams: queryParams })
     }).catch((error)=>{
     
       this.errorMessage = error.error;

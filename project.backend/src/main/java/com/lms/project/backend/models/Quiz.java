@@ -9,10 +9,46 @@ public class Quiz {
     private String title;
     private String status;
     private QuizQuestions[] quizQuestions;
+    private String[] quizClasses;
     public Quiz() {
     }
 
     
+    // Quiz quiz = new Quiz(accountId, title, quizId, questions);
+
+
+    public QuizQuestions[] getQuizQuestions() {
+        return quizQuestions;
+    }
+
+    
+    public Quiz(String accountId, String title,  String quizId, QuizQuestions[] quizQuestions,
+            String[] quizClasses) {
+        this.accountId = accountId;
+        this.quizId = quizId;
+        this.title = title;
+        this.quizQuestions = quizQuestions;
+        this.quizClasses = quizClasses;
+    }
+
+
+    public Quiz(String accountId, String quizId, String title, String status,
+            QuizQuestions[] quizQuestions, String[] quizClasses) {
+        this.accountId = accountId;
+        this.quizId = quizId;
+        this.title = title;
+        this.status = status;
+        this.quizQuestions = quizQuestions;
+        this.quizClasses = quizClasses;
+    }
+
+
+    public void setQuizQuestions(QuizQuestions[] quizQuestions) {
+        this.quizQuestions = quizQuestions;
+    }
+
+
+
     public Quiz(String title, String quizId) {
         this.quizId = quizId;
         this.title = title;
@@ -31,8 +67,8 @@ public class Quiz {
         this.title = title;
         this.quizQuestions = quizQuestions;
     }
-
     
+
     public Quiz(String accountId, String quizId, String title, String status, QuizQuestions[] quizQuestions) {
         this.accountId = accountId;
         this.quizId = quizId;
@@ -61,6 +97,8 @@ public class Quiz {
     public String getQuizId() {
         return quizId;
     }
+
+    
     public void setQuizId(String quizId) {
         this.quizId = quizId;
     }
@@ -74,6 +112,16 @@ public class Quiz {
     public String toString() {
         return "Quiz [accountId=" + accountId + ", quizId=" + quizId + ", title=" + title + ", status=" + status
                 + ", quizQuestions=" + Arrays.toString(quizQuestions) + "]";
+    }
+
+
+    public String[] getQuizClasses() {
+        return quizClasses;
+    }
+
+
+    public void setQuizClasses(String[] quizClasses) {
+        this.quizClasses = quizClasses;
     }
     
     

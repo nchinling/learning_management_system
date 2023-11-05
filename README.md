@@ -47,6 +47,10 @@
 # 4 Nov
 - Created student account in sql
 
+# 5 Nov
+- Retrieved student data in student page
+- retrieved student quiz based on class assigned
+
 
 # To do
 - Create assignment of classes to students

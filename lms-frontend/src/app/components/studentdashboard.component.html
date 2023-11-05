@@ -1,0 +1,21 @@
+<div class = "container">
+<p>Welcome, {{ name }} ({{ studentClass }}). </p>
+<!-- <p>Class: {{ studentClass }}</p> -->
+
+    <div *ngIf="allStudentQuizCreated$ | async as quizResponses;">
+        <h1>Quiz</h1>
+        <ol>
+          <li *ngFor="let quizResponse of quizResponses">
+            
+            <!-- {{ quizResponse | json }} -->
+            <td class="quiz_row" (click)="viewQuiz(quizResponse.quiz_id)">
+                {{ quizResponse.title}} ({{ quizResponse.quiz_id }})
+            </td>
+    
+          </li>
+        </ol>
+    </div>
+    
+    
+    
+    </div>

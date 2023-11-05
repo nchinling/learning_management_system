@@ -21,6 +21,8 @@ export class AccountService {
   router = inject(Router)
 
   username = "";
+  name = "";
+  studentClass = "";
   email = "";
   password = "";
   queryParams: any;
@@ -97,6 +99,8 @@ login(email: string, password: string, student: boolean): Observable<LoginRespon
         console.info('Login response:', response);
         this.username = response.username;
         this.account_id = response.account_id;
+        this.studentClass = response.studentClass;
+        this.name = response.name;
         // Handle successful login response here
         this.onLoginRequest.next(response);
     

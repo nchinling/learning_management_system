@@ -153,7 +153,7 @@ declare var MathJax: {
           }
         }
     
-        // Now you can work with the modified selectedClasses
+       
         console.log('Modified Selected Classes:', selectedClasses);
    
 

@@ -60,6 +60,7 @@ public class QuizRepository {
             doc.put("title", quiz.getTitle());
             doc.put("quizId", quiz.getQuizId());
             doc.put("quizQuestions", quiz.getQuestions());
+            doc.put("classes", quiz.getQuizClasses());
             mongoTemplate.insert(doc, "quiz");
             System.out.println(">>>>> New quiz created >>>>>>");
         }
@@ -71,6 +72,26 @@ public class QuizRepository {
 
     public List<Quiz> getAllQuiz(String accountId){
         Criteria criteria = Criteria.where("accountId").is(accountId);      
+
+		Query query = new Query(criteria)
+			.with(Sort.by(Direction.ASC, "title"));
+		query.fields()
+			.exclude("_id")
+			.include("title", "quizId");
+
+
+            List<Quiz> result = mongoTemplate.find(query, Document.class, "quiz").stream()
+            .map(doc -> new Quiz(doc.getString("title"), doc.getString("quizId")))
+            .toList();
+
+            System.out.println("Data returned from MongoDB: " + result);
+
+            return result;
+    }
+
+    
+    public List<Quiz> getAllStudentQuiz(String studentClass){
+        Criteria criteria = Criteria.where("classes").is(studentClass);      
 
 		Query query = new Query(criteria)
 			.with(Sort.by(Direction.ASC, "title"));

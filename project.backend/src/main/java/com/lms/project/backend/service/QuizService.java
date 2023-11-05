@@ -55,6 +55,30 @@ public class QuizService {
     }
 
 
+    public List<Quiz> getAllStudentQuiz(String studentClass) throws IOException {
+        System.out.println(">>>>>>>> I am in getAllQuizServices>>>>>>");
+
+        List<Quiz> allQuiz = quizRepo.getAllStudentQuiz(studentClass);
+
+        List<Quiz> quizzes = new ArrayList<Quiz>();
+        if (!allQuiz.isEmpty()) {
+        for (Quiz quiz : allQuiz) {
+
+            Quiz eachQuiz = new Quiz(quiz.getTitle(), quiz.getQuizId());
+
+
+            quizzes.add(eachQuiz);
+        }
+        } else {
+            System.out.println("No quiz found.");
+        }
+
+    
+        return quizzes;
+        
+    }
+
+
     public Quiz getQuiz(String quizId) throws IOException {
         System.out.println(">>>>>>>> I am in getQuizService>>>>>>");
 
