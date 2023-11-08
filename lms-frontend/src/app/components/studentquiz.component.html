@@ -1,0 +1,55 @@
+<form [formGroup]="quizForm">
+    <div class="container">
+      <div *ngIf="quizForm.value">
+        <h1 class="custom-h1">Quiz</h1>
+        <div class="form-group">
+          <p>Quiz ID: {{ quiz_id }}</p>
+        </div>
+        <div class="form-group">
+          <label for="title">Title: </label>
+          <input type="text" id="title" formControlName="title">
+        </div><br>
+        <div formArrayName="questions">
+          <div *ngFor="let question of questionControls; let i = index">
+  
+            <div [formGroupName]="i">
+  
+        <div class="form-group">
+                <label for="question">Question {{ i + 1 }}:</label><br>
+                <p>Question type: {{ question.get('questionType')?.value }}</p>
+                <p>Question: {{ question.get('question')?.value }}</p>
+                <!-- <textarea id="question" formControlName="question" rows="5"></textarea> -->
+              </div>
+          
+        <div class="form-group" *ngIf="question.get('questionType')?.value === 'MCQ'">
+                    <div class="form-group"><br>
+                      <label for="option1">A) </label>&nbsp;
+                      <span>{{ question.get('option1')?.value }}</span>
+                    </div>
+                    <div class="form-group"><br>
+                      <label for="option2">B) </label>&nbsp;
+                      <span>{{ question.get('option2')?.value }}</span>
+                    </div>
+                    <div class="form-group"><br>
+                      <label for="option3">C) </label>&nbsp;
+                      <span>{{ question.get('option3')?.value }}</span>
+                    </div>
+                    <div class="form-group"><br>
+                      <label for="option4">D) </label>&nbsp;
+                      <span>{{ question.get('option4')?.value }}</span>
+                    </div>
+                </div>
+                <div class="form-group"><br>
+                  <label for="answer">Answer: </label>
+                  <input type="text" id="answer" formControlName="answer">
+                </div><br>
+                
+        <br>
+            </div>
+          </div>
+        </div>
+        <br>
+          <button mat-raised-button color="primary" (click)="submitQuiz(quiz_id)">Submit</button>&nbsp;{{marks}}
+      </div>
+    </div>
+  </form>

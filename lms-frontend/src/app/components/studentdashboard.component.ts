@@ -20,6 +20,10 @@ export class StudentdashboardComponent {
 
   ngOnInit(): void {
 
+    // this.accountId = this.accountSvc.account_id
+    // console.log('Account id at dashboard is ', this.accountId)
+    // this.allQuizCreated$ = this.quizSvc.getAllQuizCreated(this.accountId)
+
     this.name = this.accountSvc.name
     this.studentClass = this.accountSvc.studentClass
     console.log('Student class at student dashboard is ', this.studentClass)
@@ -31,7 +35,7 @@ export class StudentdashboardComponent {
   viewQuiz(quiz_id:string){
     console.info('Printed the quiz_id:'+ quiz_id)
     this.quizSvc.quiz_id = quiz_id 
-    this.router.navigate(['viewquiz']);
+    this.router.navigate(['studentquiz']);
   
   }
 

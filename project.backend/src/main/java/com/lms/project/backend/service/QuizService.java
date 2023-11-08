@@ -30,6 +30,21 @@ public class QuizService {
     }
 
     
+    public Quiz markQuiz(Quiz quiz) throws QuizException {
+        System.out.println("The quizId in markQuiz is: " + quiz.getQuizId());
+
+        return quiz;
+        // try {
+
+        //     return quizRepo.saveQuiz(quiz);
+
+        // } catch (DataIntegrityViolationException ex) {
+        //     String errorMessage = "An error occurred while saving. Please try again.";
+        //     throw new QuizException(errorMessage);
+        // }
+    }
+
+    
     public List<Quiz> getAllQuiz(String accountId) throws IOException {
         System.out.println(">>>>>>>> I am in getAllQuizServices>>>>>>");
 

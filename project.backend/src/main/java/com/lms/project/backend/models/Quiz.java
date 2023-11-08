@@ -10,11 +10,9 @@ public class Quiz {
     private String status;
     private QuizQuestions[] quizQuestions;
     private String[] quizClasses;
+    private String marks;
     public Quiz() {
     }
-
-    
-    // Quiz quiz = new Quiz(accountId, title, quizId, questions);
 
 
     public QuizQuestions[] getQuizQuestions() {
@@ -22,6 +20,18 @@ public class Quiz {
     }
 
     
+    public Quiz(String accountId, String quizId, String title, String status,
+            QuizQuestions[] quizQuestions, String[] quizClasses, String marks) {
+        this.accountId = accountId;
+        this.quizId = quizId;
+        this.title = title;
+        this.status = status;
+        this.quizQuestions = quizQuestions;
+        this.quizClasses = quizClasses;
+        this.marks = marks;
+    }
+
+
     public Quiz(String accountId, String title,  String quizId, QuizQuestions[] quizQuestions,
             String[] quizClasses) {
         this.accountId = accountId;
@@ -108,10 +118,15 @@ public class Quiz {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    
+
+
     @Override
     public String toString() {
-        return "Quiz [accountId=" + accountId + ", quizId=" + quizId + ", title=" + title + ", status=" + status
-                + ", quizQuestions=" + Arrays.toString(quizQuestions) + "]";
+        return "Quiz [accountId=" + accountId + ", quizId=" + quizId + ", title=" + title
+                + ", status=" + status + ", quizQuestions=" + Arrays.toString(quizQuestions)
+                + ", quizClasses=" + Arrays.toString(quizClasses) + ", marks=" + marks + "]";
     }
 
 
@@ -122,6 +137,16 @@ public class Quiz {
 
     public void setQuizClasses(String[] quizClasses) {
         this.quizClasses = quizClasses;
+    }
+
+
+    public String getMarks() {
+        return marks;
+    }
+
+
+    public void setMarks(String marks) {
+        this.marks = marks;
     }
     
     

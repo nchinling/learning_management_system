@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription, of } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, of } from 'rxjs';
 import { AccountService } from '../services/account.service';
 
 @Component({
@@ -11,7 +11,11 @@ import { AccountService } from '../services/account.service';
 export class NavbarComponent implements OnInit{
   isCollapsed:boolean= true;
     
+  // isTeacherLoggedIn$!: Observable<boolean>
+  // isStudentLoggedIn$!: Observable<boolean>
   isLoggedIn$!: Observable<boolean>
+  isStudent!:boolean
+
 
   //check if can be renamed
   private isLoggedInSubscription: Subscription | undefined;
@@ -19,12 +23,14 @@ export class NavbarComponent implements OnInit{
   queryParams: any
 
   router = inject(Router)
-
   accountSvc = inject(AccountService)
 
   ngOnInit(): void {
     this.isLoggedInSubscription = this.accountSvc.isLoggedInChanged.subscribe(isLoggedIn => {
-      this.isLoggedIn$ = of(isLoggedIn);
+      
+      this.isStudent = this.accountSvc.isStudent
+      this.isLoggedIn$ = of(isLoggedIn)
+
       console.info('User is logged in: ' + isLoggedIn);
     });
 
@@ -34,8 +40,8 @@ export class NavbarComponent implements OnInit{
     // Clear the stored credentials 
     localStorage.removeItem(this.KEY);
     this.isLoggedIn$ = of(false);
-    
-    // reset 
+    this.isStudent = false;
+    this.accountSvc.isStudent = false;
     this.accountSvc.username=''
     this.accountSvc.password=''
     this.accountSvc.key=''

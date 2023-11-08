@@ -1,6 +1,6 @@
 import { HttpParams, HttpHeaders, HttpErrorResponse, HttpClient } from "@angular/common/http";
 import { Observable, catchError, throwError, filter, tap, Subject, map, lastValueFrom, firstValueFrom } from "rxjs";
-import { CreateQuizResponse, LoginResponse, Quiz, RegisterResponse, UserData } from "../models";
+import { CreateQuizResponse, LoginResponse, MarkedQuizResponse, Quiz, RegisterResponse, UserData } from "../models";
 import { Injectable, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { AccountService } from "./account.service";
@@ -131,5 +131,28 @@ export class QuizService {
     );
   
   } 
+
+
+  submitQuizForMarking(quizData: Quiz ): Observable<MarkedQuizResponse> {
+
+    const form = new HttpParams()
+      .set("accountId", quizData.account_id)
+      .set("quizId", quizData.quiz_id)
+      .set("title", quizData.title)
+      .set("questions", JSON.stringify(quizData.questions)); 
+
+    const headers = new HttpHeaders()
+      .set("Content-Type", "application/x-www-form-urlencoded")
+
+    return this.http.post<MarkedQuizResponse>(`${URL_API_SERVER}/markQuiz`, form.toString(), {headers}).pipe(
+      filter((response) => response !== null), 
+        map(response => ({ account_id: response.account_id, quiz_id: response.quiz_id, 
+                    title: response.title, questions: response.questions, marks: response.marks
+                    }))
+
+    );
+    
+  }
+
   
 }

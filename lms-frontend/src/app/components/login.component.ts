@@ -112,6 +112,8 @@ export class LoginComponent {
       this.isLoading = false;
     }, 10000);
 
+    this.accountSvc.isStudent = true;
+
 
     //Using promise
     this.login$=firstValueFrom(this.accountSvc.login(email, password,this.student))
@@ -124,6 +126,8 @@ export class LoginComponent {
         username: response.username,
        
       };
+
+    this.accountSvc.isStudent = true
 
     this.router.navigate(['/studentdashboard'], { queryParams: queryParams })
     }).catch((error)=>{

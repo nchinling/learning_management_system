@@ -48,6 +48,14 @@ export interface CreateQuizResponse {
     status: string
 }
 
+export interface MarkedQuizResponse {
+    account_id: string
+    quiz_id: string
+    title: string
+    questions: QuizQuestion[]
+    marks: string
+}
+
 
 
 

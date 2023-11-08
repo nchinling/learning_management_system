@@ -1,15 +1,38 @@
-<ng-container *ngIf="(isLoggedIn$ | async) as loggedIn; else loggedOut">
+<ng-container *ngIf="(isLoggedIn$ | async); else loggedOut">
 <mat-toolbar color="primary">
     <span><span style="color: greenyellow; font-size: 20px;">Edu</span><span style="color: navajowhite;">Quest</span> Learning Management System</span>
     <span class="spacer"></span>
-    <a routerLink="/dashboard" class="link">Dashboard</a>
-    <a routerLink="/quiz" class="link">Quiz</a>
+    <ng-container *ngIf="isLoggedIn$ && isStudent; else teacherLinks">
+        <a routerLink="/studentdashboard" class="link">Student Dashboard</a>
+        <a routerLink="/quiz" class="link">Quiz</a>
+    </ng-container>
+    <ng-template #teacherLinks>
+        <a routerLink="/dashboard" class="link">Dashboard</a>
+        <a routerLink="/quiz" class="link">Quiz</a>
+    </ng-template>
+    <!-- <ng-container *ngElse="isTeacherLoggedIn$;">
+        <a routerLink="/dashboard" class="link">Dashboard</a>
+        <a routerLink="/quiz" class="link">Quiz</a>
+    </ng-container> -->
+    <!-- <a routerLink="/dashboard" class="link">Dashboard</a>
+    <a routerLink="/quiz" class="link">Quiz</a> -->
     <button mat-raised-button color="warn" (click)="logout()">
         <mat-icon>exit_to_app</mat-icon> Log Out
     </button>
 </mat-toolbar>
 </ng-container>
 
+<!-- <ng-container *ngIf="((isStudentLoggedIn$ | async) && !isLoggedIn$) as loggedIn">
+    <mat-toolbar color="primary">
+        <span><span style="color: greenyellow; font-size: 20px;">Edu</span><span style="color: navajowhite;">Quest</span> Learning Management System</span>
+        <span class="spacer"></span>
+        <a routerLink="/studentdashboard" class="link">Dashboard</a>
+        <a routerLink="/quiz" class="link">Quiz</a>
+        <button mat-raised-button color="warn" (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon> Log Out
+        </button>
+</mat-toolbar>
+</ng-container> -->
 
 <ng-template #loggedOut>
     <mat-toolbar color="primary">
@@ -19,3 +42,9 @@
         <a routerLink="/login" class="link">Log In</a>
     </mat-toolbar>
 </ng-template>
+
+<!-- 
+<ng-template #teacherLinks>
+    <a routerLink="/dashboard" class="link">Dashboard</a>
+    <a routerLink="/quiz" class="link">Quiz</a>
+</ng-template> -->

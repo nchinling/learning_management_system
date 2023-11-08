@@ -51,8 +51,13 @@
 - Retrieved student data in student page
 - retrieved student quiz based on class assigned
 
+# 8 Nov
+- Implemented student view quiz
+- Communicated with server and returned marks
+- Implemented student nav bar 
 
 # To do
 - Create assignment of classes to students
 - Enable students to view quiz
+- 
 

@@ -1,7 +1,6 @@
 package com.lms.project.backend.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.lms.project.backend.models.Quiz;
 import com.lms.project.backend.models.QuizQuestions;
 import com.lms.project.backend.service.QuizException;
@@ -104,7 +102,7 @@ public class QuizController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(resp.toString());
             }
-        }
+    }
     
 
     @GetMapping(path="/getAllQuiz")
@@ -222,6 +220,64 @@ public ResponseEntity<String> removeQuiz(@PathVariable String quiz_id) throws IO
 
 }
 
+@PostMapping(path="/markQuiz", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @ResponseBody
+	public ResponseEntity<String> markQuiz(@RequestBody MultiValueMap<String, String> form) {
+
+        System.out.printf(">>> I am inside saveQuiz>>>>>\n");
+
+        String accountId = form.getFirst("accountId");
+        System.out.println(">>> The accountId is >>>>>" + accountId);
+
+        String quizId = form.getFirst("quizId");
+        System.out.println(">>> The quizId is >>>>>" + quizId);
+        String title = form.getFirst("title");
+        System.out.println(">>> The title is >>>>>" + title);
+        String questionsJson = form.getFirst("questions");
+        System.out.println(">>> The questions are is >>>>>" + questionsJson);
+
+        ObjectMapper questionsObjectMapper = new ObjectMapper();
+        ObjectMapper classesObjectMapper = new ObjectMapper();
+        QuizQuestions[] questions;
+    
+        try {
+            questions = questionsObjectMapper.readValue(questionsJson, QuizQuestions[].class);
+        } catch (JsonProcessingException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid format received.");
+        }
+
+        Quiz quiz = new Quiz(accountId, title, quizId, questions);
+
+        JsonObject resp = null;
+
+        Quiz markedQuiz;
+        try {
+            markedQuiz = quizSvc.markQuiz(quiz);
+            resp = Json.createObjectBuilder()
+            .add("accountId", markedQuiz.getAccountId())
+            .add("quizId", markedQuiz.getQuizId())
+            .add("title", markedQuiz.getTitle())
+            .add("questions", questionsJson)
+            // .add("marks", markedQuiz.getMarks())
+              .add("marks", "You got 2 out of 2 correct.")
+            .build();
+
+            System.out.printf(">>>Sending back to lms client>>>>>\n");   
+            return ResponseEntity.ok(resp.toString());
+
+        } catch (QuizException e) {
+                        String errorMessage = e.getMessage();
+        System.out.printf(">>>Quiz Exception occured>>>>>\n");   
+        resp = Json.createObjectBuilder()
+        .add("error", errorMessage)
+        .build();
+    
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(resp.toString());
+        }
+
+    }
+    
 
 }
 

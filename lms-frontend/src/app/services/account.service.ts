@@ -23,6 +23,7 @@ export class AccountService {
   username = "";
   name = "";
   studentClass = "";
+  isStudent = false
   email = "";
   password = "";
   queryParams: any;

@@ -28,6 +28,8 @@ import { QuizService } from './services/quiz.service';
 import { ViewquizComponent } from './components/viewquiz.component';
 import { ClassService } from './services/class.service';
 import { StudentdashboardComponent } from './components/studentdashboard.component';
+import { StudentquizComponent } from './components/studentquiz.component';
+
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { StudentdashboardComponent } from './components/studentdashboard.compone
     RegisterComponent,
     QuizComponent,
     ViewquizComponent,
-    StudentdashboardComponent
+    StudentdashboardComponent,
+    StudentquizComponent,
   ],
   imports: [
     BrowserModule,
