@@ -56,8 +56,11 @@
 - Communicated with server and returned marks
 - Implemented student nav bar 
 
+# 13 Nov
+- return class data to teacher view
+
 # To do
-- Create assignment of classes to students
-- Enable students to view quiz
-- 
+- Mark quiz
+- Display result
+- Save result to database
 

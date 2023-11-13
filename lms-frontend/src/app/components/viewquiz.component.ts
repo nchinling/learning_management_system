@@ -18,6 +18,7 @@ export class ViewquizComponent {
   currentQuestionType!: 'MCQ' | 'FreeResponse';
 
   quiz$!: Promise<Quiz>
+  classes$!: Promise<string[]>
   quizSvc = inject(QuizService)
   quiz_id!: string
   router = inject(Router)
@@ -48,14 +49,14 @@ export class ViewquizComponent {
     const formGroup = this.fb.group({
       title: [''],
       quiz_id: [''],
-      questions: this.fb.array([])
-  
+      questions: this.fb.array([]),
+      classes: this.fb.array([]),
     });
 
 
     this.quiz$.then((quizData) => {
     
-      console.info('quizData:', quizData)
+      console.info('quizData in viewQuiz:', quizData)
     
       const quizFormData = {
         ...quizData
@@ -80,6 +81,8 @@ export class ViewquizComponent {
               })
             );
           });
+
+
         }
       });
 
@@ -89,6 +92,10 @@ export class ViewquizComponent {
 
   get questionControls() {
     return (this.updateQuizForm.get('questions') as FormArray).controls;
+  }
+
+  get classControls() {
+    return (this.updateQuizForm.get('classes') as FormArray).controls;
   }
 
   // get questions() : FormArray {

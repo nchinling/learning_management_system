@@ -34,14 +34,7 @@ public class QuizService {
         System.out.println("The quizId in markQuiz is: " + quiz.getQuizId());
 
         return quiz;
-        // try {
 
-        //     return quizRepo.saveQuiz(quiz);
-
-        // } catch (DataIntegrityViolationException ex) {
-        //     String errorMessage = "An error occurred while saving. Please try again.";
-        //     throw new QuizException(errorMessage);
-        // }
     }
 
     

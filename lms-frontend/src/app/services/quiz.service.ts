@@ -103,7 +103,7 @@ export class QuizService {
 
   getQuiz(quiz_id:string): Promise<Quiz> {
 
-    console.info('>>>>>>sending to Stock server...')
+    console.info('>>>>>>sending to Quiz server...')
 
     return lastValueFrom(
       this.http.get<Quiz>(`${URL_API_SERVER}/getQuiz/${quiz_id}`)

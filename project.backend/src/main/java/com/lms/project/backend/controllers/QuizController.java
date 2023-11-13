@@ -171,7 +171,7 @@ public ResponseEntity<String> getAllStudentQuiz(
         
         System.out.println("Retrieved quiz from controller: "+ quiz);
 
-        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        JsonArrayBuilder questionArrayBuilder = Json.createArrayBuilder();
         for (QuizQuestions question : quiz.getQuestions()) {
             JsonObjectBuilder questionBuilder = Json.createObjectBuilder()
             .add("question", question.getQuestion())
@@ -181,14 +181,22 @@ public ResponseEntity<String> getAllStudentQuiz(
             .add("option3", question.getOption3() != null ? question.getOption3() : "")
             .add("option4", question.getOption4() != null ? question.getOption4() : "")
             .add("answer", question.getAnswer());
-            arrayBuilder.add(questionBuilder);
+            questionArrayBuilder.add(questionBuilder);
+        }
+
+        JsonArrayBuilder classArrayBuilder = Json.createArrayBuilder();
+        for (String quizClass : quiz.getQuizClasses()){
+            JsonObjectBuilder classBuilder = Json.createObjectBuilder()
+                .add("class", quizClass);
+                classArrayBuilder.add(classBuilder);
         }
 
         JsonObject resp = Json.createObjectBuilder()
             .add("title", quiz.getTitle())
             .add("account_id", quiz.getAccountId())
             .add("quiz_id", quiz.getQuizId())
-            .add("questions", arrayBuilder)
+            .add("questions", questionArrayBuilder)
+            .add("classes", classArrayBuilder)
             .build();
 
         System.out.println(">>>sending back quiz data.>>>>>Hooray: " + resp);

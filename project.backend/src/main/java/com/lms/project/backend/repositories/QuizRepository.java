@@ -117,7 +117,7 @@ public class QuizRepository {
 			// .with(Sort.by(Direction.ASC, "title"));z
 		query.fields()
 			.exclude("_id")
-			.include("accountId", "title", "quizId", "quizQuestions");
+			.include("accountId", "title", "quizId", "quizQuestions", "quizClasses");
 
 
             Quiz quiz = mongoTemplate.findOne(query, Quiz.class, "quiz");

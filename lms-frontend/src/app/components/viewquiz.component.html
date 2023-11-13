@@ -56,6 +56,20 @@
       <!-- <button mat-raised-button color="basic" class="add-label" type="button" (click)="addMCQ()"> +MCQ</button>&nbsp;
       <button mat-raised-button color="basic" class="add-label" type="button" (click)="addFreeResponse()"> +Free-Response</button>&nbsp; -->
       <br><br>
+
+      <p>Assign to classes:</p>
+      <!-- <div formArrayName="classes">
+          <div *ngFor="let class of classControls; let i = index">
+            <label>
+              <input type="checkbox" [formControlName]="i" [value]="class.value">
+              {{ class.value }}
+            </label>
+          </div>
+      </div>
+      <br> -->
+
+
+      
         <button mat-raised-button color="primary" (click)="saveQuiz(quiz_id)">Save Quiz</button>&nbsp;
         <button mat-raised-button color="warn" (click)="deleteQuiz(quiz_id)">Delete Quiz</button>
         
