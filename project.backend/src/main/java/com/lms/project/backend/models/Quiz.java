@@ -1,7 +1,7 @@
 package com.lms.project.backend.models;
 
 import java.util.Arrays;
-import org.springframework.data.mongodb.core.mapping.Field;
+
 
 public class Quiz {
 
@@ -11,7 +11,6 @@ public class Quiz {
     private String status;
     private QuizQuestions[] quizQuestions;
 
-    @Field("classes")
     private String[] quizClasses;
     
     private String marks;

@@ -59,6 +59,9 @@
 # 13 Nov
 - return class data to teacher view
 
+# 14 Nov
+- fixed quiz classes
+
 # To do
 - Mark quiz
 - Display result

@@ -1,9 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { QuizService } from '../services/quiz.service';
 import { CreateQuizResponse, Quiz } from '../models';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { ClassService } from '../services/class.service';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-viewquiz',
@@ -20,22 +22,37 @@ export class ViewquizComponent {
   quiz$!: Promise<Quiz>
   classes$!: Promise<string[]>
   quizSvc = inject(QuizService)
+  accountSvc = inject(AccountService)
+  accountId!:string
   quiz_id!: string
+  selectedClassesArray!:FormArray
+  classArray!: string[]
   router = inject(Router)
   fb = inject(FormBuilder)
+  classSvc = inject(ClassService)
 
   ngOnInit(): void{
     this.quiz_id = this.quizSvc.quiz_id
+    this.accountId = this.accountSvc.account_id
     console.info("the quiz_id in view quiz is ", this.quiz_id)
-    // this.quiz$ = this.quizSvc.getQuiz(this.quiz_id)
     this.updateQuizForm = this.createForm()
 
   }
 
 
   private createForm(): FormGroup {
- 
+
+
     this.quiz$ = this.quizSvc.getQuiz(this.quiz_id)
+    this.classes$=this.classSvc.getClasses(this.accountId)
+    this.classes$.then(classes=> {
+      this.classArray = classes;
+      console.log('Classes data', classes)
+      this.selectedClassesArray = this.updateQuizForm.get('selectedClasses') as FormArray;
+      classes.forEach((classItem) => {
+        this.selectedClassesArray.push(new FormControl(false)); 
+      });
+    })
     
     const defaultQuestion = this.fb.group({
       question: [''],
@@ -50,7 +67,7 @@ export class ViewquizComponent {
       title: [''],
       quiz_id: [''],
       questions: this.fb.array([]),
-      classes: this.fb.array([]),
+      selectedClasses: this.fb.array([]),
     });
 
 
@@ -58,8 +75,9 @@ export class ViewquizComponent {
     
       console.info('quizData in viewQuiz:', quizData)
     
+    
       const quizFormData = {
-        ...quizData
+        ...quizData,
       };
       formGroup.patchValue(quizFormData);
 
@@ -98,6 +116,7 @@ export class ViewquizComponent {
     return (this.updateQuizForm.get('classes') as FormArray).controls;
   }
 
+
   // get questions() : FormArray {
   //   return this.quizForm.get("questions") as FormArray
   // }
@@ -115,9 +134,37 @@ export class ViewquizComponent {
 
   
   saveQuiz(quizId: string){
+
+    this.classes$.then(classNames => {
+      this.classArray = classNames;
+    });
+
     console.info("saving quiz with id ", quizId)
     const updatedQuizData:Quiz = this.updateQuizForm.value
     console.info('>> data: ', updatedQuizData)
+
+    const selectedClasses = this.updateQuizForm.get('selectedClasses')?.value;
+    if (selectedClasses && Array.isArray(selectedClasses)) {
+      for (let i = 0; i < selectedClasses.length; i++) {
+        if (selectedClasses[i] === true) {
+          selectedClasses[i] = this.classArray[i];
+        }
+        else{
+          selectedClasses[i] = null
+        }
+      }
+    }
+
+    for (let i = 0; i < selectedClasses.length; i++) {
+      if (selectedClasses[i] === null) {
+        selectedClasses.splice(i, 1);
+        i--;
+      }
+    }
+
+    updatedQuizData.classes = selectedClasses
+    console.info('The updated classes are: ', selectedClasses)
+    
 
     this.quizUpdateResponse$=firstValueFrom(this.quizSvc.createQuiz(updatedQuizData))
     this.quizUpdateResponse$.then((response) => {

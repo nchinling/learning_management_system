@@ -45,20 +45,18 @@ declare var MathJax: {
     title = 'Quiz Creator';
     ngOnInit() {
 
-      const mathjaxConfig = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']],
-          processEscapes: true,
-        },
-      };
+      // const mathjaxConfig = {
+      //   tex: {
+      //     inlineMath: [['$', '$'], ['\\(', '\\)']],
+      //     processEscapes: true,
+      //   },
+      // };
   
-      // MathJax.tex2chtmlPromise("a^2+b^2=c^2\\pi+{e}{3}", mathjaxConfig).then((output) => {
+
+
+      // MathJax.tex2chtmlPromise("\\int_{a}^{b} f(x) \\, dx", mathjaxConfig).then((output) => {
       //   this.mathEquationOutput = output.outerHTML;
       // });
-
-      MathJax.tex2chtmlPromise("\\int_{a}^{b} f(x) \\, dx", mathjaxConfig).then((output) => {
-        this.mathEquationOutput = output.outerHTML;
-      });
       
     }
 
@@ -141,7 +139,7 @@ declare var MathJax: {
       this.classes$.then(classNames => {
         const selectedClasses = this.quizForm.get('selectedClasses')?.value;
         console.log('Selected Classes:', selectedClasses);
-    
+
         if (selectedClasses && Array.isArray(selectedClasses)) {
           for (let i = 0; i < selectedClasses.length; i++) {
             if (selectedClasses[i] === true) {
@@ -152,9 +150,15 @@ declare var MathJax: {
             }
           }
         }
-    
-       
-        console.log('Modified Selected Classes:', selectedClasses);
+
+        for (let i = 0; i < selectedClasses.length; i++) {
+          if (selectedClasses[i] === null) {
+            selectedClasses.splice(i, 1);
+            i--;
+          }
+        }
+        
+      console.log('Modified Selected Classes:', selectedClasses);
    
 
       const quizData:Quiz = this.quizForm.value
@@ -187,29 +191,6 @@ declare var MathJax: {
   });
             
 
-    //   const quizData:Quiz = this.quizForm.value
-    //   quizData.account_id = this.accountSvc.account_id
-    //   quizData.classes = selectedClasses
-
-    //   console.info("quizData account id is", quizData.account_id)
-    
-    // this.createQuiz$=firstValueFrom(this.quizSvc.createQuiz(quizData))
-    // this.createQuiz$.then((response) => {
-    //   console.log('account_id:', response.account_id);
-    //   console.log('quiz_id:', response.quiz_id);
-    //   console.log('title:', response.title);
-    //   console.log('status:' , response.status)
-    //   const queryParams = {
-    //   account_id: response.account_id,
-    //   };
-
-    // this.router.navigate(['/dashboard'], { queryParams: queryParams })
-    // }).catch((error)=>{
-    
-    //   this.errorMessage = error.error;
-    //   console.info('this.errorMessage is ' + this.errorMessage)
-  
-    // });
 
     }
 

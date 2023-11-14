@@ -191,6 +191,7 @@ public ResponseEntity<String> getAllStudentQuiz(
                 classArrayBuilder.add(classBuilder);
         }
 
+
         JsonObject resp = Json.createObjectBuilder()
             .add("title", quiz.getTitle())
             .add("account_id", quiz.getAccountId())

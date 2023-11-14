@@ -44,7 +44,8 @@ public class QuizRepository {
             // Update the existing document
             Update update = new Update()
                 .set("title", quiz.getTitle())
-                .set("quizQuestions", quiz.getQuestions());
+                .set("quizQuestions", quiz.getQuestions())
+                .set("quizClasses", quiz.getQuizClasses());
             
             UpdateResult updateResult = mongoTemplate.updateFirst(searchQuery, update, "quiz");
             
@@ -60,7 +61,7 @@ public class QuizRepository {
             doc.put("title", quiz.getTitle());
             doc.put("quizId", quiz.getQuizId());
             doc.put("quizQuestions", quiz.getQuestions());
-            doc.put("classes", quiz.getQuizClasses());
+            doc.put("quizClasses", quiz.getQuizClasses());
             mongoTemplate.insert(doc, "quiz");
             System.out.println(">>>>> New quiz created >>>>>>");
         }
@@ -91,7 +92,7 @@ public class QuizRepository {
 
     
     public List<Quiz> getAllStudentQuiz(String studentClass){
-        Criteria criteria = Criteria.where("classes").is(studentClass);      
+        Criteria criteria = Criteria.where("quizClasses").is(studentClass);      
 
 		Query query = new Query(criteria)
 			.with(Sort.by(Direction.ASC, "title"));
