@@ -25,8 +25,10 @@ export class ViewquizComponent {
   accountSvc = inject(AccountService)
   accountId!:string
   quiz_id!: string
+  marker!: boolean
   selectedClassesArray!:FormArray
   classArray!: string[]
+  quizClassArray!: string[]
   router = inject(Router)
   fb = inject(FormBuilder)
   classSvc = inject(ClassService)
@@ -42,16 +44,62 @@ export class ViewquizComponent {
 
   private createForm(): FormGroup {
 
-
     this.quiz$ = this.quizSvc.getQuiz(this.quiz_id)
-    this.classes$=this.classSvc.getClasses(this.accountId)
-    this.classes$.then(classes=> {
-      this.classArray = classes;
-      console.log('Classes data', classes)
-      this.selectedClassesArray = this.updateQuizForm.get('selectedClasses') as FormArray;
-      classes.forEach((classItem) => {
-        this.selectedClassesArray.push(new FormControl(false)); 
-      });
+    this.quiz$.then(quizData=> {
+    this.quizClassArray = quizData.classes
+
+
+
+      console.info('this.quizClassArray is: ', this.quizClassArray)
+      this.classes$=this.classSvc.getClasses(this.accountId)
+      this.classes$.then(classes=> {
+        this.classArray = classes;
+        console.log('Classes data', classes)
+        this.selectedClassesArray = this.updateQuizForm.get('selectedClasses') as FormArray;
+
+        
+        // classes.forEach((classItem) => {
+        //     this.selectedClassesArray.push(new FormControl(false));
+        
+        // });
+
+        classes.forEach((classItem) => {
+          const isChecked = this.quizClassArray.includes(classItem);
+          this.selectedClassesArray.push(new FormControl(isChecked));
+        });
+        
+
+
+        // classes.forEach((classItem) => {
+        //   this.marker=!this.marker
+        //   if(this.marker){
+        //     this.selectedClassesArray.push(new FormControl(true));
+        //   }
+        //   else{
+        //     this.selectedClassesArray.push(new FormControl(false));
+        //   }
+        
+        // });
+
+
+        
+
+    })
+    // console.info('this.quizClassArray is: ', this.quizClassArray)
+    // this.classes$=this.classSvc.getClasses(this.accountId)
+    // this.classes$.then(classes=> {
+    //   this.classArray = classes;
+    //   console.log('Classes data', classes)
+    //   this.selectedClassesArray = this.updateQuizForm.get('selectedClasses') as FormArray;
+
+    //   classes.forEach((classItem) => {
+    //     if (this.quizClassArray.includes(classItem)) {
+    //       this.selectedClassesArray.push(new FormControl(true));
+    //     } else {
+    //       this.selectedClassesArray.push(new FormControl(false));
+    //     }
+    //   });
+    
     })
     
     const defaultQuestion = this.fb.group({
@@ -105,6 +153,7 @@ export class ViewquizComponent {
       });
 
     return formGroup;
+    
   }
 
 

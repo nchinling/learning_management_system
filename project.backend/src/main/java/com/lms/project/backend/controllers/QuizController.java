@@ -184,14 +184,19 @@ public ResponseEntity<String> getAllStudentQuiz(
             questionArrayBuilder.add(questionBuilder);
         }
 
+        // JsonArrayBuilder classArrayBuilder = Json.createArrayBuilder();
+        // for (String quizClass : quiz.getQuizClasses()){
+        //     JsonObjectBuilder classBuilder = Json.createObjectBuilder()
+        //         .add("class", quizClass);
+        //         classArrayBuilder.add(classBuilder);
+        // }
+
         JsonArrayBuilder classArrayBuilder = Json.createArrayBuilder();
-        for (String quizClass : quiz.getQuizClasses()){
-            JsonObjectBuilder classBuilder = Json.createObjectBuilder()
-                .add("class", quizClass);
-                classArrayBuilder.add(classBuilder);
+        for (String quizClass : quiz.getQuizClasses()) {
+            classArrayBuilder.add(quizClass);
         }
 
-
+        
         JsonObject resp = Json.createObjectBuilder()
             .add("title", quiz.getTitle())
             .add("account_id", quiz.getAccountId())
