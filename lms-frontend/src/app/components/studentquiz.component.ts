@@ -18,6 +18,7 @@ export class StudentquizComponent {
   quiz_id!: string
   marks!: string
   quizForm!: FormGroup;
+  quizNoOfQuestions!: number
   router = inject(Router)
   fb = inject(FormBuilder)
   accountSvc = inject(AccountService)
@@ -59,6 +60,7 @@ export class StudentquizComponent {
     this.quiz$.then((quizData) => {
     
       console.info('quizData:', quizData)
+      this.quizNoOfQuestions = quizData.questions.length
     
       const quizFormData = {
         ...quizData
@@ -106,7 +108,7 @@ export class StudentquizComponent {
     this.markedQuizResponse$.then((response) => {
       console.log('returned response', response)
       console.log('marks:', response.marks);
-      this.marks = response.marks
+      this.marks = 'You got ' + response.marks + ' out of ' + this.quizNoOfQuestions + ' marks!'
 
    
     // setTimeout(() => {

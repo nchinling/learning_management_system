@@ -36,6 +36,10 @@ VALUES ('ccf05864', 'Class B');
 INSERT INTO class (account_id, class_name)
 VALUES ('ccf05864', 'Class C');
 
+UPDATE class
+SET class_name = "Class E"
+WHERE id=5;
+
 insert into student_account
 values(0, 'student0', 'student0@email.com', 'student0@eduquest', 'Class A');
 

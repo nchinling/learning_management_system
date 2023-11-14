@@ -251,7 +251,6 @@ public ResponseEntity<String> removeQuiz(@PathVariable String quiz_id) throws IO
         System.out.println(">>> The questions are is >>>>>" + questionsJson);
 
         ObjectMapper questionsObjectMapper = new ObjectMapper();
-        ObjectMapper classesObjectMapper = new ObjectMapper();
         QuizQuestions[] questions;
     
         try {
@@ -261,6 +260,7 @@ public ResponseEntity<String> removeQuiz(@PathVariable String quiz_id) throws IO
         }
 
         Quiz quiz = new Quiz(accountId, title, quizId, questions);
+        System.out.println("The quiz data in markQuiz is: "+ quiz);
 
         JsonObject resp = null;
 
@@ -273,7 +273,7 @@ public ResponseEntity<String> removeQuiz(@PathVariable String quiz_id) throws IO
             .add("title", markedQuiz.getTitle())
             .add("questions", questionsJson)
             // .add("marks", markedQuiz.getMarks())
-              .add("marks", "You got 2 out of 2 correct.")
+            .add("marks", markedQuiz.getMarks())
             .build();
 
             System.out.printf(">>>Sending back to lms client>>>>>\n");   

@@ -61,6 +61,7 @@
 
 # 14 Nov
 - fixed quiz classes
+- implemented marking
 
 # To do
 - Mark quiz

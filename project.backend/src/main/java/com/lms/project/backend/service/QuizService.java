@@ -33,7 +33,8 @@ public class QuizService {
     public Quiz markQuiz(Quiz quiz) throws QuizException {
         System.out.println("The quizId in markQuiz is: " + quiz.getQuizId());
 
-        return quiz;
+        Quiz markedQuiz = quizRepo.markQuiz(quiz);
+        return markedQuiz;
 
     }
 
