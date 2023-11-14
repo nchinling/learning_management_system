@@ -15,6 +15,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.jdbc.core.JdbcTemplate;
+import static com.lms.project.backend.repositories.DBQueries.*;
 
 
 
@@ -24,17 +26,9 @@ public class QuizRepository {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    // public Quiz saveQuiz(Quiz quiz) {
-    // Document doc = new Document();
-    // doc.put("accountId", quiz.getAccountId());
-    // doc.put("title", quiz.getTitle());
-    // doc.put("quizId", quiz.getQuizId());
-    // doc.put("quizQuestions", quiz.getQuestions());
-    // mongoTemplate.insert(doc, "quiz");
-    // System.out.println(">>>>> New quiz created >>>>>>");
-    // return quiz;
+    @Autowired 
+    JdbcTemplate jdbcTemplate;
 
-    // }
 
     public Quiz saveQuiz(Quiz quiz) {
         Query searchQuery = new Query(Criteria.where("quizId").is(quiz.getQuizId()));
@@ -54,7 +48,10 @@ public class QuizRepository {
                 System.out.println(">>>>> Existing quiz not updated >>>>>>");
             }
         } else {
-            // Create a new document
+            // Create a new document and save in sql 
+
+            jdbcTemplate.update(INSERT_QUIZ, quiz.getQuizId());
+
             Document doc = new Document();
             doc.put("accountId", quiz.getAccountId());
             doc.put("title", quiz.getTitle());
@@ -134,6 +131,10 @@ public class QuizRepository {
         if (savedQuiz != null) {
             Quiz markedQuiz = compareAndMarkQuiz(quiz, savedQuiz);
             System.out.println("The marks obtained is: " + markedQuiz.getMarks());
+
+            // save into sql database
+            jdbcTemplate.update(INCREMENT_ATTEMPTS_BY_QUIZ_ID, quiz.getQuizId());
+            jdbcTemplate.update(INSERT_MARKS_BY_ACCOUNT_ID_AND_QUIZ_ID, quiz.getAccountId(), quiz.getQuizId(), quiz.getMarks());
 
             return markedQuiz;
         } else {

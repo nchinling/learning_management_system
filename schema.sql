@@ -21,10 +21,17 @@ create table class(
     class_name VARCHAR(10) NOT NULL
 );
 
-create table quiz(
+create table student_result(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    student_account_id  VARCHAR(5) NOT NULL, 
+    quiz_id VARCHAR(20) NOT NULL,
+    marks NUMERIC NOT NULL
+);
+
+create table quiz_data(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     quiz_id VARCHAR(20) NOT NULL, 
-    class_name VARCHAR(12) NOT NULL
+    attempts NUMERIC NOT NULL DEFAULT 0
 );
 
 INSERT INTO class (account_id, class_name)

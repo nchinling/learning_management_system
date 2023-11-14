@@ -62,9 +62,8 @@
 # 14 Nov
 - fixed quiz classes
 - implemented marking
+- stored quiz results in sql database
 
 # To do
-- Mark quiz
-- Display result
-- Save result to database
+- Improve db scheme to be more representative
 
