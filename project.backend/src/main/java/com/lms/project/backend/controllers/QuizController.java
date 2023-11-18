@@ -180,7 +180,8 @@ public ResponseEntity<String> getAllStudentQuiz(
             .add("option2", question.getOption2() != null ? question.getOption2() : "")
             .add("option3", question.getOption3() != null ? question.getOption3() : "")
             .add("option4", question.getOption4() != null ? question.getOption4() : "")
-            .add("answer", question.getAnswer());
+            .add("answer", question.getAnswer())
+            .add("marks", question.getMarks());
             questionArrayBuilder.add(questionBuilder);
         }
 
@@ -272,7 +273,7 @@ public ResponseEntity<String> removeQuiz(@PathVariable String quiz_id) throws IO
             .add("quizId", markedQuiz.getQuizId())
             .add("title", markedQuiz.getTitle())
             .add("questions", questionsJson)
-            // .add("marks", markedQuiz.getMarks())
+            .add("total_marks", markedQuiz.getTotalMarks())
             .add("marks", markedQuiz.getMarks())
             .build();
 

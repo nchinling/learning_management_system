@@ -1,6 +1,6 @@
-import { HttpParams, HttpHeaders, HttpErrorResponse, HttpClient } from "@angular/common/http";
-import { Observable, catchError, throwError, filter, tap, Subject, map, lastValueFrom, firstValueFrom } from "rxjs";
-import { CreateQuizResponse, LoginResponse, MarkedQuizResponse, Quiz, RegisterResponse, UserData } from "../models";
+import { HttpParams, HttpHeaders, HttpClient } from "@angular/common/http";
+import { Observable, filter, tap, Subject, map, lastValueFrom, firstValueFrom } from "rxjs";
+import { CreateQuizResponse, MarkedQuizResponse, Quiz } from "../models";
 import { Injectable, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { AccountService } from "./account.service";
@@ -118,11 +118,6 @@ export class QuizService {
 
   removeFromAllQuiz(quiz_id:string) {
     console.info('>>>>>>sending to Quiz server...')
-    
-    const payload = {
-      quiz_id: quiz_id
-    };
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     console.info('>>>>>>sending to Quiz server2...')
 
@@ -147,7 +142,7 @@ export class QuizService {
     return this.http.post<MarkedQuizResponse>(`${URL_API_SERVER}/markQuiz`, form.toString(), {headers}).pipe(
       filter((response) => response !== null), 
         map(response => ({ account_id: response.account_id, quiz_id: response.quiz_id, 
-                    title: response.title, questions: response.questions, marks: response.marks
+                    title: response.title, questions: response.questions, total_marks: response.total_marks, marks: response.marks
                     }))
 
     );

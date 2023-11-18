@@ -37,10 +37,12 @@
                     <label for="option4">D) </label>
                     <input type="text" id="option4" formControlName="option4">
                   </div>
-              </div>
+      </div>  
               <div class="form-group"><br>
                 <label for="answer">Answer: </label>
-                <input type="text" id="answer" formControlName="answer">
+                <input type="text" id="answer" formControlName="answer">&nbsp;&nbsp;
+                <label for="marks">Marks: </label>
+                <input type="text" class="marks" id="marks" formControlName="marks"> m
               </div><br>
               <!-- <button mat-raised-button color="accent" class="add-label" (click)="deleteQuestion(i)">Remove Question {{i+1}}</button><br> -->
               <button mat-fab color="accent" (click)="deleteQuestion(i)">

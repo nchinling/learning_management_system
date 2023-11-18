@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { QuizService } from '../services/quiz.service';
 import { CreateQuizResponse, Quiz } from '../models';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ClassService } from '../services/class.service';
 import { AccountService } from '../services/account.service';
@@ -12,7 +12,7 @@ import { AccountService } from '../services/account.service';
   templateUrl: './viewquiz.component.html',
   styleUrls: ['./viewquiz.component.css']
 })
-export class ViewquizComponent {
+export class ViewquizComponent implements OnInit {
 
   updateQuizForm!: FormGroup
   quizUpdateResponse$!: Promise<CreateQuizResponse>
@@ -57,48 +57,14 @@ export class ViewquizComponent {
         console.log('Classes data', classes)
         this.selectedClassesArray = this.updateQuizForm.get('selectedClasses') as FormArray;
 
-        
-        // classes.forEach((classItem) => {
-        //     this.selectedClassesArray.push(new FormControl(false));
-        
-        // });
-
+      
         classes.forEach((classItem) => {
           const isChecked = this.quizClassArray.includes(classItem);
           this.selectedClassesArray.push(new FormControl(isChecked));
         });
         
 
-
-        // classes.forEach((classItem) => {
-        //   this.marker=!this.marker
-        //   if(this.marker){
-        //     this.selectedClassesArray.push(new FormControl(true));
-        //   }
-        //   else{
-        //     this.selectedClassesArray.push(new FormControl(false));
-        //   }
-        
-        // });
-
-
-        
-
     })
-    // console.info('this.quizClassArray is: ', this.quizClassArray)
-    // this.classes$=this.classSvc.getClasses(this.accountId)
-    // this.classes$.then(classes=> {
-    //   this.classArray = classes;
-    //   console.log('Classes data', classes)
-    //   this.selectedClassesArray = this.updateQuizForm.get('selectedClasses') as FormArray;
-
-    //   classes.forEach((classItem) => {
-    //     if (this.quizClassArray.includes(classItem)) {
-    //       this.selectedClassesArray.push(new FormControl(true));
-    //     } else {
-    //       this.selectedClassesArray.push(new FormControl(false));
-    //     }
-    //   });
     
     })
     
@@ -109,7 +75,8 @@ export class ViewquizComponent {
       option2: [''],
       option3: [''],
       option4: [''],
-      answer: ['']
+      answer: [''],
+      marks:['']
     });
     const formGroup = this.fb.group({
       title: [''],
@@ -144,6 +111,7 @@ export class ViewquizComponent {
                 option3: [question.option3],
                 option4: [question.option4],
                 answer: [question.answer],
+                marks: [question.marks]
               })
             );
           });
@@ -260,6 +228,7 @@ export class ViewquizComponent {
       option3: this.fb.control<string>('4', [Validators.required]),
       option4: this.fb.control<string>('5', [Validators.required]),
       answer: this.fb.control<string>('', [Validators.required]),
+      marks: this.fb.control<number>(1, [Validators.required]),
     })
   }
 
@@ -269,6 +238,7 @@ export class ViewquizComponent {
       questionType: 'FreeResponse',
       question: this.fb.control<string>('What is 1+1', [Validators.required]),
       answer: this.fb.control<string>('', [Validators.required]),
+      marks: this.fb.control<number>(1, [Validators.required]),
     })
   }
 

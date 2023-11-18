@@ -64,6 +64,19 @@
 - implemented marking
 - stored quiz results in sql database
 
-# To do
+# 17 Nov 
+- redesigned student quiz table
+- added marks to form field
+
+# 18 Nov
+- fixed quiz marks
 - Improve db scheme to be more representative
+- place quiz marks in teacher modification form
+
+# 19 Nov
+- implement quiz marks in student view form
+
+# To do
+- Implement notes
+- Implement data analytics in teacher's dashboard
 

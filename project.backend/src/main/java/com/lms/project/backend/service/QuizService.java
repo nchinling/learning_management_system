@@ -34,6 +34,7 @@ public class QuizService {
         System.out.println("The quizId in markQuiz is: " + quiz.getQuizId());
 
         Quiz markedQuiz = quizRepo.markQuiz(quiz);
+        quizRepo.saveAnalytics(quiz, markedQuiz);
         return markedQuiz;
 
     }

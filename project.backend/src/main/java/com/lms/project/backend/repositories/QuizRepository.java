@@ -1,7 +1,7 @@
 package com.lms.project.backend.repositories;
 
 import org.springframework.stereotype.Repository;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.lms.project.backend.models.Quiz;
 import com.mongodb.client.result.UpdateResult;
 
@@ -26,7 +26,7 @@ public class QuizRepository {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    @Autowired 
+    @Autowired
     JdbcTemplate jdbcTemplate;
 
 
@@ -48,9 +48,14 @@ public class QuizRepository {
                 System.out.println(">>>>> Existing quiz not updated >>>>>>");
             }
         } else {
-            // Create a new document and save in sql 
+            // Create a new document and save in sql
+            int quizTotalMarks = 0;
+            for (int i = 0; i < quiz.getQuizQuestions().length; i++) {
+                quizTotalMarks =
+                        quizTotalMarks + Integer.parseInt(quiz.getQuizQuestions()[i].getMarks());
+            }
 
-            jdbcTemplate.update(INSERT_QUIZ, quiz.getQuizId());
+            jdbcTemplate.update(INSERT_QUIZ, quiz.getQuizId(), quizTotalMarks);
 
             Document doc = new Document();
             doc.put("accountId", quiz.getAccountId());
@@ -131,11 +136,14 @@ public class QuizRepository {
         if (savedQuiz != null) {
             Quiz markedQuiz = compareAndMarkQuiz(quiz, savedQuiz);
             System.out.println("The marks obtained is: " + markedQuiz.getMarks());
+            // int quizTotalMarks = quiz.getQuestions().length;
+
 
             // save into sql database
-            jdbcTemplate.update(INCREMENT_ATTEMPTS_BY_QUIZ_ID, quiz.getQuizId());
-            jdbcTemplate.update(INSERT_MARKS_BY_ACCOUNT_ID_AND_QUIZ_ID, quiz.getAccountId(), quiz.getQuizId(), quiz.getMarks());
-
+            // jdbcTemplate.update(INCREMENT_ATTEMPTS_BY_QUIZ_ID, quiz.getQuizId());
+            // jdbcTemplate.update(INSERT_MARKS_BY_ACCOUNT_ID_AND_QUIZ_ID, quiz.getAccountId(),
+            // quiz.getQuizId(), markedQuiz.getTotalMarks(), markedQuiz.getMarks(), percent);
+            System.out.println("The total marks in quizRepo is " + markedQuiz.getTotalMarks());
             return markedQuiz;
         } else {
 
@@ -148,18 +156,46 @@ public class QuizRepository {
     private Quiz compareAndMarkQuiz(Quiz inputQuiz, Quiz savedQuiz) {
 
         int marks = 0;
+        int totalMarks = 0;
         for (int i = 0; i < inputQuiz.getQuizQuestions().length; i++) {
             String inputAnswer = inputQuiz.getQuizQuestions()[i].getAnswer();
             String savedAnswer = savedQuiz.getQuizQuestions()[i].getAnswer();
 
+            totalMarks = totalMarks + Integer.parseInt(savedQuiz.getQuizQuestions()[i].getMarks());
+
             if (inputAnswer.equals(savedAnswer)) {
-                marks++;
+                marks = marks + Integer.parseInt(savedQuiz.getQuizQuestions()[i].getMarks());
+                System.out.println("The marks obtained for question" + i + " is " + marks);
             }
 
         }
         inputQuiz.setMarks(String.valueOf(marks));
+        inputQuiz.setTotalMarks(String.valueOf(totalMarks));
         return inputQuiz;
     }
+
+    @Transactional
+    public void saveAnalytics(Quiz quiz, Quiz markedQuiz) {
+
+        try {
+            double percent = (Double.parseDouble(markedQuiz.getMarks())
+                    / Double.parseDouble(markedQuiz.getTotalMarks())) * 100;
+
+            // save into SQL database
+            jdbcTemplate.update(INCREMENT_ATTEMPTS_AND_ADD_MARKS_BY_QUIZ_ID, markedQuiz.getMarks(),
+                    quiz.getQuizId());
+            jdbcTemplate.update(INSERT_MARKS_BY_ACCOUNT_ID_AND_QUIZ_ID, quiz.getAccountId(),
+                    quiz.getQuizId(), markedQuiz.getTotalMarks(), markedQuiz.getMarks(), percent);
+            System.out.println("The total marks in quizRepo is " + markedQuiz.getTotalMarks());
+        } catch (Exception e) {
+            // Handle or log the exception
+            e.printStackTrace();
+            throw new RuntimeException("Error saving analytics", e);
+        }
+
+
+    }
+
 
 
 }

@@ -9,11 +9,27 @@ public class QuizQuestions {
     private String option3;
     private String option4;
     private String answer;
+    private String marks;
     
     public QuizQuestions() {
     }
 
     
+    public QuizQuestions(String question, String questionType, String option1, String option2,
+            String option3, String option4, String answer, String marks) {
+        this.question = question;
+        this.questionType = questionType;
+        this.option1 = option1;
+        this.option2 = option2;
+        this.option3 = option3;
+        this.option4 = option4;
+        this.answer = answer;
+        this.marks = marks;
+    }
+
+
+
+
     public QuizQuestions(String question, String questionType, String option1, String option2, String option3,
             String option4, String answer) {
         this.question = question;
@@ -101,11 +117,31 @@ public class QuizQuestions {
     }
 
 
+    public String getMarks() {
+        return marks;
+    }
+
+
+    public void setMarks(String marks) {
+        this.marks = marks;
+    }
+
+
     @Override
     public String toString() {
-        return "QuizQuestions [question=" + question + ", questionType=" + questionType + ", option1=" + option1
-                + ", option2=" + option2 + ", option3=" + option3 + ", option4=" + option4 + ", answer=" + answer + "]";
+        return "QuizQuestions [question=" + question + ", questionType=" + questionType
+                + ", option1=" + option1 + ", option2=" + option2 + ", option3=" + option3
+                + ", option4=" + option4 + ", answer=" + answer + ", marks=" + marks + "]";
     }
+
+    
+
+    
+
+    
+
+
+
 
 
     

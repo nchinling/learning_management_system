@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MarkedQuizResponse, Quiz } from '../models';
@@ -11,7 +11,7 @@ import { AccountService } from '../services/account.service';
   templateUrl: './studentquiz.component.html',
   styleUrls: ['./studentquiz.component.css']
 })
-export class StudentquizComponent {
+export class StudentquizComponent implements OnInit {
 
   quiz$!: Promise<Quiz>
   quizSvc = inject(QuizService)
@@ -40,15 +40,15 @@ export class StudentquizComponent {
  
     this.quiz$ = this.quizSvc.getQuiz(this.quiz_id)
     
-    const defaultQuestion = this.fb.group({
-      question: [''],
-      questionType: [''],
-      option1: [''],
-      option2: [''],
-      option3: [''],
-      option4: [''],
-      answer: ['']
-    });
+    // const defaultQuestion = this.fb.group({
+    //   question: [''],
+    //   questionType: [''],
+    //   option1: [''],
+    //   option2: [''],
+    //   option3: [''],
+    //   option4: [''],
+    //   answer: ['']
+    // });
     const formGroup = this.fb.group({
       title: [''],
       quiz_id: [''],
@@ -108,7 +108,7 @@ export class StudentquizComponent {
     this.markedQuizResponse$.then((response) => {
       console.log('returned response', response)
       console.log('marks:', response.marks);
-      this.marks = 'You got ' + response.marks + ' out of ' + this.quizNoOfQuestions + ' marks!'
+      this.marks = 'You got ' + response.marks + ' out of ' + response.total_marks + ' marks!'
 
    
     // setTimeout(() => {

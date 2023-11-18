@@ -26,7 +26,12 @@
   mat-radio-button,
   button {
     width: 75%;
-    margin-bottom: 16px; /* Adjust the margin as needed */
+    margin-bottom: 16px; 
+  }
+
+  .marks-field{
+    width: 10%;
+    margin-bottom: 16px; 
   }
 
 

@@ -1,14 +1,3 @@
-<script>
-  MathJax = {
-    tex: {
-      inlineMath: [['$', '$'], ['\\(', '\\)']]
-    }
-  };
-  </script>
-  <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-  </script>
-
 <div class="container">
  <h1>Create Quiz</h1>
  <form [formGroup]="quizForm" (submit)="processQuiz()">
@@ -18,10 +7,7 @@
   <mat-form-field>
     <input matInput placeholder="Title" formControlName="title" required>
   </mat-form-field>
-  <div>
-    <span [innerHTML]="mathEquationOutput"></span>
-  </div>
-  \[a^2+b^2=c^2\]
+
 
   <div formArrayName="questions">
     Questions:
@@ -66,13 +52,24 @@
             </mat-form-field>
             <input type="radio" formControlName="answer" value="D">
           </div>
+
+          <label class="marks-label">Marks</label>&nbsp;
+          <mat-form-field class="marks-field">
+            <input matInput placeholder="marks" formControlName="marks" required>
+          </mat-form-field> m
+      
     </div>
 
 
     <div *ngIf="question.get('questionType')?.value === 'FreeResponse'">
       <mat-form-field class="answer-field">
         <input matInput placeholder="Answer" formControlName="answer" required>
-      </mat-form-field>
+      </mat-form-field><br>
+
+      <label class="marks-label">Marks</label>&nbsp;
+      <mat-form-field class="marks-field">
+        <input matInput placeholder="marks" formControlName="marks" required>
+      </mat-form-field> m
     </div>
     
     <button mat-raised-button color="accent" class="add-label" (click)="removeQuestion(i)">Remove Question {{i+1}}</button>

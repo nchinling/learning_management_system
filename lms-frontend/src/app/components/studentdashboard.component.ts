@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CreateQuizResponse } from '../models';
 import { AccountService } from '../services/account.service';
@@ -9,7 +9,7 @@ import { QuizService } from '../services/quiz.service';
   templateUrl: './studentdashboard.component.html',
   styleUrls: ['./studentdashboard.component.css']
 })
-export class StudentdashboardComponent {
+export class StudentdashboardComponent implements OnInit {
 
   router = inject(Router)
   quizSvc = inject(QuizService)
@@ -19,10 +19,6 @@ export class StudentdashboardComponent {
   allStudentQuizCreated$!:Promise<CreateQuizResponse[]>
 
   ngOnInit(): void {
-
-    // this.accountId = this.accountSvc.account_id
-    // console.log('Account id at dashboard is ', this.accountId)
-    // this.allQuizCreated$ = this.quizSvc.getAllQuizCreated(this.accountId)
 
     this.name = this.accountSvc.name
     this.studentClass = this.accountSvc.studentClass

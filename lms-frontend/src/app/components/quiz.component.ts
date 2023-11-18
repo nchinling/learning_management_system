@@ -3,16 +3,9 @@ import { CreateQuizResponse, Quiz, QuizQuestion } from '../models';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
-import { Observable, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { QuizService } from '../services/quiz.service';
 import { ClassService } from '../services/class.service';
-
-
-
-
-declare var MathJax: {
-  tex2chtmlPromise: (input: string, options: Object) => Promise<any>;
-};
 
 
   @Component({
@@ -28,7 +21,6 @@ declare var MathJax: {
     questionFormGroup!: FormGroup
     createQuiz$!: Promise<CreateQuizResponse>
     errorMessage!: string;
-    mathEquationOutput: string = '';
     renderedMath!: string;
     classes$!: Promise<string[]>
     accountId!: string
@@ -43,22 +35,6 @@ declare var MathJax: {
     currentQuestionType!: 'MCQ' | 'FreeResponse';
 
     title = 'Quiz Creator';
-    ngOnInit() {
-
-      // const mathjaxConfig = {
-      //   tex: {
-      //     inlineMath: [['$', '$'], ['\\(', '\\)']],
-      //     processEscapes: true,
-      //   },
-      // };
-  
-
-
-      // MathJax.tex2chtmlPromise("\\int_{a}^{b} f(x) \\, dx", mathjaxConfig).then((output) => {
-      //   this.mathEquationOutput = output.outerHTML;
-      // });
-      
-    }
 
     constructor() {
 
@@ -100,6 +76,7 @@ declare var MathJax: {
         option3: this.fb.control<string>('4', [Validators.required]),
         option4: this.fb.control<string>('5', [Validators.required]),
         answer: this.fb.control<string>('', [Validators.required]),
+        marks: this.fb.control<number>(1, [Validators.required]),
       })
     }
 
@@ -109,6 +86,7 @@ declare var MathJax: {
         questionType: 'FreeResponse',
         question: this.fb.control<string>('What is 1+1', [Validators.required]),
         answer: this.fb.control<string>('', [Validators.required]),
+        marks: this.fb.control<number>(1, [Validators.required]),
       })
     }
 

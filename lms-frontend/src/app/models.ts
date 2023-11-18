@@ -38,6 +38,7 @@ export interface QuizQuestion {
     option3: (string | null);
     option4: (string | null);
     answer: string
+    marks: number
 }
 
 
@@ -54,6 +55,7 @@ export interface MarkedQuizResponse {
     title: string
     questions: QuizQuestion[]
     marks: string
+    total_marks: string
 }
 
 
