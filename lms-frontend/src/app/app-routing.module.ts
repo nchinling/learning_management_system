@@ -9,6 +9,7 @@ import { QuizComponent } from './components/quiz.component';
 import { ViewquizComponent } from './components/viewquiz.component';
 import { StudentdashboardComponent } from './components/studentdashboard.component';
 import { StudentquizComponent } from './components/studentquiz.component';
+import { CreatenotesComponent } from './components/createnotes.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent, title: 'Main' },
@@ -17,8 +18,10 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, title: 'Dashboard', canActivate: [loginGuard] },
   { path: 'studentdashboard', component: StudentdashboardComponent, title: 'Dashboard', canActivate: [loginGuard] },
   { path: 'quiz', component: QuizComponent, title: 'Create Quiz', canActivate: [loginGuard] },
+  { path: 'create_notes', component: CreatenotesComponent, title: 'Create Notes', canActivate: [loginGuard] },
   { path: 'viewquiz', component: ViewquizComponent, title: 'Quiz', canActivate: [loginGuard] },
   { path: 'studentquiz', component: StudentquizComponent, title: 'Student Quiz', canActivate: [loginGuard] },
+
 ];
 
 @NgModule({

@@ -3,11 +3,11 @@
       <div *ngIf="quizForm.value">
         <h1 class="custom-h1">Quiz</h1>
         <div class="form-group">
-          <p>Quiz ID: {{ quiz_id }}</p>
+          <!-- <p>Quiz ID: {{ quiz_id }}</p> -->
         </div>
         <div class="form-group">
-          <label for="title">Title: </label>
-          <input type="text" id="title" formControlName="title">
+          <p class="custom-h2">Title: {{ quizForm.get('title')?.value }}</p>
+
         </div><br>
         <div formArrayName="questions">
           <div *ngFor="let question of questionControls; let i = index">
@@ -41,7 +41,12 @@
                 </div>
                 <div class="form-group"><br>
                   <label for="answer">Answer: </label>
-                  <input type="text" id="answer" formControlName="answer">
+                  <input type="text" id="answer" formControlName="answer">&nbsp;
+                
+                  [<span>{{ question.get('marks')?.value }}</span> m]
+
+                  <mat-error *ngIf="invalidQuizField('questions.' + i + '.answer')">Please provide the answer</mat-error>
+
                 </div><br>
                 
         <br>
@@ -49,7 +54,7 @@
           </div>
         </div>
         <br>
-          <button mat-raised-button color="primary" (click)="submitQuiz(quiz_id)">Submit</button>&nbsp;&nbsp;{{marks}} 
+          <button mat-raised-button color="primary" (click)="submitQuiz(quiz_id)" [disabled]="quizForm.invalid">Submit</button>&nbsp;&nbsp;{{marks}} 
 
       </div>
     </div>

@@ -8,6 +8,7 @@
       <div class="form-group">
         <label for="title">Title: </label>
         <input type="text" id="title" formControlName="title">
+        <mat-error *ngIf="invalidQuizField('title')">Please enter a valid title</mat-error>
       </div><br>
       <div formArrayName="questions">
         <div *ngFor="let question of questionControls; let i = index">
@@ -18,31 +19,38 @@
               <label for="question">Question {{ i + 1 }}:</label><br>
               <p>Question type: {{ question.get('questionType')?.value }}</p>
               <textarea id="question" formControlName="question" rows="5"></textarea>
+              <mat-error *ngIf="invalidQuizField('questions.' + i + '.question')">Please provide a question.</mat-error>
             </div>
         
       <div class="form-group" *ngIf="question.get('questionType')?.value === 'MCQ'">
                   <div class="form-group"><br>
                     <label for="option1">A) </label>
                     <input type="text" id="option1" formControlName="option1">
+                    <mat-error *ngIf="invalidQuizField('questions.' + i + '.option1')">Please enter option A</mat-error>
                   </div>
                   <div class="form-group"><br>
                     <label for="option2">B) </label>
                     <input type="text" id="option2" formControlName="option2">
+                    <mat-error *ngIf="invalidQuizField('questions.' + i + '.option2')">Please enter option B</mat-error>
                   </div>
                   <div class="form-group"><br>
                     <label for="option3">C) </label>
                     <input type="text" id="option3" formControlName="option3">
+                    <mat-error *ngIf="invalidQuizField('questions.' + i + '.option3')">Please enter option C</mat-error>
                   </div>
                   <div class="form-group"><br>
                     <label for="option4">D) </label>
                     <input type="text" id="option4" formControlName="option4">
+                    <mat-error *ngIf="invalidQuizField('questions.' + i + '.option4')">Please enter option D</mat-error>
                   </div>
       </div>  
               <div class="form-group"><br>
                 <label for="answer">Answer: </label>
                 <input type="text" id="answer" formControlName="answer">&nbsp;&nbsp;
+                <mat-error *ngIf="invalidQuizField('questions.' + i + '.answer')">Please provide the answer.</mat-error>
                 <label for="marks">Marks: </label>
                 <input type="text" class="marks" id="marks" formControlName="marks"> m
+                <mat-error *ngIf="invalidQuizField('questions.' + i + '.marks')">Please provide the marks.</mat-error>
               </div><br>
               <!-- <button mat-raised-button color="accent" class="add-label" (click)="deleteQuestion(i)">Remove Question {{i+1}}</button><br> -->
               <button mat-fab color="accent" (click)="deleteQuestion(i)">

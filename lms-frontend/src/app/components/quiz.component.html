@@ -6,6 +6,7 @@
   <label>Quiz Title: </label>
   <mat-form-field>
     <input matInput placeholder="Title" formControlName="title" required>
+    <mat-error *ngIf="invalidQuizField('title')">Please enter a valid title</mat-error>
   </mat-form-field>
 
 
@@ -18,6 +19,7 @@
 
     <mat-form-field class="question-field">
       <textarea matInput placeholder="Question" formControlName="question" required rows="5"></textarea>
+      <mat-error *ngIf="invalidQuizField('questions.' + i + '.question')">Please provide a question.</mat-error>
     </mat-form-field>
 
     <div *ngIf="question.get('questionType')?.value === 'MCQ'">
@@ -25,6 +27,9 @@
             <label class="option-label">A)</label>&nbsp;
             <mat-form-field class="option-field">
               <input matInput placeholder="Answer for A" formControlName="option1" required>
+              <mat-error *ngIf="invalidQuizField('questions.' + i + '.option1')">Please enter option A</mat-error>
+              <!-- <mat-error *ngIf="invalidQuizField('questions.question.' + i + '.option1')">Please enter option A</mat-error> -->
+              <!-- <mat-error *ngIf="invalidQuizField('questions.' + i + '.question')">Please provide a question.</mat-error> -->
             </mat-form-field>
             <input type="radio" formControlName="answer" value="A">
           </div>
@@ -33,6 +38,7 @@
             <label class="option-label">B)</label>&nbsp;
             <mat-form-field class="option-field">
               <input matInput placeholder="Answer for B" formControlName="option2" required>
+              <mat-error *ngIf="invalidQuizField('questions.' + i + '.option2')">Please enter option B</mat-error>
             </mat-form-field>
             <input type="radio" formControlName="answer" value="B">
           </div>
@@ -41,6 +47,7 @@
             <label class="option-label">C)</label>&nbsp;
             <mat-form-field class="option-field">
               <input matInput placeholder="Answer for C" formControlName="option3" required>
+              <mat-error *ngIf="invalidQuizField('questions.' + i + '.option3')">Please enter option C</mat-error>
             </mat-form-field>
             <input type="radio" formControlName="answer" value="C">
           </div>
@@ -49,6 +56,7 @@
             <label class="option-label">D)</label>&nbsp;
             <mat-form-field class="option-field">
               <input matInput placeholder="Answer for D" formControlName="option4" required>
+              <mat-error *ngIf="invalidQuizField('questions.' + i + '.option4')">Please enter option D</mat-error>
             </mat-form-field>
             <input type="radio" formControlName="answer" value="D">
           </div>
@@ -56,6 +64,7 @@
           <label class="marks-label">Marks</label>&nbsp;
           <mat-form-field class="marks-field">
             <input matInput placeholder="marks" formControlName="marks" required>
+            <mat-error *ngIf="invalidQuizField('questions.' + i + '.marks')">Please provide the marks.</mat-error>
           </mat-form-field> m
       
     </div>
@@ -64,12 +73,15 @@
     <div *ngIf="question.get('questionType')?.value === 'FreeResponse'">
       <mat-form-field class="answer-field">
         <input matInput placeholder="Answer" formControlName="answer" required>
+        <mat-error *ngIf="invalidQuizField('questions.' + i + '.answer')">Please provide the answer</mat-error>
       </mat-form-field><br>
 
       <label class="marks-label">Marks</label>&nbsp;
       <mat-form-field class="marks-field">
         <input matInput placeholder="marks" formControlName="marks" required>
+        <!-- <mat-error *ngIf="invalidQuizField('questions.' + i + '.marks')">Please provide the marks</mat-error> -->
       </mat-form-field> m
+      <mat-error *ngIf="invalidQuizField('questions.' + i + '.marks')">Please provide the marks</mat-error>
     </div>
     
     <button mat-raised-button color="accent" class="add-label" (click)="removeQuestion(i)">Remove Question {{i+1}}</button>
@@ -98,7 +110,7 @@
 
 
   <div>
-    <button mat-raised-button color="primary" class="submit-label" type="submit">Submit</button>
+    <button mat-raised-button color="primary" class="submit-label" type="submit" [disabled]="quizForm.invalid">Submit</button>
   </div>
  
 <div>

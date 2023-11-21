@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, firstValueFrom } from 'rxjs';
@@ -11,7 +11,7 @@ import { AccountService } from '../services/account.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   
   login$!: Promise<LoginResponse>
@@ -32,12 +32,12 @@ export class LoginComponent {
   ngOnInit(): void {
     // this.errorMessage$ = this.accountSvc.onErrorMessage;
     this.teacherLoginForm = this.fb.group({
-      email: this.fb.control<string>('ncl@email.com', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')]),
+      email: this.fb.control<string>('ncl@email.com', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}')]),
       password: this.fb.control<string>('#a888888', [ Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[a-zA-Z])(?=.*[@#$%^&+=]).*$') ])
     })
 
     this.studentLoginForm = this.fb.group({
-      email: this.fb.control<string>('student0@email.com', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')]),
+      email: this.fb.control<string>('student0@email.com', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}')]),
       password: this.fb.control<string>('student0@eduquest', [ Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[a-zA-Z])(?=.*[@#$%^&+=]).*$') ])
     })
   }

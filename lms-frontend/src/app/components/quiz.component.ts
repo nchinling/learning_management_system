@@ -105,6 +105,10 @@ import { ClassService } from '../services/class.service';
       this.questions.removeAt(i);
     }
 
+    invalidQuizField(ctrlName:string): boolean{
+      return !!(this.quizForm.get(ctrlName)?.invalid && this.quizForm.get(ctrlName)?.dirty)
+    }
+
     assignClass() {
       console.log('class assigned to: ')
     }

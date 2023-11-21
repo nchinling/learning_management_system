@@ -48,6 +48,14 @@ label {
     font-weight: bold;
   
   }
+
+  .custom-h2 {
+    font-family: 'Arial', sans-serif; 
+    font-size: 24px; 
+    color: darkkhaki;
+    font-weight: bold;
+  
+  }
   
   /* Style the title and quiz ID */
   p,.quizTitle {

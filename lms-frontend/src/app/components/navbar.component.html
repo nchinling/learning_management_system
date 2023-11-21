@@ -8,14 +8,10 @@
     </ng-container>
     <ng-template #teacherLinks>
         <a routerLink="/dashboard" class="link">Dashboard</a>
+        <a routerLink="/create_notes" class="link">Notes</a>
         <a routerLink="/quiz" class="link">Quiz</a>
     </ng-template>
-    <!-- <ng-container *ngElse="isTeacherLoggedIn$;">
-        <a routerLink="/dashboard" class="link">Dashboard</a>
-        <a routerLink="/quiz" class="link">Quiz</a>
-    </ng-container> -->
-    <!-- <a routerLink="/dashboard" class="link">Dashboard</a>
-    <a routerLink="/quiz" class="link">Quiz</a> -->
+    
     <button mat-raised-button color="warn" (click)="logout()">
         <mat-icon>exit_to_app</mat-icon> Log Out
     </button>

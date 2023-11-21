@@ -76,7 +76,17 @@
 # 19 Nov
 - implement quiz marks in student view form
 
+# 21 Nov
+- edited student quiz form to include marks
+- debugged title in student quiz form
+- Implemented form validation in quiz creation and quiz edit forms
+- Implemented form validation in student submission
+
+
 # To do
 - Implement notes
 - Implement data analytics in teacher's dashboard
+- Implement form validation
+
+
 

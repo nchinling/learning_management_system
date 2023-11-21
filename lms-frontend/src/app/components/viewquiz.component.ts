@@ -68,18 +68,19 @@ export class ViewquizComponent implements OnInit {
     
     })
     
-    const defaultQuestion = this.fb.group({
-      question: [''],
-      questionType: [''],
-      option1: [''],
-      option2: [''],
-      option3: [''],
-      option4: [''],
-      answer: [''],
-      marks:['']
-    });
+    // const defaultQuestion = this.fb.group({
+    //   question: [''],
+    //   questionType: [''],
+    //   option1: [''],
+    //   option2: [''],
+    //   option3: [''],
+    //   option4: [''],
+    //   answer: [''],
+    //   marks:['']
+    // });
     const formGroup = this.fb.group({
-      title: [''],
+      title: ['', [Validators.required] ],
+      // answer: this.fb.control<string>('', [Validators.required]),
       quiz_id: [''],
       questions: this.fb.array([]),
       selectedClasses: this.fb.array([]),
@@ -104,14 +105,14 @@ export class ViewquizComponent implements OnInit {
           quizData.questions.forEach((question) => {
             questionArray.push(
               this.fb.group({
-                question: [question.question],
-                questionType: [question.questionType],
-                option1: [question.option1],
-                option2: [question.option2],
-                option3: [question.option3],
-                option4: [question.option4],
-                answer: [question.answer],
-                marks: [question.marks]
+                question: [question.question, [Validators.required]],
+                questionType: [question.questionType, [Validators.required]],
+                option1: [question.option1, [Validators.required]],
+                option2: [question.option2, [Validators.required]],
+                option3: [question.option3, [Validators.required]],
+                option4: [question.option4, [Validators.required]],
+                answer: [question.answer, [Validators.required]],
+                marks: [question.marks, [Validators.required]]
               })
             );
           });
@@ -240,6 +241,10 @@ export class ViewquizComponent implements OnInit {
       answer: this.fb.control<string>('', [Validators.required]),
       marks: this.fb.control<number>(1, [Validators.required]),
     })
+  }
+
+  invalidQuizField(ctrlName:string): boolean{
+    return !!(this.updateQuizForm.get(ctrlName)?.invalid && this.updateQuizForm.get(ctrlName)?.dirty)
   }
 
 

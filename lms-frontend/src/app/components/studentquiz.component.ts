@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MarkedQuizResponse, Quiz } from '../models';
 import { QuizService } from '../services/quiz.service';
@@ -81,7 +81,9 @@ export class StudentquizComponent implements OnInit {
                 option2: [question.option2],
                 option3: [question.option3],
                 option4: [question.option4],
-                answer: '',
+                // answer: '',
+                answer: this.fb.control<string>('', [Validators.required]),
+                marks: [question.marks]
               })
             );
           });
@@ -117,6 +119,12 @@ export class StudentquizComponent implements OnInit {
 
     })
   }
+
+  invalidQuizField(ctrlName:string): boolean{
+    return !!(this.quizForm.get(ctrlName)?.invalid && this.quizForm.get(ctrlName)?.dirty)
+  }
+
+
 
 
 
