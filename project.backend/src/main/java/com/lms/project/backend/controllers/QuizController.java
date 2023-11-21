@@ -118,8 +118,12 @@ public class QuizController {
         for (Quiz quiz : quizzes) {
             JsonObjectBuilder quizBuilder = Json.createObjectBuilder()
                     .add("quiz_id", quiz.getQuizId()).add("title", quiz.getTitle())
-                    .add("date_created", quiz.getDateCreated().toString()).add("date_edited",
-                            quiz.getDateEdited() != null ? quiz.getDateEdited().toString() : "");
+                    // .add("date_created", quiz.getDateCreated().toString())
+                    // .add("date_edited",
+                    //         quiz.getDateEdited() != null ? quiz.getDateEdited().toString() : "");
+                    .add("date_created", quiz.getFormattedDateCreated())
+                    .add("date_edited",
+                            quiz.getDateEdited() != null ? quiz.getFormattedDateEdited() : "");
             arrayBuilder.add(quizBuilder);
         }
 

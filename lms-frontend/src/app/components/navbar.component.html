@@ -3,12 +3,11 @@
     <span><span style="color: greenyellow; font-size: 20px;">Edu</span><span style="color: navajowhite;">Quest</span> Learning Management System</span>
     <span class="spacer"></span>
     <ng-container *ngIf="isLoggedIn$ && isStudent; else teacherLinks">
-        <a routerLink="/studentdashboard" class="link">Student Dashboard</a>
-        <a routerLink="/quiz" class="link">Quiz</a>
+        <a routerLink="/studentdashboard" class="link">Dashboard</a>
     </ng-container>
     <ng-template #teacherLinks>
         <a routerLink="/dashboard" class="link">Dashboard</a>
-        <a routerLink="/create_notes" class="link">Notes</a>
+        <a routerLink="/create_content" class="link">Content</a>
         <a routerLink="/quiz" class="link">Quiz</a>
     </ng-template>
     

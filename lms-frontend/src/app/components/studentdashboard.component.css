@@ -21,6 +21,12 @@
 }
 
 .quiz_row:hover {
-    background-color: #ffcc80;
+    /* background-color: #ffcc80; */
+    background-color: #aaffaa;
 }
+
+.glowing-text {
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+    color: green;
+  }
 

@@ -83,6 +83,7 @@
 - Implemented form validation in student submission
 - Implemented mcq submission correctly
 - Improved list details to include student attempts, date, etc
+- Beautified dashboard form
 
 
 # To do

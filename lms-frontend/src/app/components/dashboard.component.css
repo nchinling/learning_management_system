@@ -2,10 +2,25 @@
     margin: 15px
 }
 
-.quiz_row{
+/* .quiz_row{
     cursor: pointer;
 }
 
 .quiz_row:hover{
     color:grey;
+} */
+
+.quiz_row {
+    cursor: pointer;
+    padding: 10px;
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+    margin: 5px;
+    /* background-color: #f5f5f5; */
+    transition: background-color 0.3s ease;
+}
+
+.quiz_row:hover {
+    /* background-color: #ffcc80; */
+    background-color: #aaffaa;
 }

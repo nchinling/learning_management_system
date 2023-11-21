@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, title: 'Dashboard', canActivate: [loginGuard] },
   { path: 'studentdashboard', component: StudentdashboardComponent, title: 'Dashboard', canActivate: [loginGuard] },
   { path: 'quiz', component: QuizComponent, title: 'Create Quiz', canActivate: [loginGuard] },
-  { path: 'create_notes', component: CreatenotesComponent, title: 'Create Notes', canActivate: [loginGuard] },
+  { path: 'create_content', component: CreatenotesComponent, title: 'Create Content', canActivate: [loginGuard] },
   { path: 'viewquiz', component: ViewquizComponent, title: 'Quiz', canActivate: [loginGuard] },
   { path: 'studentquiz', component: StudentquizComponent, title: 'Student Quiz', canActivate: [loginGuard] },
 

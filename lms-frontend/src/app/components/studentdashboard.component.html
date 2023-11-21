@@ -12,15 +12,22 @@
                 {{ quizResponse.title}} ({{ quizResponse.quiz_id }})&nbsp;
             </td>
             <td>
-              <span *ngIf="quizResponse.student_total_marks !== ''"> | Marks: {{ quizResponse.student_total_marks }} out of 
-                {{ quizResponse.quiz_total_marks }} | {{quizResponse.percent}} %
-              | Attempted on {{quizResponse.date_attempted }}</span>
+           
+              <span [style.color]="'grey'" *ngIf="quizResponse.student_total_marks !== undefined; else newMessage">
+                  |&nbsp;Marks: {{ quizResponse.student_total_marks }} out of 
+                  {{ quizResponse.quiz_total_marks }}&nbsp;&nbsp; | &nbsp; {{quizResponse.percent}} %&nbsp;&nbsp;
+                |&nbsp; Attempted on {{quizResponse.date_attempted }}
+              </span>
             </td>
     
           </li>
         </ol>
     </div>
     
-    
-    
+  
     </div>
+
+
+  <ng-template #newMessage>
+    <p class="glowing-text">New!</p>
+  </ng-template>

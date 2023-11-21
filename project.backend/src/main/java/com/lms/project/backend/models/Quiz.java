@@ -1,5 +1,6 @@
 package com.lms.project.backend.models;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -78,6 +79,23 @@ public class Quiz {
 
     public void setDateEdited(Date dateEdited) {
         this.dateEdited = dateEdited;
+    }
+
+       public String getFormattedDateCreated() {
+        return formatDate(dateCreated);
+    }
+
+    public String getFormattedDateEdited() {
+        return formatDate(dateEdited);
+    }
+
+    private String formatDate(Date date) {
+        if (date == null) {
+            return null;
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy");
+        return sdf.format(date);
     }
 
 

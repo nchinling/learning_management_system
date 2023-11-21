@@ -8,11 +8,11 @@
     
    
         <td class="quiz_row" (click)="viewQuiz(quizResponse.quiz_id)">
-            {{ quizResponse.title}} ({{ quizResponse.quiz_id }})&nbsp;
+            {{ quizResponse.title}} ({{ quizResponse.quiz_id }})&nbsp;&nbsp;
         </td>
         <td>
-          Created: {{quizResponse.date_created}}
-          <span *ngIf="quizResponse.date_edited !== ''"> | Edited: {{ quizResponse.date_edited }}</span>
+          <!-- Created: {{quizResponse.date_created}} -->
+          <span [style.color]="'grey'" *ngIf="quizResponse.date_edited !== ''"> Created: {{quizResponse.date_created}}&nbsp; |&nbsp; Edited: {{ quizResponse.date_edited }}</span>
         </td>
     
 
