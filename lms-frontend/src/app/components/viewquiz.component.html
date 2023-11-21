@@ -26,28 +26,37 @@
                   <div class="form-group"><br>
                     <label for="option1">A) </label>
                     <input type="text" id="option1" formControlName="option1">
+                    <input type="radio" formControlName="answer" value="A">
                     <mat-error *ngIf="invalidQuizField('questions.' + i + '.option1')">Please enter option A</mat-error>
                   </div>
                   <div class="form-group"><br>
                     <label for="option2">B) </label>
                     <input type="text" id="option2" formControlName="option2">
+                    <input type="radio" formControlName="answer" value="B">
                     <mat-error *ngIf="invalidQuizField('questions.' + i + '.option2')">Please enter option B</mat-error>
                   </div>
                   <div class="form-group"><br>
                     <label for="option3">C) </label>
                     <input type="text" id="option3" formControlName="option3">
+                    <input type="radio" formControlName="answer" value="C">
                     <mat-error *ngIf="invalidQuizField('questions.' + i + '.option3')">Please enter option C</mat-error>
                   </div>
                   <div class="form-group"><br>
                     <label for="option4">D) </label>
                     <input type="text" id="option4" formControlName="option4">
+                    <input type="radio" formControlName="answer" value="D">
                     <mat-error *ngIf="invalidQuizField('questions.' + i + '.option4')">Please enter option D</mat-error>
                   </div>
       </div>  
+
+      <div *ngIf="question.get('questionType')?.value === 'FreeResponse'">
               <div class="form-group"><br>
                 <label for="answer">Answer: </label>
                 <input type="text" id="answer" formControlName="answer">&nbsp;&nbsp;
                 <mat-error *ngIf="invalidQuizField('questions.' + i + '.answer')">Please provide the answer.</mat-error>
+              </div>
+      </div><br>
+              <div>
                 <label for="marks">Marks: </label>
                 <input type="text" class="marks" id="marks" formControlName="marks"> m
                 <mat-error *ngIf="invalidQuizField('questions.' + i + '.marks')">Please provide the marks.</mat-error>

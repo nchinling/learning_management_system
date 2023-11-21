@@ -81,6 +81,8 @@
 - debugged title in student quiz form
 - Implemented form validation in quiz creation and quiz edit forms
 - Implemented form validation in student submission
+- Implemented mcq submission correctly
+- Improved list details to include student attempts, date, etc
 
 
 # To do

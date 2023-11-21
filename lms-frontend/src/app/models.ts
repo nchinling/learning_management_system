@@ -27,6 +27,8 @@ export interface Quiz {
     title: string
     questions: QuizQuestion[]
     classes: string[]
+    date_created: string
+    date_edited: string
 }
 
 export interface QuizQuestion {
@@ -47,6 +49,15 @@ export interface CreateQuizResponse {
     quiz_id: string
     title: string
     status: string
+    date_created: string
+    date_edited: string
+    quiz_total_marks: string
+    student_total_marks: string
+    percent: string
+    date_attempted: string
+    // quizBuilder.add("quiz_total_marks", result.getQuizTotalMarks());
+    // quizBuilder.add("student_total_marks", result.getStudentTotalMarks());
+    // quizBuilder.add("percent", result.getPercent());
 }
 
 export interface MarkedQuizResponse {

@@ -103,4 +103,10 @@ label {
   .add-label {
     width: 10%; 
   }
+
+  .option-span {
+    display: inline-block;
+    width: 100px; /* Set your desired fixed width */
+  }
+  
   

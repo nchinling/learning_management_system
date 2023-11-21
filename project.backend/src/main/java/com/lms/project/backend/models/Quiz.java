@@ -1,6 +1,7 @@
 package com.lms.project.backend.models;
 
 import java.util.Arrays;
+import java.util.Date;
 
 
 public class Quiz {
@@ -10,11 +11,13 @@ public class Quiz {
     private String title;
     private String status;
     private QuizQuestions[] quizQuestions;
-
     private String[] quizClasses;
-    
     private String marks;
     private String totalMarks;
+    private Date dateCreated;
+    private Date dateEdited;
+
+
     public Quiz() {
     }
 
@@ -23,9 +26,61 @@ public class Quiz {
         return quizQuestions;
     }
 
-    
+
+
+    public Quiz(String title, String quizId, Date dateCreated, Date dateEdited) {
+        this.quizId = quizId;
+        this.title = title;
+        this.dateCreated = dateCreated;
+        this.dateEdited = dateEdited;
+    }
 
     
+
+
+    public Quiz(String title,String quizId, Date dateCreated) {
+        this.quizId = quizId;
+        this.title = title;
+        this.dateCreated = dateCreated;
+    }
+
+
+    public Quiz(String accountId, String quizId, String title, String status,
+            QuizQuestions[] quizQuestions, String[] quizClasses, String marks, String totalMarks,
+            Date dateCreated, Date dateEdited) {
+        this.accountId = accountId;
+        this.quizId = quizId;
+        this.title = title;
+        this.status = status;
+        this.quizQuestions = quizQuestions;
+        this.quizClasses = quizClasses;
+        this.marks = marks;
+        this.totalMarks = totalMarks;
+        this.dateCreated = dateCreated;
+        this.dateEdited = dateEdited;
+    }
+
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+
+    public Date getDateEdited() {
+        return dateEdited;
+    }
+
+
+    public void setDateEdited(Date dateEdited) {
+        this.dateEdited = dateEdited;
+    }
+
+
     public Quiz(String accountId, String quizId, String title, String status,
             QuizQuestions[] quizQuestions, String[] quizClasses, String marks, String totalMarks) {
         this.accountId = accountId;

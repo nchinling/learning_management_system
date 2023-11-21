@@ -1,16 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuizService } from '../services/quiz.service';
 import { AccountService } from '../services/account.service';
 import { CreateQuizResponse } from '../models';
-import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
   router = inject(Router)
   quizSvc = inject(QuizService)

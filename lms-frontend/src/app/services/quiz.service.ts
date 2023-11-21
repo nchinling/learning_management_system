@@ -30,7 +30,6 @@ export class QuizService {
 
   console.info('The classes in quizData are: ', quizData.classes)
   
-
     const form = new HttpParams()
       .set("accountId", quizData.account_id)
       .set("quizId", quizData.quiz_id)
@@ -45,7 +44,10 @@ export class QuizService {
       filter((response) => response !== null), 
         tap(response => this.onCreateQuizRequest.next(response)),
         map(response => ({ account_id: response.account_id, quiz_id: response.quiz_id, 
-                    title: response.title, status:response.status, 
+                    title: response.title, status:response.status, date_created: response.date_created,
+                    date_edited: response.date_edited, quiz_total_marks: response.quiz_total_marks,
+                    student_total_marks: response.student_total_marks,
+                    percent: response.percent, date_attempted: response.date_attempted
                     }))
 
     );
@@ -68,7 +70,13 @@ export class QuizService {
         account_id: resp.account_id, 
         quiz_id: resp.quiz_id,
         title: resp.title,
-        status: resp.status
+        status: resp.status,
+        date_created: resp.date_created,
+        date_edited: resp.date_edited,
+        quiz_total_marks: resp.quiz_total_marks,
+        student_total_marks: resp.student_total_marks,
+        percent: resp.percent,
+        date_attempted: resp.date_attempted
 
       })))
     )
@@ -79,8 +87,10 @@ export class QuizService {
 
   getAllStudentQuiz(studentClass: string): Promise<CreateQuizResponse[]> {
   
+    this.account_id = this.accountSvc.account_id
     const queryParams = new HttpParams()
-      .set('studentClass', studentClass);
+      .set('studentClass', studentClass)
+      .set('accountId', this.account_id)
 
     console.info("I am inside getAllStudentQuiz service:", studentClass)
   
@@ -92,7 +102,18 @@ export class QuizService {
         account_id: resp.account_id, 
         quiz_id: resp.quiz_id,
         title: resp.title,
-        status: resp.status
+        status: resp.status,
+        date_created: resp.date_created,
+        date_edited: resp.date_edited,
+        quiz_total_marks: resp.quiz_total_marks,
+        student_total_marks: resp.student_total_marks,
+        percent: resp.percent,
+        date_attempted: resp.date_attempted
+
+        // quizBuilder.add("quiz_total_marks", result.getQuizTotalMarks());
+        // quizBuilder.add("student_total_marks", result.getStudentTotalMarks());
+        // quizBuilder.add("percent", result.getPercent());
+        
 
       })))
     )
@@ -109,7 +130,8 @@ export class QuizService {
       this.http.get<Quiz>(`${URL_API_SERVER}/getQuiz/${quiz_id}`)
         .pipe(
           map(resp => ({ account_id: resp.account_id, title: resp.title, 
-                      questions: resp.questions, quiz_id: resp.quiz_id, classes: resp.classes
+                      questions: resp.questions, quiz_id: resp.quiz_id, classes: resp.classes, date_created: resp.date_created,
+                      date_edited: resp.date_edited
                       }))
         )
     )

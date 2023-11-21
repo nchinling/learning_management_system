@@ -9,7 +9,12 @@
             
             <!-- {{ quizResponse | json }} -->
             <td class="quiz_row" (click)="viewQuiz(quizResponse.quiz_id)">
-                {{ quizResponse.title}} ({{ quizResponse.quiz_id }})
+                {{ quizResponse.title}} ({{ quizResponse.quiz_id }})&nbsp;
+            </td>
+            <td>
+              <span *ngIf="quizResponse.student_total_marks !== ''"> | Marks: {{ quizResponse.student_total_marks }} out of 
+                {{ quizResponse.quiz_total_marks }} | {{quizResponse.percent}} %
+              | Attempted on {{quizResponse.date_attempted }}</span>
             </td>
     
           </li>

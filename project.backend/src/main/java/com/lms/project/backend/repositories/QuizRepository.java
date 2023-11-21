@@ -3,10 +3,12 @@ package com.lms.project.backend.repositories;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.lms.project.backend.models.Quiz;
+import com.lms.project.backend.models.StudentAccount;
+import com.lms.project.backend.models.StudentResult;
 import com.mongodb.client.result.UpdateResult;
-
+import java.util.Date;
 import java.util.List;
-
+import java.util.Optional;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -38,7 +40,7 @@ public class QuizRepository {
             // Update the existing document
             Update update = new Update().set("title", quiz.getTitle())
                     .set("quizQuestions", quiz.getQuestions())
-                    .set("quizClasses", quiz.getQuizClasses());
+                    .set("quizClasses", quiz.getQuizClasses()).set("dateEdited", new Date());
 
             UpdateResult updateResult = mongoTemplate.updateFirst(searchQuery, update, "quiz");
 
@@ -63,6 +65,7 @@ public class QuizRepository {
             doc.put("quizId", quiz.getQuizId());
             doc.put("quizQuestions", quiz.getQuestions());
             doc.put("quizClasses", quiz.getQuizClasses());
+            doc.put("dateCreated", new Date());
             mongoTemplate.insert(doc, "quiz");
             System.out.println(">>>>> New quiz created >>>>>>");
         }
@@ -76,11 +79,13 @@ public class QuizRepository {
         Criteria criteria = Criteria.where("accountId").is(accountId);
 
         Query query = new Query(criteria).with(Sort.by(Direction.ASC, "title"));
-        query.fields().exclude("_id").include("title", "quizId");
+        query.fields().exclude("_id").include("title", "quizId", "dateCreated", "dateEdited");
 
 
         List<Quiz> result = mongoTemplate.find(query, Document.class, "quiz").stream()
-                .map(doc -> new Quiz(doc.getString("title"), doc.getString("quizId"))).toList();
+                .map(doc -> new Quiz(doc.getString("title"), doc.getString("quizId"),
+                        doc.getDate("dateCreated"), doc.getDate("dateEdited")))
+                .toList();
 
         System.out.println("Data returned from MongoDB: " + result);
 
@@ -96,7 +101,45 @@ public class QuizRepository {
 
 
         List<Quiz> result = mongoTemplate.find(query, Document.class, "quiz").stream()
-                .map(doc -> new Quiz(doc.getString("title"), doc.getString("quizId"))).toList();
+                .map(doc -> new Quiz(doc.getString("title"), doc.getString("quizId"),
+                        doc.getDate("dateCreated")))
+                .toList();
+
+        System.out.println("Data returned from MongoDB: " + result);
+
+        return result;
+    }
+
+    
+    public List<StudentResult> getStudentResults(String studentAccountId) {
+        List<StudentResult> studentResults;
+
+        System.out.println("The student account Id is " + studentAccountId);
+    
+            studentResults = jdbcTemplate.query(SELECT_STUDENT_RESULTS_BY_STUDENT_ACCOUNT_ID, 
+            new StudentResultRowMapper() , new Object[]{studentAccountId});
+            
+            // if (!studentResults.isEmpty()) {
+            //     return Optional.of(studentResults.get(0));
+            // } else {
+            //     return Optional.empty();
+            // }
+
+            return studentResults;
+
+    }
+
+    public List<Quiz> getAllStudentQuizResult(String studentClass) {
+        Criteria criteria = Criteria.where("quizClasses").is(studentClass);
+
+        Query query = new Query(criteria).with(Sort.by(Direction.ASC, "title"));
+        query.fields().exclude("_id").include("title", "quizId");
+
+
+        List<Quiz> result = mongoTemplate.find(query, Document.class, "quiz").stream()
+                .map(doc -> new Quiz(doc.getString("title"), doc.getString("quizId"),
+                        doc.getDate("dateCreated")))
+                .toList();
 
         System.out.println("Data returned from MongoDB: " + result);
 

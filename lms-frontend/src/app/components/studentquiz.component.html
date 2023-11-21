@@ -24,25 +24,32 @@
         <div class="form-group" *ngIf="question.get('questionType')?.value === 'MCQ'">
                     <div class="form-group"><br>
                       <label for="option1">A) </label>&nbsp;
-                      <span>{{ question.get('option1')?.value }}</span>
+                      <span class="option-span">{{ question.get('option1')?.value }}</span>
+                      <input type="radio" formControlName="answer" value="A">
                     </div>
                     <div class="form-group"><br>
                       <label for="option2">B) </label>&nbsp;
-                      <span>{{ question.get('option2')?.value }}</span>
+                      <span class="option-span">{{ question.get('option2')?.value }}</span>
+                      <input type="radio" formControlName="answer" value="B">
                     </div>
                     <div class="form-group"><br>
                       <label for="option3">C) </label>&nbsp;
-                      <span>{{ question.get('option3')?.value }}</span>
+                      <span class="option-span">{{ question.get('option3')?.value }}</span>
+                      <input type="radio" formControlName="answer" value="C">
                     </div>
                     <div class="form-group"><br>
                       <label for="option4">D) </label>&nbsp;
-                      <span>{{ question.get('option4')?.value }}</span>
+                      <span class="option-span">{{ question.get('option4')?.value }}</span>
+                      <input type="radio" formControlName="answer" value="D">
                     </div>
-                </div>
+                </div><br>
+              <div *ngIf="question.get('questionType')?.value === 'FreeResponse'">
                 <div class="form-group"><br>
                   <label for="answer">Answer: </label>
                   <input type="text" id="answer" formControlName="answer">&nbsp;
-                
+                </div>
+              </div>
+              <div>
                   [<span>{{ question.get('marks')?.value }}</span> m]
 
                   <mat-error *ngIf="invalidQuizField('questions.' + i + '.answer')">Please provide the answer</mat-error>

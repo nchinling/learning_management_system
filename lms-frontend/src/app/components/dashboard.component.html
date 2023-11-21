@@ -5,10 +5,16 @@
     <ol>
       <li *ngFor="let quizResponse of quizResponses">
         
-        <!-- {{ quizResponse | json }} -->
+    
+   
         <td class="quiz_row" (click)="viewQuiz(quizResponse.quiz_id)">
-            {{ quizResponse.title}} ({{ quizResponse.quiz_id }})
+            {{ quizResponse.title}} ({{ quizResponse.quiz_id }})&nbsp;
         </td>
+        <td>
+          Created: {{quizResponse.date_created}}
+          <span *ngIf="quizResponse.date_edited !== ''"> | Edited: {{ quizResponse.date_edited }}</span>
+        </td>
+    
 
       </li>
     </ol>
