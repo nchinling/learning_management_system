@@ -10,6 +10,8 @@ import { ViewquizComponent } from './components/viewquiz.component';
 import { StudentdashboardComponent } from './components/studentdashboard.component';
 import { StudentquizComponent } from './components/studentquiz.component';
 import { CreatenotesComponent } from './components/createnotes.component';
+import { EditnotesComponent } from './components/editnotes.component';
+import { StudentcontentComponent } from './components/studentcontent.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent, title: 'Main' },
@@ -20,7 +22,9 @@ const routes: Routes = [
   { path: 'quiz', component: QuizComponent, title: 'Create Quiz', canActivate: [loginGuard] },
   { path: 'create_content', component: CreatenotesComponent, title: 'Create Content', canActivate: [loginGuard] },
   { path: 'viewquiz', component: ViewquizComponent, title: 'Quiz', canActivate: [loginGuard] },
+  { path: 'editnotes', component: EditnotesComponent, title: 'Notes', canActivate: [loginGuard] },
   { path: 'studentquiz', component: StudentquizComponent, title: 'Student Quiz', canActivate: [loginGuard] },
+  { path: 'studentcontent', component: StudentcontentComponent, title: 'Student Content', canActivate: [loginGuard] },
 
 ];
 

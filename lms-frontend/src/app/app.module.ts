@@ -30,6 +30,9 @@ import { ClassService } from './services/class.service';
 import { StudentdashboardComponent } from './components/studentdashboard.component';
 import { StudentquizComponent } from './components/studentquiz.component';
 import { CreatenotesComponent } from './components/createnotes.component';
+import { ContentService } from './services/content.service';
+import { EditnotesComponent } from './components/editnotes.component';
+import { StudentcontentComponent } from './components/studentcontent.component';
 
 
 @NgModule({
@@ -45,6 +48,8 @@ import { CreatenotesComponent } from './components/createnotes.component';
     StudentdashboardComponent,
     StudentquizComponent,
     CreatenotesComponent,
+    EditnotesComponent,
+    StudentcontentComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,9 +69,11 @@ import { CreatenotesComponent } from './components/createnotes.component';
     MatIconModule,
     MatRadioModule,
     MatSelectModule,
-    MatTabsModule
+    MatTabsModule,
+
+   
   ],
-  providers: [AccountService, QuizService, ClassService],
+  providers: [AccountService, QuizService, ContentService, ClassService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

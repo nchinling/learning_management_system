@@ -81,7 +81,7 @@ public class Quiz {
         this.dateEdited = dateEdited;
     }
 
-       public String getFormattedDateCreated() {
+    public String getFormattedDateCreated() {
         return formatDate(dateCreated);
     }
 

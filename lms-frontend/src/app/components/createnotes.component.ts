@@ -1,43 +1,43 @@
 import { Component, inject } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
-import { QuizQuestion, CreateQuizResponse, Quiz } from '../models';
+import { Content, CreateContentResponse } from '../models';
 import { AccountService } from '../services/account.service';
 import { ClassService } from '../services/class.service';
 import { QuizService } from '../services/quiz.service';
+import { firstValueFrom } from 'rxjs';
+import { ContentService } from '../services/content.service';
+
+
 
 @Component({
   selector: 'app-createnotes',
   templateUrl: './createnotes.component.html',
   styleUrls: ['./createnotes.component.css']
 })
-export class CreatenotesComponent {
+export class CreatenotesComponent  {
 
-  
-  question!: QuizQuestion
+
   contentForm!: FormGroup
-  optionForm!: FormGroup
-  questionFormGroup!: FormGroup
-  createQuiz$!: Promise<CreateQuizResponse>
+  createContent$!:Promise<CreateContentResponse>
+  // createQuiz$!: Promise<CreateQuizResponse>
   errorMessage!: string;
   renderedMath!: string;
   classes$!: Promise<string[]>
   accountId!: string
+
  
   fb = inject(FormBuilder)
   router = inject(Router)
+  contentSvc = inject(ContentService)
   accountSvc = inject(AccountService)
   quizSvc = inject(QuizService)
   classSvc = inject(ClassService)
-  
 
-  currentQuestionType!: 'MCQ' | 'FreeResponse';
 
-  title = 'Quiz Creator';
+  title = 'Content Creator';
 
   constructor() {
-
   this.accountId = this.accountSvc.account_id
   this.classes$=this.classSvc.getClasses(this.accountId)
   this.classes$.then(classes=> {
@@ -51,16 +51,16 @@ export class CreatenotesComponent {
 
   this.contentForm = this.fb.group({
       title: '',
-      sections: this.fb.array([]) ,
+      contents: this.fb.array([]) ,
       selectedClasses: this.fb.array([]),
       
     });
   
   }
-  
 
-  get sections() : FormArray {
-    return this.contentForm.get("sections") as FormArray
+
+  get contents() : FormArray {
+    return this.contentForm.get("contents") as FormArray
   }
 
   get selectedClasses() : FormArray {
@@ -72,17 +72,17 @@ export class CreatenotesComponent {
   createNewSection(): FormGroup {
     return this.fb.group({
       sectionTitle: this.fb.control<string>('', [Validators.required]),
-      notes: this.fb.control<string>('What is 1+1', [Validators.required]),
+      notes: this.fb.control<string>('', [Validators.required]),
     })
   }
 
 
   addSection() {
-    this.sections.push(this.createNewSection());
+    this.contents.push(this.createNewSection());
   }
 
   removeSection(i:number) {
-    this.sections.removeAt(i);
+    this.contents.removeAt(i);
   }
 
   invalidContentField(ctrlName:string): boolean{
@@ -94,7 +94,7 @@ export class CreatenotesComponent {
   }
 
   processContent() {
-    console.log('In process quiz:', this.contentForm.value);
+    console.log('In process content:', this.contentForm.value);
     const selectedClasses = this.contentForm.get('selectedClasses')?.value;
     console.log('Selected Classes:', selectedClasses);
 
@@ -123,16 +123,17 @@ export class CreatenotesComponent {
     console.log('Modified Selected Classes:', selectedClasses);
  
 
-    const quizData:Quiz = this.contentForm.value
-    quizData.account_id = this.accountSvc.account_id
-    quizData.classes = selectedClasses
 
-    console.info("quizData account id is", quizData.account_id)
+    const contentData: Content = this.contentForm.value
+    contentData.account_id = this.accountSvc.account_id
+    contentData.classes = selectedClasses
+
+    console.info("contentData account id is", contentData.account_id)
   
-  this.createQuiz$=firstValueFrom(this.quizSvc.createQuiz(quizData))
-  this.createQuiz$.then((response) => {
+  this.createContent$=firstValueFrom(this.contentSvc.createContent(contentData))
+  this.createContent$.then((response) => {
     console.log('account_id:', response.account_id);
-    console.log('quiz_id:', response.quiz_id);
+    console.log('content_od:', response.content_id);
     console.log('title:', response.title);
     console.log('status:' , response.status)
     const queryParams = {

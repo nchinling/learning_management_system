@@ -23,6 +23,28 @@
           </li>
         </ol>
     </div>
+
+
+    <div *ngIf="allStudentContentCreated$ | async as contentResponses;">
+      <h1>Content</h1>
+      <ol>
+        <li *ngFor="let contentResponse of contentResponses">
+          
+          <!-- {{ quizResponse | json }} -->
+          <td class="quiz_row" (click)="viewContent(contentResponse.content_id)">
+              {{ contentResponse.title}} ({{ contentResponse.content_id }})&nbsp;
+          </td>
+          <td>
+         
+            <span [style.color]="'grey'" *ngIf="contentResponse.date_created !== undefined; else newMessage">
+
+              |&nbsp; Created on {{contentResponse.date_created }}
+            </span>
+          </td>
+  
+        </li>
+      </ol>
+  </div>
     
   
     </div>

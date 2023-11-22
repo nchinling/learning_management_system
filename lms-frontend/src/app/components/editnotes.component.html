@@ -1,0 +1,69 @@
+<form [formGroup]="updateContentForm">
+    <div class="container">
+      <div *ngIf="updateContentForm.value">
+        <h1 class="custom-h1">Content</h1>
+        <div class="form-group">
+          <p>Content ID: {{ content_id }}</p>
+        </div>
+        <div class="form-group">
+          <label for="title">Title: </label>
+          <input type="text" id="title" formControlName="title">
+          <mat-error *ngIf="invalidContentField('title')">Please enter a valid title</mat-error>
+        </div><br>
+        <div formArrayName="contents">
+          <div *ngFor="let content of contentControls; let i = index">
+  
+            <div [formGroupName]="i">
+  
+              <div class="form-group">
+                <label for="section">Section {{ i + 1 }}:</label><br>
+                Section title: <input type="text" id="section-title" matInput placeholder="Section Title" formControlName="sectionTitle" required>
+                <mat-error *ngIf="invalidContentField('contents.' + i + '.sectionTitle')">Please provide section title.</mat-error><br><br>
+                <textarea id="content" formControlName="notes" rows="10"></textarea>
+                <mat-error *ngIf="invalidContentField('contents.' + i + '.notes')">Please provide content.</mat-error>
+              </div>
+ 
+  
+                <!-- <button mat-raised-button color="accent" class="add-label" (click)="deleteQuestion(i)">Remove Question {{i+1}}</button><br> -->
+            <button mat-fab color="accent" (click)="deleteSection(i)">
+                <mat-icon>delete</mat-icon>
+            </button><br>
+                
+        <br>
+            </div>
+          </div>
+        </div>
+ 
+        <button mat-stroked-button color="accent" class="add-label" type="button" (click)="addSection()">Add Section</button>&nbsp;
+
+        <br><br>
+  
+        <p>Assign to classes:</p>
+        <div *ngIf="classes$ | async as classes">
+          <div formArrayName="selectedClasses">
+            <div *ngFor="let class of classes; let i = index">
+              <label>
+                <input type="checkbox" [formControlName]="i" [value]="class">
+                {{ class }}
+              </label>
+            </div>
+          </div>
+        </div><br>
+  
+  
+        
+  
+  
+        
+          <button mat-raised-button color="primary" (click)="saveContent(content_id)" [disabled]="updateContentForm.invalid">Save Content</button>&nbsp;
+          <button mat-raised-button color="warn" (click)="deleteContent(content_id)">Delete Content</button>
+          
+          
+          <div class="success-message">{{successMessage}}</div>
+      </div>
+    </div>
+  </form>
+  
+  
+  
+  

@@ -21,6 +21,21 @@ export interface RegisterResponse {
     timestamp: string
 }
 
+export interface Content {
+ account_id: string
+ content_id: string
+ title: string
+ contents: ContentNotes[]
+ classes: string[]
+ date_created: string
+ date_edited: string
+}
+
+export interface ContentNotes {
+    sectionTitle: string
+    notes: string
+}
+
 export interface Quiz {
     account_id: string
     quiz_id: string
@@ -55,9 +70,16 @@ export interface CreateQuizResponse {
     student_total_marks: string
     percent: string
     date_attempted: string
-    // quizBuilder.add("quiz_total_marks", result.getQuizTotalMarks());
-    // quizBuilder.add("student_total_marks", result.getStudentTotalMarks());
-    // quizBuilder.add("percent", result.getPercent());
+}
+
+
+export interface CreateContentResponse {
+    account_id: string
+    content_id: string
+    title: string
+    status: string
+    date_created: string
+    date_edited: string
 }
 
 export interface MarkedQuizResponse {

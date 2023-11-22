@@ -85,11 +85,16 @@
 - Improved list details to include student attempts, date, etc
 - Beautified dashboard form
 
+# 22 Nov
+- minor edit to display date edited and date created
+- created content form
+- created edit, store and delete functions
+- Implemented form validation
 
 # To do
-- Implement notes
+- Create sql table for content
 - Implement data analytics in teacher's dashboard
-- Implement form validation
+- Implement data analytics in student's dashboard
 
 
 
