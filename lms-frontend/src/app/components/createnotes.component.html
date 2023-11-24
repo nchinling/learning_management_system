@@ -2,7 +2,7 @@
 
 
     <h1>Create Content</h1>
-    <form [formGroup]="contentForm" (submit)="processContent()">
+    <form [formGroup]="contentForm" enctype="multipart/form-data" (submit)="processContent()">
     
     
      <label>Content Title: </label>
@@ -18,12 +18,30 @@
         
      <div [formGroupName]="i">
 
+
       <button mat-raised-button color="accent" class="add-label" (click)="removeSection(i)">Remove Section {{i+1}}</button><br>
 
       <mat-form-field class="section-title">
         <input matInput placeholder="Section Title" formControlName="sectionTitle" required>
         <mat-error *ngIf="invalidContentField('contents.' + i + '.sectionTitle')">Please provide section title.</mat-error>
       </mat-form-field><br>
+
+<!-- 
+      <div>
+        <label for="image">Picture:</label>
+        <input type="file" id="image" name="image" size="30" placeholder="Select photo to upload"
+               accept="image/*" formControlName="image" (change)="onImageSelected($event)"><br>
+
+        <img *ngIf="selectedImage" [src]="selectedImage" alt="Selected Image" class="resized-image">
+      </div> -->
+
+      <!-- <div>
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image" size="30" placeholder="Select image to upload"
+               accept="image/*" (change)="onImageSelected($event, i)"><br>
+  
+        <img *ngIf="selectedImages[i]" [src]="selectedImages[i]" alt="Selected Image" class="resized-image">
+      </div> -->
 
    
        <mat-form-field class="section-field">
@@ -62,6 +80,12 @@
     
    </form>
    </div>
+
+
+
+
+
+
    
     
    

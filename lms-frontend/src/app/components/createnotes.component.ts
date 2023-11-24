@@ -15,7 +15,7 @@ import { ContentService } from '../services/content.service';
   templateUrl: './createnotes.component.html',
   styleUrls: ['./createnotes.component.css']
 })
-export class CreatenotesComponent  {
+export class CreatenotesComponent   {
 
 
   contentForm!: FormGroup
@@ -25,6 +25,8 @@ export class CreatenotesComponent  {
   renderedMath!: string;
   classes$!: Promise<string[]>
   accountId!: string
+  selectedImages: (string | ArrayBuffer | null)[] =[]
+  // selectedImage!: (string | ArrayBuffer)
 
  
   fb = inject(FormBuilder)
@@ -36,6 +38,7 @@ export class CreatenotesComponent  {
 
 
   title = 'Content Creator';
+
 
   constructor() {
   this.accountId = this.accountSvc.account_id
@@ -73,16 +76,24 @@ export class CreatenotesComponent  {
     return this.fb.group({
       sectionTitle: this.fb.control<string>('', [Validators.required]),
       notes: this.fb.control<string>('', [Validators.required]),
+      // image: null
+      // image: [null, Validators.required]
+
+      // image: this.fb.control<string>('', [Validators.required]),
     })
   }
 
 
   addSection() {
     this.contents.push(this.createNewSection());
+
+    // this.selectedImages.push(null);
   }
 
   removeSection(i:number) {
     this.contents.removeAt(i);
+
+    // this.selectedImages.splice(i, 1);
   }
 
   invalidContentField(ctrlName:string): boolean{
@@ -127,13 +138,14 @@ export class CreatenotesComponent  {
     const contentData: Content = this.contentForm.value
     contentData.account_id = this.accountSvc.account_id
     contentData.classes = selectedClasses
+    
 
     console.info("contentData account id is", contentData.account_id)
   
   this.createContent$=firstValueFrom(this.contentSvc.createContent(contentData))
   this.createContent$.then((response) => {
     console.log('account_id:', response.account_id);
-    console.log('content_od:', response.content_id);
+    console.log('content_id:', response.content_id);
     console.log('title:', response.title);
     console.log('status:' , response.status)
     const queryParams = {
@@ -156,4 +168,69 @@ export class CreatenotesComponent  {
 
 
   }
+
+  async onImageSelected(event: any, i: number) {
+    const fileInput = event.target;
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      this.contents.at(i).get('image')?.setValue(file ? await this.getBase64(file) : null);
+      // this.contents.at(i).get('image')?.setValue(file);
+      // this.contents.at(i).patchValue({
+      //   image: file
+      // });
+
+      this.displaySelectedImage(file, i);
+    }
+  }
+
+  async getBase64(file: File): Promise<string | null> {
+    return new Promise<string | null>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  
+  displaySelectedImage(file: File, i: number) {
+    const reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      this.selectedImages[i] = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  
+
+
+  // onImageSelected(event: any) {
+  //   const fileInput = event.target;
+  //   if (fileInput.files.length > 0) {
+  //     const file = fileInput.files[0];
+  //     this.contentForm.patchValue({
+  //       image: file
+  //     });
+
+  //     // Display the selected image
+  //     this.displaySelectedImage(file);
+  //   }
+  // }
+
+  // displaySelectedImage(file: File) {
+  //   const reader = new FileReader();
+
+  //   reader.onload = (e: any) => {
+  //     this.selectedImage = e.target.result;
+  //   };
+
+  //   reader.readAsDataURL(file);
+  // }
+
+
+  
+
+
 }

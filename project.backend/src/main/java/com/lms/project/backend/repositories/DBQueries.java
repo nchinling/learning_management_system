@@ -41,6 +41,6 @@ public class DBQueries {
 
   public static final String INCREMENT_ATTEMPTS_AND_ADD_MARKS_BY_QUIZ_ID = "UPDATE quiz_data SET attempts = attempts + 1, student_total_marks = student_total_marks + ? WHERE quiz_id = ? ";
 
-  public static final String INCREMENT_ACCESS_BY_CONTENT_ID = "UPDATE content_data SET access = access + 1 WHERE content_id = ? ";
+  public static final String INCREMENT_ACCESS_BY_CONTENT_ID = "UPDATE content_data SET accessed = accessed + 1 WHERE content_id = ? ";
 
 }

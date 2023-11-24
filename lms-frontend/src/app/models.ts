@@ -34,6 +34,7 @@ export interface Content {
 export interface ContentNotes {
     sectionTitle: string
     notes: string
+    // image?: string | null
 }
 
 export interface Quiz {

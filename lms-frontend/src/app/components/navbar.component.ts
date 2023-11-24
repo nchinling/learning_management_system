@@ -9,7 +9,7 @@ import { AccountService } from '../services/account.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit{
-  isCollapsed:boolean= true;
+  isCollapsed = true;
     
   // isTeacherLoggedIn$!: Observable<boolean>
   // isStudentLoggedIn$!: Observable<boolean>
@@ -49,11 +49,11 @@ export class NavbarComponent implements OnInit{
   }
 
   ngAfterViewInit(): void{
-    // this.isLoggedIn$ = this.accountSvc.isLoggedInChanged
+    this.isLoggedIn$ = this.accountSvc.isLoggedInChanged
   }
 
   ngOnChanges(): void{
-    // this.isLoggedIn$ = this.accountSvc.isLoggedInChanged
+    this.isLoggedIn$ = this.accountSvc.isLoggedInChanged
 
   }
 

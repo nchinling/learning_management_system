@@ -35,6 +35,7 @@ import { EditnotesComponent } from './components/editnotes.component';
 import { StudentcontentComponent } from './components/studentcontent.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -63,7 +63,9 @@ public class ContentController {
         ContentNotes[] contentNotes;
         String[] classList;
         try {
+            // contentNotes = contentsObjectMapper.readValue(contentsJson, ContentNotes[].class);
             contentNotes = contentsObjectMapper.readValue(contentsJson, ContentNotes[].class);
+    
             classList = classesObjectMapper.readValue(classes, String[].class);
             System.out.println("The classes with Jackson are: " + classList);
         } catch (JsonProcessingException e) {

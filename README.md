@@ -98,7 +98,7 @@
 
 
 # To do
-- Create sql table for content
+- insert images
 - Implement data analytics in teacher's dashboard
 - Implement data analytics in student's dashboard
 

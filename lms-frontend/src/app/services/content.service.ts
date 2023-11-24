@@ -37,7 +37,7 @@ export class ContentService {
       .set("contentId", contentData.content_id)
       .set("title", contentData.title)
       .set("classes", JSON.stringify(contentData.classes)) 
-      .set("content", JSON.stringify(contentData.contents)); 
+      .set("content", JSON.stringify(contentData.contents));
 
     const headers = new HttpHeaders()
       .set("Content-Type", "application/x-www-form-urlencoded")

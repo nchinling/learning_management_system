@@ -126,7 +126,7 @@ public class ContentRepository {
         try {
 
             // save into SQL database
-            jdbcTemplate.update(INCREMENT_ACCESS_BY_CONTENT_ID);
+            jdbcTemplate.update(INCREMENT_ACCESS_BY_CONTENT_ID, content.getContentId());
 
         } catch (Exception e) {
             e.printStackTrace();

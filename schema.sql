@@ -47,6 +47,12 @@ create table content_data(
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+create table images (
+	image_id char(8) not null,
+	image mediumblob not null,
+	primary key(image_id)
+);
+
 
 INSERT INTO class (account_id, class_name)
 VALUES ('ccf05864', 'Class A');
