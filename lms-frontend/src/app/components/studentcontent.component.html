@@ -1,1 +1,23 @@
-<p>studentcontent works!</p>
+<div class="container">
+
+<div *ngIf="content$ | async as content; else loading">
+    <h2>{{ content.title }}</h2>
+    <p>Content ID: {{ content.content_id }}</p>
+    <p>Created: {{ content.date_created }}</p>
+
+    <p *ngIf="content.date_edited">Edited: {{ content.date_edited }}</p>
+  
+    <h3>Content</h3>
+    <div *ngFor="let contentNote of content.contents">
+      <h4>{{ contentNote.sectionTitle }}</h4>
+      <p>{{ contentNote.notes }}</p>
+    </div>
+  
+  </div>
+  
+  <ng-template #loading>
+
+    <p>Loading...</p>
+  </ng-template>
+  
+</div>

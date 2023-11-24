@@ -12,19 +12,21 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.lms.project.backend.models.Content;
 import com.lms.project.backend.models.Quiz;
 import com.mongodb.client.result.UpdateResult;
+import static com.lms.project.backend.repositories.DBQueries.*;
 
 @Repository
 public class ContentRepository {
-    
+
     @Autowired
     private MongoTemplate mongoTemplate;
 
     @Autowired
     JdbcTemplate jdbcTemplate;
-
 
     public Content saveContent(Content content) {
         Query searchQuery = new Query(Criteria.where("contentId").is(content.getContentId()));
@@ -47,7 +49,7 @@ public class ContentRepository {
         } else {
             // Create a new document and save in sql
 
-            // jdbcTemplate.update(INSERT_CONTENT, content.getContentId(), contentTotalMarks);
+            jdbcTemplate.update(INSERT_CONTENT, content.getContentId());
 
             Document doc = new Document();
             doc.put("accountId", content.getAccountId());
@@ -63,13 +65,11 @@ public class ContentRepository {
         return content;
     }
 
-    
     public List<Content> getAllContent(String accountId) {
         Criteria criteria = Criteria.where("accountId").is(accountId);
 
         Query query = new Query(criteria).with(Sort.by(Direction.ASC, "title"));
         query.fields().exclude("_id").include("title", "contentId", "dateCreated", "dateEdited");
-
 
         List<Content> result = mongoTemplate.find(query, Document.class, "content").stream()
                 .map(doc -> new Content(doc.getString("title"), doc.getString("contentId"),
@@ -87,8 +87,7 @@ public class ContentRepository {
         Query query = new Query(criteria);
         // .with(Sort.by(Direction.ASC, "title"));z
         query.fields().exclude("_id").include("accountId", "title", "contentId", "contentNotes",
-                "classes");
-
+                "classes", "dateCreated", "dateEdited");
 
         Content content = mongoTemplate.findOne(query, Content.class, "content");
 
@@ -110,7 +109,6 @@ public class ContentRepository {
         Query query = new Query(criteria).with(Sort.by(Direction.ASC, "title"));
         query.fields().exclude("_id").include("title", "contentId", "dateCreated");
 
-
         List<Content> result = mongoTemplate.find(query, Document.class, "content").stream()
                 .map(doc -> new Content(doc.getString("title"), doc.getString("contentId"),
                         doc.getDate("dateCreated")))
@@ -121,5 +119,20 @@ public class ContentRepository {
         return result;
     }
 
+
+    @Transactional
+    public void saveAnalytics(Content content) {
+
+        try {
+
+            // save into SQL database
+            jdbcTemplate.update(INCREMENT_ACCESS_BY_CONTENT_ID);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error saving analytics", e);
+        }
+
+    }
 
 }

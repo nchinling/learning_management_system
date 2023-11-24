@@ -40,6 +40,14 @@ create table quiz_data(
     quiz_total_marks NUMERIC NOT NULL
 );
 
+create table content_data(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    content_id VARCHAR(20) NOT NULL, 
+    accessed NUMERIC NOT NULL DEFAULT 0,
+    date_created DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
 INSERT INTO class (account_id, class_name)
 VALUES ('ccf05864', 'Class A');
 

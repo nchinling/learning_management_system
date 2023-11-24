@@ -40,7 +40,7 @@ export class StudentdashboardComponent implements OnInit {
 
   viewContent(content_id:string){
     console.info('Printed the content_id:'+ content_id)
-    this.quizSvc.quiz_id = content_id 
+    this.contentSvc.content_id = content_id 
     this.router.navigate(['studentcontent']);
   
   }

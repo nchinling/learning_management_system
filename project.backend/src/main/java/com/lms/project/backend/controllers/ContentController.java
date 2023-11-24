@@ -38,7 +38,6 @@ import jakarta.json.JsonObjectBuilder;
 @CrossOrigin(origins = "*")
 public class ContentController {
 
-
     @Autowired
     private ContentService contentSvc;
 
@@ -101,8 +100,6 @@ public class ContentController {
         }
     }
 
-
-
     @GetMapping(path = "/getAllContent")
     @ResponseBody
     public ResponseEntity<String> getAllContent(@RequestParam(required = true) String account_id)
@@ -115,7 +112,6 @@ public class ContentController {
         System.out.println("Retrieved in controller: " + contentsList);
 
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-
 
         for (Content content : contentsList) {
             JsonObjectBuilder quizBuilder = Json.createObjectBuilder()
@@ -142,10 +138,8 @@ public class ContentController {
 
         System.out.println("Retrieved the student account Id: " + accountId);
 
-
-
         List<Content> contentList = contentSvc.getAllStudentContent(studentClass);
-       
+
         System.out.println("Retrieved in controller: " + contentList);
 
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
@@ -161,7 +155,6 @@ public class ContentController {
         return ResponseEntity.ok(respArray.toString());
 
     }
-
 
     @GetMapping(path = "/getContent/{content_id}")
     @ResponseBody
@@ -181,23 +174,23 @@ public class ContentController {
             contentArrayBuilder.add(contentBuilder);
         }
 
-
         JsonArrayBuilder classArrayBuilder = Json.createArrayBuilder();
         for (String contentClass : content.getClasses()) {
             classArrayBuilder.add(contentClass);
         }
 
-
         JsonObject resp = Json.createObjectBuilder().add("title", content.getTitle())
                 .add("account_id", content.getAccountId()).add("content_id", content.getContentId())
                 .add("contents", contentArrayBuilder)
+                .add("date_created", content.getFormattedDateCreated())
+                .add("date_edited", content.getDateEdited() != null ? content.getFormattedDateEdited() : "")
                 .add("classes", classArrayBuilder).build();
+    
 
         System.out.println(">>>sending back content data.>>>>>Hooray: " + resp);
         return ResponseEntity.ok(resp.toString());
 
     }
-
 
     @GetMapping(path = "/removeContent/{content_id}")
     @ResponseBody
@@ -209,8 +202,7 @@ public class ContentController {
         try {
             contentSvc.removeContent(contentId);
             System.out.println(">>>>>>>>Successfully removed content with id >>>>>" + content_id);
-            JsonObject resp =
-                    Json.createObjectBuilder().add("message", "Successfully removed").build();
+            JsonObject resp = Json.createObjectBuilder().add("message", "Successfully removed").build();
 
             return ResponseEntity.ok(resp.toString());
 
@@ -221,54 +213,60 @@ public class ContentController {
 
     }
 
-    // @PostMapping(path = "/markQuiz", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    // @PostMapping(path = "/markQuiz", consumes =
+    // MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     // @ResponseBody
-    // public ResponseEntity<String> markQuiz(@RequestBody MultiValueMap<String, String> form) {
+    // public ResponseEntity<String> markQuiz(@RequestBody MultiValueMap<String,
+    // String> form) {
 
-    //     System.out.printf(">>> I am inside saveQuiz>>>>>\n");
+    // System.out.printf(">>> I am inside saveQuiz>>>>>\n");
 
-    //     String accountId = form.getFirst("accountId");
-    //     System.out.println(">>> The accountId is >>>>>" + accountId);
+    // String accountId = form.getFirst("accountId");
+    // System.out.println(">>> The accountId is >>>>>" + accountId);
 
-    //     String quizId = form.getFirst("quizId");
-    //     System.out.println(">>> The quizId is >>>>>" + quizId);
-    //     String title = form.getFirst("title");
-    //     System.out.println(">>> The title is >>>>>" + title);
-    //     String questionsJson = form.getFirst("questions");
-    //     System.out.println(">>> The questions are is >>>>>" + questionsJson);
+    // String quizId = form.getFirst("quizId");
+    // System.out.println(">>> The quizId is >>>>>" + quizId);
+    // String title = form.getFirst("title");
+    // System.out.println(">>> The title is >>>>>" + title);
+    // String questionsJson = form.getFirst("questions");
+    // System.out.println(">>> The questions are is >>>>>" + questionsJson);
 
-    //     ObjectMapper questionsObjectMapper = new ObjectMapper();
-    //     QuizQuestions[] questions;
+    // ObjectMapper questionsObjectMapper = new ObjectMapper();
+    // QuizQuestions[] questions;
 
-    //     try {
-    //         questions = questionsObjectMapper.readValue(questionsJson, QuizQuestions[].class);
-    //     } catch (JsonProcessingException e) {
-    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid format received.");
-    //     }
+    // try {
+    // questions = questionsObjectMapper.readValue(questionsJson,
+    // QuizQuestions[].class);
+    // } catch (JsonProcessingException e) {
+    // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid format
+    // received.");
+    // }
 
-    //     Quiz quiz = new Quiz(accountId, title, quizId, questions);
-    //     System.out.println("The quiz data in markQuiz is: " + quiz);
+    // Quiz quiz = new Quiz(accountId, title, quizId, questions);
+    // System.out.println("The quiz data in markQuiz is: " + quiz);
 
-    //     JsonObject resp = null;
+    // JsonObject resp = null;
 
-    //     Quiz markedQuiz;
-    //     try {
-    //         markedQuiz = quizSvc.markQuiz(quiz);
-    //         resp = Json.createObjectBuilder().add("accountId", markedQuiz.getAccountId())
-    //                 .add("quizId", markedQuiz.getQuizId()).add("title", markedQuiz.getTitle())
-    //                 .add("questions", questionsJson).add("total_marks", markedQuiz.getTotalMarks())
-    //                 .add("marks", markedQuiz.getMarks()).build();
+    // Quiz markedQuiz;
+    // try {
+    // markedQuiz = quizSvc.markQuiz(quiz);
+    // resp = Json.createObjectBuilder().add("accountId", markedQuiz.getAccountId())
+    // .add("quizId", markedQuiz.getQuizId()).add("title", markedQuiz.getTitle())
+    // .add("questions", questionsJson).add("total_marks",
+    // markedQuiz.getTotalMarks())
+    // .add("marks", markedQuiz.getMarks()).build();
 
-    //         System.out.printf(">>>Sending back to lms client>>>>>\n");
-    //         return ResponseEntity.ok(resp.toString());
+    // System.out.printf(">>>Sending back to lms client>>>>>\n");
+    // return ResponseEntity.ok(resp.toString());
 
-    //     } catch (QuizException e) {
-    //         String errorMessage = e.getMessage();
-    //         System.out.printf(">>>Quiz Exception occured>>>>>\n");
-    //         resp = Json.createObjectBuilder().add("error", errorMessage).build();
+    // } catch (QuizException e) {
+    // String errorMessage = e.getMessage();
+    // System.out.printf(">>>Quiz Exception occured>>>>>\n");
+    // resp = Json.createObjectBuilder().add("error", errorMessage).build();
 
-    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resp.toString());
-    //     }
+    // return
+    // ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resp.toString());
+    // }
 
     // }
 

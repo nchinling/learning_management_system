@@ -36,6 +36,16 @@ public class Content {
         this.title = title;
         this.dateCreated = dateCreated;
     }
+    
+    
+
+    public Content(String accountId, ContentNotes[] contentNotes, String[] classes, Date dateCreated, Date dateEdited) {
+        this.accountId = accountId;
+        this.contentNotes = contentNotes;
+        this.classes = classes;
+        this.dateCreated = dateCreated;
+        this.dateEdited = dateEdited;
+    }
 
     public Content(String title , String contentId, Date dateCreated, Date dateEdited) {
         this.contentId = contentId;

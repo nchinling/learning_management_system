@@ -110,6 +110,7 @@ public class ContentService {
 
 
         Content content = contentRepo.getContent(contentId);
+        contentRepo.saveAnalytics(content);
         return content;
 
     }

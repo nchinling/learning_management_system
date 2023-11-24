@@ -91,6 +91,12 @@
 - created edit, store and delete functions
 - Implemented form validation
 
+
+# 24 Nov
+- displayed student content
+- created content analytics table
+
+
 # To do
 - Create sql table for content
 - Implement data analytics in teacher's dashboard
