@@ -109,4 +109,13 @@ label {
     width: 100px; /* Set your desired fixed width */
   }
   
+  .correct {
+    font-size: 48px; /* Adjust the size as needed */
+    color: green;
+  }
+  
+  .incorrect {
+    font-size: 48px; /* Adjust the size as needed */
+    color: red;
+  }
   

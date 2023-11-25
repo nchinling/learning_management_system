@@ -1,6 +1,6 @@
 import { HttpParams, HttpHeaders, HttpClient } from "@angular/common/http";
 import { Observable, filter, tap, Subject, map, lastValueFrom, firstValueFrom } from "rxjs";
-import { Content, CreateContentResponse, CreateQuizResponse, Quiz } from "../models";
+import { Content, CreateContentResponse } from "../models";
 import { Injectable, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { AccountService } from "./account.service";
@@ -39,10 +39,29 @@ export class ContentService {
       .set("classes", JSON.stringify(contentData.classes)) 
       .set("content", JSON.stringify(contentData.contents));
 
-    const headers = new HttpHeaders()
-      .set("Content-Type", "application/x-www-form-urlencoded")
+    const formData = new FormData();
+    formData.append('accountId', contentData.account_id);
+    formData.append('contentId', contentData.content_id);
+    formData.append('title', contentData.title);
+    formData.append('classes', JSON.stringify(contentData.classes));
+
+    // contentData.contents.forEach((contentNote, index) => {
+    //   formData.append(`contents[${index}].sectionTitle`, contentNote.sectionTitle);
+    //   formData.append(`contents[${index}].notes`, contentNote.notes);
+    //   if (contentNote.image) {
+    //     formData.append(`contents[${index}].image`, contentNote.image);
+    //   }
+    // });
+
+
+        const headers = new HttpHeaders()
+          .set("Content-Type", "application/x-www-form-urlencoded")
+
+    // const headers = new HttpHeaders();
+    // headers.append('Content-Type', 'multipart/form-data');
 
     return this.http.post<CreateContentResponse>(`${URL_API_SERVER}/saveContent`, form.toString(), {headers}).pipe(
+      // return this.http.post<CreateContentResponse>(`${URL_API_SERVER}/saveContent`, formData, { headers }).pipe(
       filter((response) => response !== null), 
         tap(response => this.onCreateContentRequest.next(response)),
         map(response => ({ account_id: response.account_id, content_id: response.content_id, 

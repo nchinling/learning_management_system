@@ -10,6 +10,7 @@ public class QuizQuestions {
     private String option4;
     private String answer;
     private String marks;
+    private boolean correct;
     
     public QuizQuestions() {
     }
@@ -27,7 +28,23 @@ public class QuizQuestions {
         this.marks = marks;
     }
 
+    
 
+
+
+
+    public QuizQuestions(String question, String questionType, String option1, String option2,
+            String option3, String option4, String answer, String marks, boolean correct) {
+        this.question = question;
+        this.questionType = questionType;
+        this.option1 = option1;
+        this.option2 = option2;
+        this.option3 = option3;
+        this.option4 = option4;
+        this.answer = answer;
+        this.marks = marks;
+        this.correct = correct;
+    }
 
 
     public QuizQuestions(String question, String questionType, String option1, String option2, String option3,
@@ -127,11 +144,22 @@ public class QuizQuestions {
     }
 
 
+    public boolean isCorrect() {
+        return correct;
+    }
+
+
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
+    }
+
+
     @Override
     public String toString() {
         return "QuizQuestions [question=" + question + ", questionType=" + questionType
                 + ", option1=" + option1 + ", option2=" + option2 + ", option3=" + option3
-                + ", option4=" + option4 + ", answer=" + answer + ", marks=" + marks + "]";
+                + ", option4=" + option4 + ", answer=" + answer + ", marks=" + marks + ", correct="
+                + correct + "]";
     }
 
     

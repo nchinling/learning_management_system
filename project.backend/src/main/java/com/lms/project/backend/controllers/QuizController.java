@@ -1,6 +1,7 @@
 package com.lms.project.backend.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,9 +121,8 @@ public class QuizController {
                     .add("quiz_id", quiz.getQuizId()).add("title", quiz.getTitle())
                     // .add("date_created", quiz.getDateCreated().toString())
                     // .add("date_edited",
-                    //         quiz.getDateEdited() != null ? quiz.getDateEdited().toString() : "");
-                    .add("date_created", quiz.getFormattedDateCreated())
-                    .add("date_edited",
+                    // quiz.getDateEdited() != null ? quiz.getDateEdited().toString() : "");
+                    .add("date_created", quiz.getFormattedDateCreated()).add("date_edited",
                             quiz.getDateEdited() != null ? quiz.getFormattedDateEdited() : "");
             arrayBuilder.add(quizBuilder);
         }
@@ -276,15 +276,39 @@ public class QuizController {
         JsonObject resp = null;
 
         Quiz markedQuiz;
+        ObjectMapper objectMapper = new ObjectMapper();
+        String returnedCorrectJson;
         try {
             markedQuiz = quizSvc.markQuiz(quiz);
-            resp = Json.createObjectBuilder().add("accountId", markedQuiz.getAccountId())
-                    .add("quizId", markedQuiz.getQuizId()).add("title", markedQuiz.getTitle())
-                    .add("questions", questionsJson).add("total_marks", markedQuiz.getTotalMarks())
-                    .add("marks", markedQuiz.getMarks()).build();
 
-            System.out.printf(">>>Sending back to lms client>>>>>\n");
-            return ResponseEntity.ok(resp.toString());
+            try {
+                List<Boolean> correctResults = new ArrayList<>();
+
+                for (QuizQuestions question : markedQuiz.getQuizQuestions()) {
+                    correctResults.add(question.isCorrect());
+                }
+
+                JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+                    for (Boolean result : correctResults) {
+                        jsonArrayBuilder.add(result);
+                    }
+                    JsonArray correctArray = jsonArrayBuilder.build();
+
+                // returnedCorrectJson = objectMapper.writeValueAsString(correctResults);
+
+                resp = Json.createObjectBuilder().add("accountId", markedQuiz.getAccountId())
+                        .add("quizId", markedQuiz.getQuizId()).add("title", markedQuiz.getTitle())
+                        .add("questions", questionsJson)
+                        .add("correct", correctArray)
+                        .add("total_marks", markedQuiz.getTotalMarks())
+                        .add("marks", markedQuiz.getMarks()).build();
+
+                System.out.println(">>>Sending back to lms client>>>>> " + markedQuiz);
+                return ResponseEntity.ok(resp.toString());
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.toString());
+
+            }
 
         } catch (QuizException e) {
             String errorMessage = e.getMessage();

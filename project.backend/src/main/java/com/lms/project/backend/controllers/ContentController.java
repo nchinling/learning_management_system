@@ -2,7 +2,6 @@ package com.lms.project.backend.controllers;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,12 +20,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lms.project.backend.models.Content;
 import com.lms.project.backend.models.ContentNotes;
-import com.lms.project.backend.models.Quiz;
-import com.lms.project.backend.models.QuizQuestions;
-import com.lms.project.backend.models.StudentResult;
 import com.lms.project.backend.service.ContentException;
 import com.lms.project.backend.service.ContentService;
-import com.lms.project.backend.service.QuizException;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
@@ -44,6 +39,14 @@ public class ContentController {
     @PostMapping(path = "/saveContent", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseBody
     public ResponseEntity<String> saveContent(@RequestBody MultiValueMap<String, String> form) {
+
+    // @PostMapping("/saveContent")
+    // public ResponseEntity<String> saveContent(
+    //     @RequestParam("accountId") String accountId,
+    //     @RequestParam("contentId") String contentId,
+    //     @RequestParam("title") String title,
+    //     @RequestParam("classes") String classes,
+    //     @RequestParam("contents") List<Map<String, Object>> contentDataList) {
 
         System.out.printf(">>> I am inside saveContent>>>>>\n");
 
@@ -63,8 +66,8 @@ public class ContentController {
         ContentNotes[] contentNotes;
         String[] classList;
         try {
-            // contentNotes = contentsObjectMapper.readValue(contentsJson, ContentNotes[].class);
             contentNotes = contentsObjectMapper.readValue(contentsJson, ContentNotes[].class);
+            // contentNotes = contentsObjectMapper.readValue(classes, ContentNotes[].class);
     
             classList = classesObjectMapper.readValue(classes, String[].class);
             System.out.println("The classes with Jackson are: " + classList);

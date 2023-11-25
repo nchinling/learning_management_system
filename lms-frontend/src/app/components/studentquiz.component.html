@@ -18,8 +18,8 @@
                 <label for="question">Question {{ i + 1 }}:</label><br>
                 <p>Question type: {{ question.get('questionType')?.value }}</p>
                 <p>Question: {{ question.get('question')?.value }}</p>
-                <!-- <textarea id="question" formControlName="question" rows="5"></textarea> -->
-              </div>
+        </div>
+
           
         <div class="form-group" *ngIf="question.get('questionType')?.value === 'MCQ'">
                     <div class="form-group"><br>
@@ -54,11 +54,29 @@
 
                   <mat-error *ngIf="invalidQuizField('questions.' + i + '.answer')">Please provide the answer</mat-error>
 
-                </div><br>
-                
+              </div><br>
+<!-- 
+              <div *ngFor="let isCorrect of eachMarkedQuestion; let i = index">
+                Question {{ i + 1 }}: {{ isCorrect ? 'Correct' : 'Incorrect' }}
+              </div> -->
+              <!-- <div *ngIf="eachMarkedQuestion[i] !== undefined">
+                Question {{ i + 1 }}: {{ eachMarkedQuestion[i] ? 'Correct' : 'Incorrect' }}
+              </div> -->
+
+              <!-- <div *ngIf="eachMarkedQuestion[i] !== undefined">
+               {{ eachMarkedQuestion[i] ? '&#10003;' : '&#10007;' }}
+              </div> -->
+
+              <div *ngIf="eachMarkedQuestion[i] !== undefined">
+                <span [innerHTML]="eachMarkedQuestion[i] ? '&#10003;' : '&#10007;'" class="{{ eachMarkedQuestion[i] ? 'correct' : 'incorrect' }}"></span>
+              </div>
+              
+    
+               
         <br>
             </div>
           </div>
+     
         </div>
         <br>
           <button mat-raised-button color="primary" (click)="submitQuiz(quiz_id)" [disabled]="quizForm.invalid">Submit</button>&nbsp;&nbsp;{{marks}} 

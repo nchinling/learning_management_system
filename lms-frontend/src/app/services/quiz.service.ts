@@ -164,7 +164,8 @@ export class QuizService {
     return this.http.post<MarkedQuizResponse>(`${URL_API_SERVER}/markQuiz`, form.toString(), {headers}).pipe(
       filter((response) => response !== null), 
         map(response => ({ account_id: response.account_id, quiz_id: response.quiz_id, 
-                    title: response.title, questions: response.questions, total_marks: response.total_marks, marks: response.marks
+                    title: response.title, questions: response.questions, total_marks: response.total_marks, marks: response.marks,
+                    correct: response.correct
                     }))
 
     );

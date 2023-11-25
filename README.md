@@ -96,6 +96,9 @@
 - displayed student content
 - created content analytics table
 
+# 25 Nov
+- created marking symbols for each question
+
 
 # To do
 - insert images

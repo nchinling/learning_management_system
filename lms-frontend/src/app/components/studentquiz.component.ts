@@ -24,6 +24,10 @@ export class StudentquizComponent implements OnInit {
   accountSvc = inject(AccountService)
 
   markedQuizResponse$!: Promise<MarkedQuizResponse>
+  markedQuizResponse!: MarkedQuizResponse
+  eachMarkedQuestion: boolean[] = [];
+
+
 
   ngOnInit(): void{
     this.quiz_id = this.quizSvc.quiz_id
@@ -31,7 +35,7 @@ export class StudentquizComponent implements OnInit {
     this.quiz$ = this.quizSvc.getQuiz(this.quiz_id)
     console.info('quiz data is ', this.quiz$)
     this.quizForm = this.createForm()
-   
+
 
   }
 
@@ -52,7 +56,7 @@ export class StudentquizComponent implements OnInit {
     const formGroup = this.fb.group({
       title: [''],
       quiz_id: [''],
-      questions: this.fb.array([])
+      questions: this.fb.array([]),
   
     });
 
@@ -83,7 +87,8 @@ export class StudentquizComponent implements OnInit {
                 option4: [question.option4],
                 // answer: '',
                 answer: this.fb.control<string>('', [Validators.required]),
-                marks: [question.marks]
+                marks: [question.marks],
+
               })
             );
           });
@@ -94,6 +99,7 @@ export class StudentquizComponent implements OnInit {
   }
 
   get questionControls() {
+
     return (this.quizForm.get('questions') as FormArray).controls;
   }
 
@@ -108,6 +114,14 @@ export class StudentquizComponent implements OnInit {
 
     this.markedQuizResponse$=firstValueFrom(this.quizSvc.submitQuizForMarking(submittedQuizData))
     this.markedQuizResponse$.then((response) => {
+      this.markedQuizResponse = response
+      console.log('this.markedQuizResponse: ', this.markedQuizResponse)
+      // this.eachMarkedQuestion = response.correct
+
+    
+        this.eachMarkedQuestion = response.correct
+
+    
       console.log('returned response', response)
       console.log('marks:', response.marks);
       this.marks = 'You got ' + response.marks + ' out of ' + response.total_marks + ' marks!'
@@ -123,11 +137,6 @@ export class StudentquizComponent implements OnInit {
   invalidQuizField(ctrlName:string): boolean{
     return !!(this.quizForm.get(ctrlName)?.invalid && this.quizForm.get(ctrlName)?.dirty)
   }
-
-
-
-
-
 
 
 }

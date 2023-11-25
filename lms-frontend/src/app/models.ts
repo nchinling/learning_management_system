@@ -34,7 +34,7 @@ export interface Content {
 export interface ContentNotes {
     sectionTitle: string
     notes: string
-    // image?: string | null
+    // image?: File | null
 }
 
 export interface Quiz {
@@ -88,6 +88,9 @@ export interface MarkedQuizResponse {
     quiz_id: string
     title: string
     questions: QuizQuestion[]
+    correct: boolean[]
+    // questions: string
+    // questions_correct: boolean[]
     marks: string
     total_marks: string
 }

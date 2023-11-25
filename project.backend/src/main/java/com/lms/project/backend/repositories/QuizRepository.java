@@ -206,9 +206,12 @@ public class QuizRepository {
 
             if (inputAnswer.equals(savedAnswer)) {
                 marks = marks + Integer.parseInt(savedQuiz.getQuizQuestions()[i].getMarks());
+                inputQuiz.getQuizQuestions()[i].setCorrect(true);
                 System.out.println("The marks obtained for question" + i + " is " + marks);
             }
-
+            else{
+                inputQuiz.getQuizQuestions()[i].setCorrect(false);
+            }
         }
         inputQuiz.setMarks(String.valueOf(marks));
         inputQuiz.setTotalMarks(String.valueOf(totalMarks));

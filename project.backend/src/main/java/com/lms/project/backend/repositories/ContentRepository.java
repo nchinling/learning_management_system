@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lms.project.backend.models.Content;
-import com.lms.project.backend.models.Quiz;
 import com.mongodb.client.result.UpdateResult;
 import static com.lms.project.backend.repositories.DBQueries.*;
 
