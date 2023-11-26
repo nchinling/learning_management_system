@@ -151,7 +151,9 @@ public class ContentController {
 
         for (Content content : contentList) {
             JsonObjectBuilder contentBuilder = Json.createObjectBuilder()
-                    .add("content_id", content.getContentId()).add("title", content.getTitle());
+                    .add("content_id", content.getContentId())
+                    .add("title", content.getTitle())
+                    .add("date_created", content.getFormattedDateCreated());
             arrayBuilder.add(contentBuilder);
         }
 

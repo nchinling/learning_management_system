@@ -21,6 +21,16 @@ create table class(
     class_name VARCHAR(10) NOT NULL
 );
 
+-- create table student_result(
+--     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+--     student_account_id  VARCHAR(5) NOT NULL, 
+--     quiz_id VARCHAR(20) NOT NULL,
+--     quiz_total_marks NUMERIC NOT NULL,
+--     student_total_marks NUMERIC NOT NULL,
+--     percent NUMERIC(6, 2) NOT NULL,
+--     date_attempted DATETIME DEFAULT CURRENT_TIMESTAMP
+-- );
+
 create table student_result(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     student_account_id  VARCHAR(5) NOT NULL, 
@@ -28,12 +38,14 @@ create table student_result(
     quiz_total_marks NUMERIC NOT NULL,
     student_total_marks NUMERIC NOT NULL,
     percent NUMERIC(6, 2) NOT NULL,
-    date_attempted DATETIME DEFAULT CURRENT_TIMESTAMP
+    date_attempted DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_student_quiz_pair (student_account_id, quiz_id)
 );
 
 create table quiz_data(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     quiz_id VARCHAR(20) NOT NULL, 
+    account_id VARCHAR(20) NOT NULL,
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
     attempts NUMERIC NOT NULL DEFAULT 0,
     student_total_marks NUMERIC NOT NULL DEFAULT 0,

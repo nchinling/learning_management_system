@@ -2,11 +2,13 @@ package com.lms.project.backend.repositories;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import com.lms.project.backend.models.Account;
 import com.lms.project.backend.models.Quiz;
 import com.lms.project.backend.models.StudentResult;
 import com.mongodb.client.result.UpdateResult;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -55,7 +57,7 @@ public class QuizRepository {
                         quizTotalMarks + Integer.parseInt(quiz.getQuizQuestions()[i].getMarks());
             }
 
-            jdbcTemplate.update(INSERT_QUIZ, quiz.getQuizId(), quizTotalMarks);
+            jdbcTemplate.update(INSERT_QUIZ, quiz.getQuizId(), quiz.getAccountId(), quizTotalMarks);
 
             Document doc = new Document();
             doc.put("accountId", quiz.getAccountId());
@@ -85,9 +87,31 @@ public class QuizRepository {
                         doc.getDate("dateCreated"), doc.getDate("dateEdited")))
                 .toList();
 
+        List<Quiz> quizListFromSql = getQuizByTeacherAccountId(accountId);
+        if (!quizListFromSql.isEmpty()) {
+            System.out.println("Obtained quiz with row mappers");
+        
+            // Iterate over each quiz in quizListFromSql
+            for (Quiz resultQuiz : result) {
+                for (Quiz sqlQuiz : quizListFromSql) {
+                    // Compare the quizId
+                    if (resultQuiz.getQuizId().equals(sqlQuiz.getQuizId())) {
+                        // Update the attempts if the quizId matches
+                        resultQuiz.setNumberOfAttempts(sqlQuiz.getNumberOfAttempts());
+                        break; 
+                    }
+                }
+            }
+        }
+
         System.out.println("Data returned from MongoDB: " + result);
 
         return result;
+    }
+
+    private List<Quiz> getQuizByTeacherAccountId(String accountId) {
+        return jdbcTemplate.query(SELECT_QUIZ_BY_TEACHER_ACCOUNT_ID, new QuizRowMapper(),
+                new Object[] {accountId});
     }
 
 
@@ -108,22 +132,22 @@ public class QuizRepository {
         return result;
     }
 
-    
+
     public List<StudentResult> getStudentResults(String studentAccountId) {
         List<StudentResult> studentResults;
 
         System.out.println("The student account Id is " + studentAccountId);
-    
-            studentResults = jdbcTemplate.query(SELECT_STUDENT_RESULTS_BY_STUDENT_ACCOUNT_ID, 
-            new StudentResultRowMapper() , new Object[]{studentAccountId});
-            
-            // if (!studentResults.isEmpty()) {
-            //     return Optional.of(studentResults.get(0));
-            // } else {
-            //     return Optional.empty();
-            // }
 
-            return studentResults;
+        studentResults = jdbcTemplate.query(SELECT_STUDENT_RESULTS_BY_STUDENT_ACCOUNT_ID,
+                new StudentResultRowMapper(), new Object[] {studentAccountId});
+
+        // if (!studentResults.isEmpty()) {
+        // return Optional.of(studentResults.get(0));
+        // } else {
+        // return Optional.empty();
+        // }
+
+        return studentResults;
 
     }
 
@@ -208,8 +232,7 @@ public class QuizRepository {
                 marks = marks + Integer.parseInt(savedQuiz.getQuizQuestions()[i].getMarks());
                 inputQuiz.getQuizQuestions()[i].setCorrect(true);
                 System.out.println("The marks obtained for question" + i + " is " + marks);
-            }
-            else{
+            } else {
                 inputQuiz.getQuizQuestions()[i].setCorrect(false);
             }
         }

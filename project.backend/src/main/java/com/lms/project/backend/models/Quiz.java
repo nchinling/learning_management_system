@@ -17,6 +17,7 @@ public class Quiz {
     private String totalMarks;
     private Date dateCreated;
     private Date dateEdited;
+    private int numberOfAttempts;
 
 
     public Quiz() {
@@ -27,14 +28,40 @@ public class Quiz {
         return quizQuestions;
     }
 
+    
+    public Quiz(String accountId, String quizId, String title, String status,
+            QuizQuestions[] quizQuestions, String[] quizClasses, String marks, String totalMarks,
+            Date dateCreated, Date dateEdited, int numberOfAttempts) {
+        this.accountId = accountId;
+        this.quizId = quizId;
+        this.title = title;
+        this.status = status;
+        this.quizQuestions = quizQuestions;
+        this.quizClasses = quizClasses;
+        this.marks = marks;
+        this.totalMarks = totalMarks;
+        this.dateCreated = dateCreated;
+        this.dateEdited = dateEdited;
+        this.numberOfAttempts = numberOfAttempts;
+    }
 
+
+    public Quiz(String title, String quizId, int numberOfAttempts, Date dateCreated, Date dateEdited) {
+        this.quizId = quizId;
+        this.title = title;
+        this.dateCreated = dateCreated;
+        this.dateEdited = dateEdited;
+        this.numberOfAttempts = numberOfAttempts;
+    }
 
     public Quiz(String title, String quizId, Date dateCreated, Date dateEdited) {
         this.quizId = quizId;
         this.title = title;
         this.dateCreated = dateCreated;
         this.dateEdited = dateEdited;
+
     }
+
 
     
 
@@ -242,13 +269,27 @@ public class Quiz {
     }
 
 
+    public int getNumberOfAttempts() {
+        return numberOfAttempts;
+    }
+
+
+    public void setNumberOfAttempts(int numberOfAttempts) {
+        this.numberOfAttempts = numberOfAttempts;
+    }
+
+
     @Override
     public String toString() {
         return "Quiz [accountId=" + accountId + ", quizId=" + quizId + ", title=" + title
                 + ", status=" + status + ", quizQuestions=" + Arrays.toString(quizQuestions)
                 + ", quizClasses=" + Arrays.toString(quizClasses) + ", marks=" + marks
-                + ", totalMarks=" + totalMarks + "]";
+                + ", totalMarks=" + totalMarks + ", dateCreated=" + dateCreated + ", dateEdited="
+                + dateEdited + ", numberOfAttempts=" + numberOfAttempts + "]";
     }
+
+    
+
 
     
 }

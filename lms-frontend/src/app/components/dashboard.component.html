@@ -1,5 +1,13 @@
 <div class = "container">
 
+<div style="width: 800px;">
+    <canvas id="acquisitions"></canvas>
+</div><br>
+
+<div style="width: 800px;">
+  <canvas id="myChart"></canvas>
+</div>
+
 <div *ngIf="allQuizCreated$ | async as quizResponses;">
     <h1>Quiz</h1>
     <ol>
@@ -8,7 +16,7 @@
     
    
         <td class="quiz_row" (click)="viewQuiz(quizResponse.quiz_id)">
-            {{ quizResponse.title}} ({{ quizResponse.quiz_id }})&nbsp;&nbsp;
+            {{ quizResponse.title}} ({{ quizResponse.quiz_id }}) {{quizResponse.attempts}} &nbsp;&nbsp;
         </td>
         <td>
           <!-- Created: {{quizResponse.date_created}} -->
@@ -43,3 +51,4 @@
 
 
 </div>
+

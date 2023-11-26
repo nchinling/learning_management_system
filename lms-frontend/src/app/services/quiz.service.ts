@@ -47,7 +47,7 @@ export class QuizService {
                     title: response.title, status:response.status, date_created: response.date_created,
                     date_edited: response.date_edited, quiz_total_marks: response.quiz_total_marks,
                     student_total_marks: response.student_total_marks,
-                    percent: response.percent, date_attempted: response.date_attempted
+                    percent: response.percent, date_attempted: response.date_attempted,  attempts: response.attempts
                     }))
 
     );
@@ -76,7 +76,8 @@ export class QuizService {
         quiz_total_marks: resp.quiz_total_marks,
         student_total_marks: resp.student_total_marks,
         percent: resp.percent,
-        date_attempted: resp.date_attempted
+        date_attempted: resp.date_attempted,
+        attempts: resp.attempts
 
       })))
     )
@@ -108,12 +109,9 @@ export class QuizService {
         quiz_total_marks: resp.quiz_total_marks,
         student_total_marks: resp.student_total_marks,
         percent: resp.percent,
-        date_attempted: resp.date_attempted
+        date_attempted: resp.date_attempted,
+        attempts: resp.attempts
 
-        // quizBuilder.add("quiz_total_marks", result.getQuizTotalMarks());
-        // quizBuilder.add("student_total_marks", result.getStudentTotalMarks());
-        // quizBuilder.add("percent", result.getPercent());
-        
 
       })))
     )

@@ -71,6 +71,7 @@ export interface CreateQuizResponse {
     student_total_marks: string
     percent: string
     date_attempted: string
+    attempts: number
 }
 
 

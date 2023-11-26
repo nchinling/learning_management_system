@@ -119,11 +119,13 @@ public class QuizController {
         for (Quiz quiz : quizzes) {
             JsonObjectBuilder quizBuilder = Json.createObjectBuilder()
                     .add("quiz_id", quiz.getQuizId()).add("title", quiz.getTitle())
-                    // .add("date_created", quiz.getDateCreated().toString())
+                    .add("attempts", quiz.getNumberOfAttempts())
                     // .add("date_edited",
                     // quiz.getDateEdited() != null ? quiz.getDateEdited().toString() : "");
-                    .add("date_created", quiz.getFormattedDateCreated()).add("date_edited",
+                    .add("date_created", quiz.getFormattedDateCreated())
+                    .add("date_edited",
                             quiz.getDateEdited() != null ? quiz.getFormattedDateEdited() : "");
+                    
             arrayBuilder.add(quizBuilder);
         }
 
@@ -276,8 +278,8 @@ public class QuizController {
         JsonObject resp = null;
 
         Quiz markedQuiz;
-        ObjectMapper objectMapper = new ObjectMapper();
-        String returnedCorrectJson;
+        // ObjectMapper objectMapper = new ObjectMapper();
+        // String returnedCorrectJson;
         try {
             markedQuiz = quizSvc.markQuiz(quiz);
 

@@ -116,7 +116,6 @@ export class StudentquizComponent implements OnInit {
     this.markedQuizResponse$.then((response) => {
       this.markedQuizResponse = response
       console.log('this.markedQuizResponse: ', this.markedQuizResponse)
-      // this.eachMarkedQuestion = response.correct
 
     
         this.eachMarkedQuestion = response.correct
@@ -127,9 +126,9 @@ export class StudentquizComponent implements OnInit {
       this.marks = 'You got ' + response.marks + ' out of ' + response.total_marks + ' marks!'
 
    
-    // setTimeout(() => {
-    //   this.router.navigate(['/dashboard']);
-    // }, 2000); 
+    setTimeout(() => {
+      this.router.navigate(['/studentdashboard']);
+    }, 2000); 
 
     })
   }

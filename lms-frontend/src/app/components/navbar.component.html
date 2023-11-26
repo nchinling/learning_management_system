@@ -1,6 +1,12 @@
 <ng-container *ngIf="(isLoggedIn$ | async); else loggedOut">
 <mat-toolbar color="primary">
-    <span><span style="color: greenyellow; font-size: 20px;">Edu</span><span style="color: navajowhite;">Quest</span> Learning Management System</span>
+    <a *ngIf="isStudent; else teacherHome" [routerLink]="['/studentdashboard']" style="text-decoration: none; color: inherit;">
+        <span style="color: greenyellow; font-size: 20px;">Edu</span>
+        <span style="color: navajowhite;">Quest</span> Learning Management System
+      </a>
+
+      
+    <!-- <span><span style="color: greenyellow; font-size: 20px;">Edu</span><span style="color: navajowhite;">Quest</span> Learning Management System</span> -->
     <span class="spacer"></span>
     <ng-container *ngIf="isLoggedIn$ && isStudent; else teacherLinks">
         <a routerLink="/studentdashboard" class="link">Dashboard</a>
@@ -9,6 +15,9 @@
         <a routerLink="/dashboard" class="link">Dashboard</a>
         <a routerLink="/create_content" class="link">Content</a>
         <a routerLink="/quiz" class="link">Quiz</a>
+    </ng-template>
+    <ng-template #teacherHome>
+        <a [routerLink]="['/dashboard']" style="text-decoration: none; color: inherit;"><span style="color: greenyellow; font-size: 20px;">Edu</span><span style="color: navajowhite;">Quest</span> Learning Management System</a>
     </ng-template>
     
     <button mat-raised-button color="warn" (click)="logout()">

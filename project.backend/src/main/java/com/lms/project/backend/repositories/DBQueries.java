@@ -10,7 +10,7 @@ public class DBQueries {
 
     public static final String INSERT_QUIZ = """
         
-    insert into quiz_data(quiz_id, quiz_total_marks) values (?,?);
+    insert into quiz_data(quiz_id, account_id, quiz_total_marks) values (?,?,?);
 
   """;
 
@@ -23,7 +23,11 @@ public class DBQueries {
   
     public static final String INSERT_MARKS_BY_ACCOUNT_ID_AND_QUIZ_ID = """
         
-    insert into student_result(student_account_id, quiz_id, quiz_total_marks, student_total_marks, percent) values (?,?,?,?,?);
+    insert into student_result(student_account_id, quiz_id, quiz_total_marks, student_total_marks, percent) values (?,?,?,?,?)
+    ON DUPLICATE KEY UPDATE
+    quiz_total_marks = VALUES(quiz_total_marks),
+    student_total_marks = VALUES(student_total_marks),
+    percent = VALUES(percent);
 
   """;
 
@@ -31,6 +35,8 @@ public class DBQueries {
   public static final String SELECT_ACCOUNT_BY_EMAIL ="select * from accounts where email = ?";
 
   public static final String  SELECT_STUDENT_RESULTS_BY_STUDENT_ACCOUNT_ID ="select * from student_result where student_account_id = ?";
+
+  public static final String  SELECT_QUIZ_BY_TEACHER_ACCOUNT_ID ="select * from quiz_data where account_id = ?";
 
 
   public static final String SELECT_STUDENT_ACCOUNT_BY_EMAIL ="select * from student_account where email = ?";

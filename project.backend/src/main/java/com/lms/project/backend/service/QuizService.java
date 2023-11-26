@@ -51,7 +51,7 @@ public class QuizService {
         if (!allQuiz.isEmpty()) {
             for (Quiz quiz : allQuiz) {
 
-                Quiz eachQuiz = new Quiz(quiz.getTitle(), quiz.getQuizId(), quiz.getDateCreated(),
+                Quiz eachQuiz = new Quiz(quiz.getTitle(), quiz.getQuizId(), quiz.getNumberOfAttempts(), quiz.getDateCreated(),
                         quiz.getDateEdited());
 
 
@@ -60,6 +60,8 @@ public class QuizService {
         } else {
             System.out.println("No quiz found.");
         }
+
+        System.out.println("The quizzes in getAllQuiz service are: " + quizzes);
 
 
         return quizzes;
