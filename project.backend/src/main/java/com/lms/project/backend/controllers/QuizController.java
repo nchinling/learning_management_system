@@ -120,6 +120,8 @@ public class QuizController {
             JsonObjectBuilder quizBuilder = Json.createObjectBuilder()
                     .add("quiz_id", quiz.getQuizId()).add("title", quiz.getTitle())
                     .add("attempts", quiz.getNumberOfAttempts())
+                    .add("student_total_marks", quiz.getMarks())
+                    .add("quiz_total_marks", quiz.getTotalMarks())
                     // .add("date_edited",
                     // quiz.getDateEdited() != null ? quiz.getDateEdited().toString() : "");
                     .add("date_created", quiz.getFormattedDateCreated())

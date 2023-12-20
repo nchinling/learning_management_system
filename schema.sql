@@ -59,6 +59,18 @@ create table content_data(
     date_created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+ALTER TABLE content_data
+ADD COLUMN account_id VARCHAR(20);
+
+UPDATE content_data
+SET account_id = 'ccf05864'
+WHERE content_id = 'your_content_id';
+
+UPDATE content_data
+SET account_id = 'ccf05864'
+WHERE content_id IN ('vzgk1eas', 'hhldw3ri', 'znn1etf4', 'g5i20x8r');
+
+
 create table images (
 	image_id char(8) not null,
 	image mediumblob not null,

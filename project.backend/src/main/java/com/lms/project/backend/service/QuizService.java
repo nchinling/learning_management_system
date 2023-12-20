@@ -52,7 +52,7 @@ public class QuizService {
             for (Quiz quiz : allQuiz) {
 
                 Quiz eachQuiz = new Quiz(quiz.getTitle(), quiz.getQuizId(), quiz.getNumberOfAttempts(), quiz.getDateCreated(),
-                        quiz.getDateEdited());
+                        quiz.getDateEdited(), quiz.getMarks(), quiz.getTotalMarks());
 
 
                 quizzes.add(eachQuiz);

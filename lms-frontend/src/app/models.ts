@@ -82,6 +82,7 @@ export interface CreateContentResponse {
     status: string
     date_created: string
     date_edited: string
+    number_of_times_accessed: number
 }
 
 export interface MarkedQuizResponse {

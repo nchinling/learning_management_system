@@ -98,6 +98,8 @@ public class QuizRepository {
                     if (resultQuiz.getQuizId().equals(sqlQuiz.getQuizId())) {
                         // Update the attempts if the quizId matches
                         resultQuiz.setNumberOfAttempts(sqlQuiz.getNumberOfAttempts());
+                        resultQuiz.setMarks(sqlQuiz.getMarks());
+                        resultQuiz.setTotalMarks(sqlQuiz.getTotalMarks());
                         break; 
                     }
                 }
@@ -203,11 +205,6 @@ public class QuizRepository {
             System.out.println("The marks obtained is: " + markedQuiz.getMarks());
             // int quizTotalMarks = quiz.getQuestions().length;
 
-
-            // save into sql database
-            // jdbcTemplate.update(INCREMENT_ATTEMPTS_BY_QUIZ_ID, quiz.getQuizId());
-            // jdbcTemplate.update(INSERT_MARKS_BY_ACCOUNT_ID_AND_QUIZ_ID, quiz.getAccountId(),
-            // quiz.getQuizId(), markedQuiz.getTotalMarks(), markedQuiz.getMarks(), percent);
             System.out.println("The total marks in quizRepo is " + markedQuiz.getTotalMarks());
             return markedQuiz;
         } else {

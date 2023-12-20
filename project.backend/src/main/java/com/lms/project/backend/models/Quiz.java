@@ -46,12 +46,17 @@ public class Quiz {
     }
 
 
-    public Quiz(String title, String quizId, int numberOfAttempts, Date dateCreated, Date dateEdited) {
+    // new Quiz(quiz.getTitle(), quiz.getQuizId(), quiz.getNumberOfAttempts(), quiz.getDateCreated(),
+    //                     quiz.getDateEdited());
+
+    public Quiz(String title, String quizId, int numberOfAttempts, Date dateCreated, Date dateEdited, String marks, String totalMarks) {
         this.quizId = quizId;
         this.title = title;
         this.dateCreated = dateCreated;
         this.dateEdited = dateEdited;
         this.numberOfAttempts = numberOfAttempts;
+        this.marks = marks;
+        this.totalMarks = totalMarks;
     }
 
     public Quiz(String title, String quizId, Date dateCreated, Date dateEdited) {

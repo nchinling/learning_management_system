@@ -122,13 +122,14 @@ public class ContentController {
             JsonObjectBuilder quizBuilder = Json.createObjectBuilder()
                     .add("content_id", content.getContentId())
                     .add("title", content.getTitle())
+                    .add("number_of_times_accessed", content.getNumberOfAccess())
                     .add("date_created", content.getFormattedDateCreated())
                     .add("date_edited", content.getDateEdited() != null ? content.getFormattedDateEdited() : "");
             arrayBuilder.add(quizBuilder);
         }
 
         JsonArray respArray = arrayBuilder.build();
-        System.out.println(">>>sending back jsonarray quizResponse data.>>>>>Hooray: " + respArray);
+        System.out.println(">>>sending back jsonarray contentResponse data.>>>>>Hooray: " + respArray);
         return ResponseEntity.ok(respArray.toString());
 
     }

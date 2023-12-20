@@ -38,6 +38,8 @@ public class DBQueries {
 
   public static final String  SELECT_QUIZ_BY_TEACHER_ACCOUNT_ID ="select * from quiz_data where account_id = ?";
 
+  public static final String  SELECT_CONTENT_BY_TEACHER_ACCOUNT_ID ="select * from content_data where account_id = ?";
+
 
   public static final String SELECT_STUDENT_ACCOUNT_BY_EMAIL ="select * from student_account where email = ?";
     

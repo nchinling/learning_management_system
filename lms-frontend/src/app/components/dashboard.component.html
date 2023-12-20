@@ -1,12 +1,23 @@
 <div class = "container">
 
-<div style="width: 800px;">
-    <canvas id="acquisitions"></canvas>
-</div><br>
-
-<div style="width: 800px;">
-  <canvas id="myChart"></canvas>
+  <div class="chart-container">
+    <div style="width: 20vw; height: 300px;">
+      <canvas id="allQuizAttempts"></canvas>
+    </div>
+    <div style="width: 20vw; height: 300px;">
+      <canvas id="eachQuizAverage"></canvas>
+    </div>
+    <div style="width: 20vw; height: 300px;">
+      <canvas id="allContentCreated"></canvas>
+    </div>
+  </div>
+  
+<!-- <div style="width: 20vw; height: 300px;">
+  <canvas id="allQuizAttempts"></canvas>
 </div>
+<div style="width: 20vw; height: 300px;">
+  <canvas id="allContentCreated"></canvas>
+</div> -->
 
 <div *ngIf="allQuizCreated$ | async as quizResponses;">
     <h1>Quiz</h1>

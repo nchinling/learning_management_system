@@ -24,3 +24,14 @@
     /* background-color: #ffcc80; */
     background-color: #aaffaa;
 }
+
+.chart-container {
+    display: flex;
+  }
+  
+
+.chart-container div {
+margin-right: 20px; 
+}
+
+  

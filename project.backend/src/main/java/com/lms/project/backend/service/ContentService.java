@@ -40,7 +40,7 @@ public class ContentService {
                 // Quiz eachQuiz = new Quiz(quiz.getTitle(), quiz.getQuizId(), quiz.getDateCreated(),
                 //         quiz.getDateEdited());
                 
-                Content eachContent = new Content(content.getTitle(), content.getContentId(), content.getDateCreated(), content.getDateEdited());
+                Content eachContent = new Content(content.getTitle(), content.getContentId(), content.getDateCreated(), content.getDateEdited(), content.getNumberOfAccess());
 
 
                 contentsList.add(eachContent);

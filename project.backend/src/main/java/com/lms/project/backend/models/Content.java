@@ -13,6 +13,8 @@ public class Content {
     private String[] classes;
     private Date dateCreated;
     private Date dateEdited;
+    private int numberOfAccess
+    ;
     public Content() {}
     
     public Content(String accountId, String contentId, String title, ContentNotes[] contentNotes,
@@ -26,11 +28,26 @@ public class Content {
 
     
 
+    
+
     // Content eachContent = new Content(content.getTitle(), content.getContentId(), content.getDateCreated());
 
     // Content eachContent = new Content(content.getTitle(), content.getContentId(), content.getDateCreated(), content.getDateEdited())
 
-    
+    // new Content(content.getTitle(), content.getContentId(), content.getDateCreated(), content.getDateEdited(), content.getNumberOfAccess());
+
+    public Content(String accountId, String contentId, String title, ContentNotes[] contentNotes,
+            String[] classes, Date dateCreated, Date dateEdited, int numberOfAccess) {
+        this.accountId = accountId;
+        this.contentId = contentId;
+        this.title = title;
+        this.contentNotes = contentNotes;
+        this.classes = classes;
+        this.dateCreated = dateCreated;
+        this.dateEdited = dateEdited;
+        this.numberOfAccess = numberOfAccess;
+    }
+
     public Content(String title, String contentId, Date dateCreated) {
         this.contentId = contentId;
         this.title = title;
@@ -47,11 +64,20 @@ public class Content {
         this.dateEdited = dateEdited;
     }
 
-    public Content(String title , String contentId, Date dateCreated, Date dateEdited) {
+    public Content(String title , String contentId, Date dateCreated, Date dateEdited, int numberOfAccess) {
         this.contentId = contentId;
         this.title = title;
         this.dateCreated = dateCreated;
         this.dateEdited = dateEdited;
+        this.numberOfAccess = numberOfAccess;
+    }
+
+        public Content(String title , String contentId, Date dateCreated, Date dateEdited) {
+        this.contentId = contentId;
+        this.title = title;
+        this.dateCreated = dateCreated;
+        this.dateEdited = dateEdited;
+        
     }
     
     public Content(String accountId, String contentId, String title, ContentNotes[] contentNotes,
@@ -123,12 +149,24 @@ public class Content {
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy");
         return sdf.format(date);
     }
+
+
+    public int getNumberOfAccess() {
+        return numberOfAccess;
+    }
+
+    public void setNumberOfAccess(int numberOfAccess) {
+        this.numberOfAccess = numberOfAccess;
+    }
+
     @Override
     public String toString() {
         return "Content [accountId=" + accountId + ", contentId=" + contentId + ", title=" + title
                 + ", contentNotes=" + Arrays.toString(contentNotes) + ", classes="
                 + Arrays.toString(classes) + ", dateCreated=" + dateCreated + ", dateEdited="
-                + dateEdited + "]";
+                + dateEdited + ", numberOfAccess=" + numberOfAccess + "]";
     }
+
+    
 
 }

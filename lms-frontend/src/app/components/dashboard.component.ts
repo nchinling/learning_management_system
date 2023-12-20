@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
 
   ctx!:any
   ctx2!:any
+  ctx3!:any
 
 
   ngOnInit(): void {
@@ -34,7 +35,7 @@ export class DashboardComponent implements OnInit {
     console.log('Account id at dashboard is ', this.accountId)
     this.allQuizCreated$ = this.quizSvc.getAllQuizCreated(this.accountId)
     this.allContentCreated$ = this.contentSvc.getAllContentCreated(this.accountId)
-    this.createChart();
+    // this.createChart();
     this.createOrUpdateCharts();
   }
 
@@ -57,59 +58,40 @@ export class DashboardComponent implements OnInit {
   
   }
 
+  private createOrUpdateCharts(): void {
+    // if (this.ctx) {
+    //   const chartInstance = Chart.getChart(this.ctx); 
+    //   if (chartInstance) {
+    //     chartInstance.destroy(); 
+    //   }
+    // }
 
-  createChart() {
-    // const ctx = document.getElementById('acquisitions') as HTMLCanvasElement;
-    this.ctx = document.getElementById('acquisitions')
-    const myChart = new Chart(this.ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
+    // if (this.ctx2) {
+    //   const chartInstance = Chart.getChart(this.ctx2); 
+    //   if (chartInstance) {
+    //     chartInstance.destroy(); 
+    //   }
+    // }
+
+    const canvasContexts = [this.ctx, this.ctx2, this.ctx3];
+
+    for (const ctx of canvasContexts) {
+      if (ctx) {
+        const chartInstance = Chart.getChart(ctx);
+        if (chartInstance) {
+          chartInstance.destroy();
         }
       }
-    });
-  }
-
-
-  private createOrUpdateCharts(): void {
-    if (this.ctx2) {
-      const chartInstance = Chart.getChart(this.ctx); 
-      if (chartInstance) {
-        chartInstance.destroy(); 
-      }
     }
+
     
     // Get the canvas elements after destroying the previous charts.
-    this.ctx2 = document.getElementById('myChart');
+    this.ctx = document.getElementById('allQuizAttempts');
+    this.ctx2 = document.getElementById('allContentCreated');
+    this.ctx3 = document.getElementById('eachQuizAverage');
+    
 
-    if (this.ctx2) {
+    if (this.ctx) {
       this.updateChart();
     }
 
@@ -125,11 +107,147 @@ export class DashboardComponent implements OnInit {
 
         if (filteredData.length > 0) {
           const labels = filteredData.map(quiz => quiz.title);
-          const datasetData = filteredData.map(quiz => quiz.attempts);
+          const quizAttemptsData = filteredData.map(quiz => quiz.attempts);
+          const quizAverageData = filteredData.map(quiz => {
+            const studentTotalMarks = parseInt(quiz.student_total_marks, 10); 
+            const quizTotalMarks = parseInt(quiz.quiz_total_marks, 10); 
+          
+          //Perform calculation
+            if (!isNaN(studentTotalMarks) && !isNaN(quizTotalMarks) && quiz.attempts !== 0) {
+              return (studentTotalMarks / (quizTotalMarks * quiz.attempts))*100;
+            } else {
+           
+              return 0;
+            }
+          });
+          
+          
    
           // const backgroundColors = labels.map(() => this.generateRandomColor());
+          const backgroundColors = labels.map(() => this.generateRandomColor());
+          const borderColors = labels.map(() => this.generateRandomColor());
+          const backgroundColors2 = labels.map(() => this.generateRandomColor());
+          const borderColors2 = labels.map(() => this.generateRandomColor());
 
-          if (this.ctx2) {
+          if (this.ctx) {
+
+          const maxDataValue = Math.max(...quizAttemptsData);
+          const suggestedMaxValue = maxDataValue +1;
+
+            const chart = new Chart(this.ctx, {
+              // type: 'pie',
+              type: 'bar',
+              data: {
+                labels: labels,
+                datasets: [{
+                  data: quizAttemptsData,
+                  label: '',
+                  backgroundColor: backgroundColors,
+                  borderColor: borderColors,
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                plugins: {
+                  title: {
+                      display: true,
+                      text: 'Quiz Attempts'
+                  }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    suggestedMax: suggestedMaxValue,
+                  }
+                }
+              }
+            });
+          }
+
+
+
+          if (this.ctx3) {
+
+            // const maxDataValue = Math.max(...quizAverageData);
+            const maxDataValue = 100;
+            // const suggestedMaxValue = maxDataValue +1;
+  
+              const chart = new Chart(this.ctx3, {
+                // type: 'pie',
+                type: 'bar',
+                data: {
+                  labels: labels,
+                  datasets: [{
+                    data: quizAverageData,
+                    label: '',
+                    backgroundColor: backgroundColors2,
+                    borderColor: borderColors2,
+                    borderWidth: 1
+                  }]
+                },
+                options: {
+                  plugins: {
+                    tooltip: {
+                      callbacks: {
+                          label: function(tooltipItem) {
+                            // return tooltipItem.raw + '%';
+                            const value = (tooltipItem.raw as number).toFixed(1); 
+                            return value + '%';
+
+                          }
+                      }
+                  },
+                    title: {
+                        display: true,
+                        text: 'Quiz Average Score (%)'
+                    }
+
+                  },
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      suggestedMax: maxDataValue,
+                      ticks: {
+                        callback: function (value) {
+                          return value + '%'; 
+                        }
+                      }
+
+                    }
+                  }
+      
+                }
+              });
+            }
+
+
+
+
+
+
+        }
+      });
+
+      
+
+
+      this.allContentCreated$.then(data => {
+
+        const filteredData = data.filter(content => content.content_id != null);
+
+        if (filteredData.length > 0) {
+          const labels = filteredData.map(content => content.title);
+          const datasetData = filteredData.map(content => content.number_of_times_accessed);
+   
+          // const backgroundColors = labels.map(() => this.generateRandomColor());
+          const backgroundColors = labels.map(() => this.generateRandomColor());
+          const borderColors = labels.map(() => this.generateRandomColor());
+
+          if (this.ctx) {
 
           const maxDataValue = Math.max(...datasetData);
           const suggestedMaxValue = maxDataValue +1;
@@ -140,28 +258,20 @@ export class DashboardComponent implements OnInit {
               data: {
                 labels: labels,
                 datasets: [{
-                  label: 'Number of attempts',
                   data: datasetData,
-                  backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                  ],
+                  label: '',
+                  backgroundColor: backgroundColors,
+                  borderColor: borderColors,
                   borderWidth: 1
                 }]
               },
               options: {
+                plugins: {
+                  title: {
+                      display: true,
+                      text: 'Notes accessed'
+                  }
+                },
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {

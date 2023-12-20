@@ -84,7 +84,6 @@
 - created edit, store and delete functions
 - Implemented form validation
 
-
 # 24 Nov
 - displayed student content
 - created content analytics table
@@ -101,8 +100,16 @@
 - created row mapper to return number of attempts. 
 - implemented first data analytics -> quiz number of attempt
 
+# 20 Dec 
+- Chart title
+- Rescaled chart
+- modified content_data table to include account_id
+- updated backend to return number of access
+- displayed notes number of access in dashboard
+- displayed average marks
 
 
 # To do
-- Data analytics - general quiz performance (mean, median)
+- Data analytics - general quiz performance (mean)
+- Remove increment when content is accessed by teacher
 - student data analytcs - performance for each quiz

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lms.project.backend.models.Content;
+import com.lms.project.backend.models.Quiz;
 import com.mongodb.client.result.UpdateResult;
 import static com.lms.project.backend.repositories.DBQueries.*;
 
@@ -35,8 +36,7 @@ public class ContentRepository {
             // Update the existing document
             Update update = new Update().set("title", content.getTitle())
                     .set("contentNotes", content.getContentNotes())
-                    .set("classes", content.getClasses())
-                    .set("dateEdited", new Date());
+                    .set("classes", content.getClasses()).set("dateEdited", new Date());
 
             UpdateResult updateResult = mongoTemplate.updateFirst(searchQuery, update, "content");
 
@@ -75,10 +75,34 @@ public class ContentRepository {
                         doc.getDate("dateCreated"), doc.getDate("dateEdited")))
                 .toList();
 
+        List<Content> contentListFromSql = getContentByTeacherAccountId(accountId);
+        if (!contentListFromSql.isEmpty()) {
+            System.out.println("Obtained content with row mappers");
+
+            // Iterate over each quiz in contentListFromSql
+            for (Content content : result) {
+                for (Content sqlContent : contentListFromSql) {
+                    // Compare the contentId
+                    if (content.getContentId().equals(sqlContent.getContentId())) {
+                        // Update the attempts if the contentId matches
+                        content.setNumberOfAccess(sqlContent.getNumberOfAccess());
+                        break;
+                    }
+                }
+            }
+        }
+
         System.out.println("Data returned from MongoDB: " + result);
 
         return result;
     }
+
+    private List<Content> getContentByTeacherAccountId(String accountId) {
+        return jdbcTemplate.query(SELECT_CONTENT_BY_TEACHER_ACCOUNT_ID, new ContentRowMapper(),
+                new Object[] {accountId});
+    }
+
+
 
     public Content getContent(String contentId) {
         Criteria criteria = Criteria.where("contentId").is(contentId);

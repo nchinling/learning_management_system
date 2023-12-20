@@ -66,7 +66,7 @@ export class ContentService {
         tap(response => this.onCreateContentRequest.next(response)),
         map(response => ({ account_id: response.account_id, content_id: response.content_id, 
                     title: response.title, status:response.status, date_created: response.date_created,
-                    date_edited: response.date_edited
+                    date_edited: response.date_edited, number_of_times_accessed: response.number_of_times_accessed
                     
                     }))
 
@@ -92,7 +92,8 @@ export class ContentService {
         title: resp.title,
         status: resp.status,
         date_created: resp.date_created,
-        date_edited: resp.date_edited
+        date_edited: resp.date_edited,
+        number_of_times_accessed: resp.number_of_times_accessed
 
       })))
     )
@@ -120,7 +121,8 @@ export class ContentService {
         title: resp.title,
         status: resp.status,
         date_created: resp.date_created,
-        date_edited: resp.date_edited
+        date_edited: resp.date_edited,
+        number_of_times_accessed: resp.number_of_times_accessed
         
       })))
     )
