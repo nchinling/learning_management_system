@@ -57,6 +57,7 @@ export interface QuizQuestion {
     option4: (string | null);
     answer: string
     marks: number
+    numberOfTimesCorrect: number
 }
 
 

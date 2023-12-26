@@ -164,13 +164,14 @@ public class ContentController {
 
     }
 
-    @GetMapping(path = "/getContent/{content_id}")
+    @GetMapping(path = "/getContent/{content_id}/{account_id}")
     @ResponseBody
-    public ResponseEntity<String> getContent(@PathVariable String content_id) throws IOException {
+    public ResponseEntity<String> getContent(@PathVariable String content_id,  @PathVariable String account_id) throws IOException {
 
         String contentId = content_id;
+        String accountId = account_id;
 
-        Content content = contentSvc.getContent(contentId);
+        Content content = contentSvc.getContent(contentId, accountId);
 
         System.out.println("Retrieved content from controller: " + content);
 

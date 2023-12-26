@@ -200,16 +200,11 @@ public class QuizController {
                     .add("option2", question.getOption2() != null ? question.getOption2() : "")
                     .add("option3", question.getOption3() != null ? question.getOption3() : "")
                     .add("option4", question.getOption4() != null ? question.getOption4() : "")
-                    .add("answer", question.getAnswer()).add("marks", question.getMarks());
+                    .add("answer", question.getAnswer()).add("marks", question.getMarks())
+                    .add("numberOfTimesCorrect", question.getNumberOfTimesCorrect());
             questionArrayBuilder.add(questionBuilder);
         }
 
-        // JsonArrayBuilder classArrayBuilder = Json.createArrayBuilder();
-        // for (String quizClass : quiz.getQuizClasses()){
-        // JsonObjectBuilder classBuilder = Json.createObjectBuilder()
-        // .add("class", quizClass);
-        // classArrayBuilder.add(classBuilder);
-        // }
 
         JsonArrayBuilder classArrayBuilder = Json.createArrayBuilder();
         for (String quizClass : quiz.getQuizClasses()) {

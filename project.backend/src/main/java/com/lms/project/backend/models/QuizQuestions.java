@@ -11,6 +11,7 @@ public class QuizQuestions {
     private String answer;
     private String marks;
     private boolean correct;
+    private int numberOfTimesCorrect;
     
     public QuizQuestions() {
     }
@@ -29,8 +30,20 @@ public class QuizQuestions {
     }
 
     
-
-
+    public QuizQuestions(String question, String questionType, String option1, String option2,
+            String option3, String option4, String answer, String marks, boolean correct,
+            int numberOfTimesCorrect) {
+        this.question = question;
+        this.questionType = questionType;
+        this.option1 = option1;
+        this.option2 = option2;
+        this.option3 = option3;
+        this.option4 = option4;
+        this.answer = answer;
+        this.marks = marks;
+        this.correct = correct;
+        this.numberOfTimesCorrect = numberOfTimesCorrect;
+    }
 
 
     public QuizQuestions(String question, String questionType, String option1, String option2,
@@ -154,14 +167,33 @@ public class QuizQuestions {
     }
 
 
+    public int getNumberOfTimesCorrect() {
+        return numberOfTimesCorrect;
+    }
+
+
+    public void setNumberOfTimesCorrect(int numberOfTimesCorrect) {
+        this.numberOfTimesCorrect = numberOfTimesCorrect;
+    }
+
+
     @Override
     public String toString() {
         return "QuizQuestions [question=" + question + ", questionType=" + questionType
                 + ", option1=" + option1 + ", option2=" + option2 + ", option3=" + option3
                 + ", option4=" + option4 + ", answer=" + answer + ", marks=" + marks + ", correct="
-                + correct + "]";
+                + correct + ", numberOfTimesCorrect=" + numberOfTimesCorrect + "]";
     }
 
+    
+
+
+
+
+
+
+
+    
     
 
     

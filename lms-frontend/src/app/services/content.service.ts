@@ -135,8 +135,9 @@ export class ContentService {
 
     console.info('>>>>>>sending to Content server...')
 
+    this.account_id = this.accountSvc.account_id
     return lastValueFrom(
-      this.http.get<Content>(`${URL_API_SERVER}/getContent/${content_id}`)
+      this.http.get<Content>(`${URL_API_SERVER}/getContent/${content_id}/${this.account_id}`)
         .pipe(
           map(resp => ({ account_id: resp.account_id, title: resp.title, 
                       contents: resp.contents, content_id: resp.content_id, classes: resp.classes, date_created: resp.date_created,

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.lms.project.backend.models.Account;
 import com.lms.project.backend.models.Quiz;
+import com.lms.project.backend.models.QuizQuestions;
 import com.lms.project.backend.models.StudentResult;
 import com.mongodb.client.result.UpdateResult;
 import java.util.Date;
@@ -62,6 +63,7 @@ public class QuizRepository {
             Document doc = new Document();
             doc.put("accountId", quiz.getAccountId());
             doc.put("title", quiz.getTitle());
+            doc.put("numberOfAttempts", 0);
             doc.put("quizId", quiz.getQuizId());
             doc.put("quizQuestions", quiz.getQuestions());
             doc.put("quizClasses", quiz.getQuizClasses());
@@ -90,7 +92,7 @@ public class QuizRepository {
         List<Quiz> quizListFromSql = getQuizByTeacherAccountId(accountId);
         if (!quizListFromSql.isEmpty()) {
             System.out.println("Obtained quiz with row mappers");
-        
+
             // Iterate over each quiz in quizListFromSql
             for (Quiz resultQuiz : result) {
                 for (Quiz sqlQuiz : quizListFromSql) {
@@ -100,7 +102,7 @@ public class QuizRepository {
                         resultQuiz.setNumberOfAttempts(sqlQuiz.getNumberOfAttempts());
                         resultQuiz.setMarks(sqlQuiz.getMarks());
                         resultQuiz.setTotalMarks(sqlQuiz.getTotalMarks());
-                        break; 
+                        break;
                     }
                 }
             }
@@ -217,6 +219,14 @@ public class QuizRepository {
 
     private Quiz compareAndMarkQuiz(Quiz inputQuiz, Quiz savedQuiz) {
 
+        Query searchQuery = new Query(Criteria.where("quizId").is(savedQuiz.getQuizId()));
+        Update update = new Update().inc("numberOfAttempts", 1);
+
+        // Apply the update
+        mongoTemplate.updateFirst(searchQuery, update, "quiz");
+
+
+        
         int marks = 0;
         int totalMarks = 0;
         for (int i = 0; i < inputQuiz.getQuizQuestions().length; i++) {
@@ -228,6 +238,18 @@ public class QuizRepository {
             if (inputAnswer.equals(savedAnswer)) {
                 marks = marks + Integer.parseInt(savedQuiz.getQuizQuestions()[i].getMarks());
                 inputQuiz.getQuizQuestions()[i].setCorrect(true);
+                // int numberOfTimesCorrect = savedQuiz.getQuizQuestions()[i].getNumberOfTimesCorrect();
+                
+              
+                    Query searchQuestionQuery = new Query(Criteria.where("quizId").is(savedQuiz.getQuizId())
+                        .and("quizQuestions.question").is(savedQuiz.getQuizQuestions()[i].getQuestion()));
+                
+                    Update updateTimesCorrect = new Update().inc("quizQuestions.$.numberOfTimesCorrect", 1);
+                
+                    mongoTemplate.updateFirst(searchQuestionQuery, updateTimesCorrect, "quiz");
+               
+
+                // savedQuiz.getQuizQuestions()[i].setPercentageCorrect(percentageCorrect);
                 System.out.println("The marks obtained for question" + i + " is " + marks);
             } else {
                 inputQuiz.getQuizQuestions()[i].setCorrect(false);

@@ -4,7 +4,10 @@
       <h1 class="custom-h1">Quiz</h1>
       <div class="form-group">
         <p>Quiz ID: {{ quiz_id }}</p>
+        <p style="font-weight: bold; color: rgb(128, 50, 183);">No. of attempts: {{quizAttemptsData}} &nbsp;&nbsp; Average marks (%): {{quizAverageData.toFixed(1)}} %</p>
       </div>
+
+
       <div class="form-group">
         <label for="title">Title: </label>
         <input type="text" id="title" formControlName="title">
@@ -18,6 +21,10 @@
             <div class="form-group">
               <label for="question">Question {{ i + 1 }}:</label><br>
               <p>Question type: {{ question.get('questionType')?.value }}</p>
+              <p style="font-weight: bold; color: rgb(203, 8, 102);">
+                Percentage correct: {{ (question.get('numberOfTimesCorrect')?.value / quizAttemptsData * 100).toFixed(1) }} %
+              </p>
+              
               <textarea id="question" formControlName="question" rows="5"></textarea>
               <mat-error *ngIf="invalidQuizField('questions.' + i + '.question')">Please provide a question.</mat-error>
             </div>

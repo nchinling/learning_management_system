@@ -108,8 +108,14 @@
 - displayed notes number of access in dashboard
 - displayed average marks
 
+# 26 Dec
+- Displayed number of attempts and average marks in individual quiz
+- Removed increment when content is accessed by teacher
+- Displayed data for question performance
+
+
+
 
 # To do
-- Data analytics - general quiz performance (mean)
-- Remove increment when content is accessed by teacher
-- student data analytcs - performance for each quiz
+- student data analytics - performance for each quiz
+- create chart for each question

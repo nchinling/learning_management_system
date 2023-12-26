@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ClassService } from '../services/class.service';
 import { AccountService } from '../services/account.service';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-viewquiz',
@@ -19,8 +21,12 @@ export class ViewquizComponent implements OnInit {
   successMessage!: string;
   currentQuestionType!: 'MCQ' | 'FreeResponse';
 
+  ctx!:any
   quiz$!: Promise<Quiz>
   classes$!: Promise<string[]>
+  allQuizCreated$!:Promise<CreateQuizResponse[]>
+  quizAttemptsData!: number
+  quizAverageData!: number
   quizSvc = inject(QuizService)
   accountSvc = inject(AccountService)
   accountId!:string
@@ -36,10 +42,58 @@ export class ViewquizComponent implements OnInit {
   ngOnInit(): void{
     this.quiz_id = this.quizSvc.quiz_id
     this.accountId = this.accountSvc.account_id
+    this.allQuizCreated$ = this.quizSvc.getAllQuizCreated(this.accountId)
     console.info("the quiz_id in view quiz is ", this.quiz_id)
     this.updateQuizForm = this.createForm()
+    
+    
+    this.allQuizCreated$.then(data => {
+
+      const filteredData = data.filter(quiz => quiz.quiz_id != null);
+
+      if (filteredData.length > 0) {
+        this.quizAttemptsData = filteredData.map(quiz => {
+          
+          const desiredQuiz = data.find(q => q.quiz_id === this.quiz_id);
+        
+          return desiredQuiz && desiredQuiz.attempts ? desiredQuiz.attempts : 0;
+        })[0];
+        this.quizAverageData = filteredData.map(quiz => {
+          const desiredQuiz = data.find(q => q.quiz_id === this.quiz_id);
+        
+          if (desiredQuiz) {
+            const studentTotalMarks = parseInt(desiredQuiz.student_total_marks, 10); 
+            const quizTotalMarks = parseInt(desiredQuiz.quiz_total_marks, 10); 
+        
+            // Perform your calculation
+            if (!isNaN(studentTotalMarks) && !isNaN(quizTotalMarks) && desiredQuiz.attempts !== 0) {
+              return (studentTotalMarks / (quizTotalMarks * desiredQuiz.attempts)) * 100;
+            } else {
+              return 0;
+            }
+          } else {
+            return 0;
+          }
+        })[0];
+        
+      }
+    
+      });
 
   }
+
+
+
+private generateRandomColor(): string {
+  // Function to generate a random hex color
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 
 
   private createForm(): FormGroup {
@@ -68,16 +122,7 @@ export class ViewquizComponent implements OnInit {
     
     })
     
-    // const defaultQuestion = this.fb.group({
-    //   question: [''],
-    //   questionType: [''],
-    //   option1: [''],
-    //   option2: [''],
-    //   option3: [''],
-    //   option4: [''],
-    //   answer: [''],
-    //   marks:['']
-    // });
+
     const formGroup = this.fb.group({
       title: ['', [Validators.required] ],
       // answer: this.fb.control<string>('', [Validators.required]),
@@ -112,7 +157,8 @@ export class ViewquizComponent implements OnInit {
                 option3: [question.option3, [Validators.required]],
                 option4: [question.option4, [Validators.required]],
                 answer: [question.answer, [Validators.required]],
-                marks: [question.marks, [Validators.required]]
+                marks: [question.marks, [Validators.required]],
+                numberOfTimesCorrect: [question.numberOfTimesCorrect, [Validators.required]]
               })
             );
           });
