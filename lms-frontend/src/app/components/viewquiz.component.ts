@@ -44,7 +44,9 @@ export class ViewquizComponent implements OnInit {
     this.accountId = this.accountSvc.account_id
     this.allQuizCreated$ = this.quizSvc.getAllQuizCreated(this.accountId)
     console.info("the quiz_id in view quiz is ", this.quiz_id)
+  
     this.updateQuizForm = this.createForm()
+    this.createOrUpdateCharts()
     
     
     this.allQuizCreated$.then(data => {
@@ -65,7 +67,6 @@ export class ViewquizComponent implements OnInit {
             const studentTotalMarks = parseInt(desiredQuiz.student_total_marks, 10); 
             const quizTotalMarks = parseInt(desiredQuiz.quiz_total_marks, 10); 
         
-            // Perform your calculation
             if (!isNaN(studentTotalMarks) && !isNaN(quizTotalMarks) && desiredQuiz.attempts !== 0) {
               return (studentTotalMarks / (quizTotalMarks * desiredQuiz.attempts)) * 100;
             } else {
@@ -80,7 +81,96 @@ export class ViewquizComponent implements OnInit {
     
       });
 
+      // this.createOrUpdateCharts()
+
   }
+
+
+  
+  private createOrUpdateCharts(): void {
+
+    const canvasContexts = [this.ctx];
+
+    for (const ctx of canvasContexts) {
+      if (ctx) {
+        const chartInstance = Chart.getChart(ctx);
+        if (chartInstance) {
+          chartInstance.destroy();
+        }
+      }
+    }
+
+    // Get the canvas elements after destroying the previous charts.
+    this.ctx = document.getElementById('eachQuestionResult');
+
+  
+    if (this.ctx) {
+      console.info('there is this.ctx')
+      this.updateChart();
+    }
+
+  }
+
+
+  
+  private updateChart(): void {
+
+    this.quiz$ = this.quizSvc.getQuiz(this.quiz_id)
+
+
+    this.quiz$.then((quiz: Quiz) => { // Assuming quiz$ resolves to a single Quiz object
+      if (quiz && quiz.questions && quiz.questions.length > 0) {
+        const labels = quiz.questions.map((question) => question.question);
+        const questionAverageData = quiz.questions.map((question) =>(question.numberOfTimesCorrect/this.quizAttemptsData)*100);
+  
+        const backgroundColors = labels.map(() => this.generateRandomColor());
+        const borderColors = labels.map(() => this.generateRandomColor());
+
+
+          if (this.ctx) {
+
+          const maxDataValue = Math.max(...questionAverageData);
+          const suggestedMaxValue = maxDataValue +1;
+
+            const chart = new Chart(this.ctx, {
+              // type: 'pie',
+              type: 'bar',
+              data: {
+                labels: labels,
+                datasets: [{
+                  data: questionAverageData,
+                  label: '',
+                  backgroundColor: backgroundColors,
+                  borderColor: borderColors,
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                indexAxis: 'y',
+                plugins: {
+                  title: {
+                      display: true,
+                      text: 'Average score (%)'
+                  }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                  x: {
+                    beginAtZero: true,
+                    suggestedMax: suggestedMaxValue,
+                  }
+                }
+              }
+            });
+          }
+
+
+        }
+      });
+    
+  }
+
 
 
 

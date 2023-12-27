@@ -1,10 +1,22 @@
+      <div class="chart-container">
+        <div style="width: 50vw; height: 300px;">
+          <canvas id="eachQuestionResult"></canvas>
+        </div>
+      </div>
+
 <form [formGroup]="updateQuizForm">
   <div class="container">
     <div *ngIf="updateQuizForm.value">
       <h1 class="custom-h1">Quiz</h1>
+
       <div class="form-group">
         <p>Quiz ID: {{ quiz_id }}</p>
-        <p style="font-weight: bold; color: rgb(128, 50, 183);">No. of attempts: {{quizAttemptsData}} &nbsp;&nbsp; Average marks (%): {{quizAverageData.toFixed(1)}} %</p>
+        <!-- <p style="font-weight: bold; color: rgb(128, 50, 183);">No. of attempts: {{quizAttemptsData}} &nbsp;&nbsp; Average marks (%): {{quizAverageData.toFixed(1)}} %</p> -->
+        <p style="font-weight: bold; color: rgb(128, 50, 183);">
+          No. of attempts: {{quizAttemptsData}} &nbsp;&nbsp;
+          Average marks (%): {{ quizAverageData !== undefined ? quizAverageData.toFixed(1) + ' %' : 'N/A' }}
+        </p>
+        
       </div>
 
 

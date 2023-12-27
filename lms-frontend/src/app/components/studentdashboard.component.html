@@ -2,6 +2,13 @@
 <p>Welcome, {{ name }} ({{ studentClass }}). </p>
 <!-- <p>Class: {{ studentClass }}</p> -->
 
+<div class="chart-container">
+  <div style="width: 50vw; height: 300px;">
+
+    <canvas id="allQuizAverageResults"></canvas>
+  </div>
+</div>
+
     <div *ngIf="allStudentQuizCreated$ | async as quizResponses;">
         <h1>Quiz</h1>
         <ol>

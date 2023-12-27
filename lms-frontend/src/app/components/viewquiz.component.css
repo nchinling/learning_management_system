@@ -99,4 +99,10 @@ label {
   .add-label {
     width: 10%; 
   }
+
+  .chart-container div {
+    margin-right: 20px; 
+    margin-left: 40px; 
+    }
+
   

@@ -113,9 +113,14 @@
 - Removed increment when content is accessed by teacher
 - Displayed data for question performance
 
+# 27 Dec
+- Implemented student data analytics - performance for each quiz
+- created chart for each question
+
+
 
 
 
 # To do
-- student data analytics - performance for each quiz
 - create chart for each question
+

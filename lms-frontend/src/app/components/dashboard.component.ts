@@ -59,19 +59,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private createOrUpdateCharts(): void {
-    // if (this.ctx) {
-    //   const chartInstance = Chart.getChart(this.ctx); 
-    //   if (chartInstance) {
-    //     chartInstance.destroy(); 
-    //   }
-    // }
 
-    // if (this.ctx2) {
-    //   const chartInstance = Chart.getChart(this.ctx2); 
-    //   if (chartInstance) {
-    //     chartInstance.destroy(); 
-    //   }
-    // }
 
     const canvasContexts = [this.ctx, this.ctx2, this.ctx3];
 
