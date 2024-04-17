@@ -1,5 +1,9 @@
 # Learning Management System (LMS) Project
 
+![alt text](lms2.webp)
+![alt text](lms3.webp)
+![alt text](studentquiz1.webp)
+
 ## Overview
 
 EduQuest is a Learning Management System (LMS) designed to facilitate the management and delivery of educational courses. It is built using Angular for the frontend and Spring Boot for the backend, providing a robust and scalable solution for educational institutions.
@@ -44,6 +48,8 @@ EduQuest is a Learning Management System (LMS) designed to facilitate the manage
     cd project.backend
     mvn clean spring-boot:run
   
-
-
+### Video
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=PYoFiQt7LvY" target="_blank">
+ <img src="http://img.youtube.com/vi/PYoFiQt7LvY/mqdefault.jpg" alt="Watch the video" width="600" height="400" border="10" />
+</a>
 
